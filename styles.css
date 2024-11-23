@@ -1,5 +1,3 @@
-/* styles.css */
-
 /* Styling for the diff viewer */
 .git-diff-view {
     font-family: monospace;
@@ -7,21 +5,19 @@
     line-height: 1.5;
   }
   
-  /* Styling for added lines */
-  .git-diff-view .added {
+  .git-diff-view .addition {
     color: green;
     background-color: rgba(0, 255, 0, 0.1);
     white-space: pre-wrap;
   }
   
-  /* Styling for removed lines */
-  .git-diff-view .removed {
+  .git-diff-view .deletion {
     color: red;
     background-color: rgba(255, 0, 0, 0.1);
+    text-decoration: line-through;
     white-space: pre-wrap;
   }
   
-  /* Styling for unchanged lines */
   .git-diff-view .unchanged {
     color: black;
     background-color: transparent;
