@@ -7,7 +7,7 @@ const fs = new LightningFS("fs");
 
 export async function getGitDiff(app: App, filePath: string): Promise<string> {
   const dir = "/";
-  const vaultPath = app.vault.adapter.getBasePath();
+  const vaultPath = app.vault.adapter.basePath;
   const fullPath = `${vaultPath}/${filePath}`;
 
   try {
@@ -44,7 +44,7 @@ export async function getGitDiff(app: App, filePath: string): Promise<string> {
 
 function formatDiff(oldContent: string, newContent: string): string {
   const diffs = diffLines(oldContent, newContent);
-  let diffHtml = "<div class='doc-diff'>";
+  let diffHtml = "<div class='git-diff-view'>";
 
   diffs.forEach((part) => {
     const escapedText = escapeHtml(part.value);

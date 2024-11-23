@@ -8,9 +8,10 @@ const isWatchMode = process.argv.includes('--watch');
     bundle: true,
     outfile: 'main.js',
     platform: 'node',
+    format: 'cjs',
     target: 'es6',
     sourcemap: true,
-    external: ['obsidian'], // Mark Obsidian module as external
+    external: ['obsidian'],
   });
 
   if (isWatchMode) {
