@@ -1,29 +1,30 @@
+/* styles.css */
+
+/* Styling for the diff viewer */
 .git-diff-view {
     font-family: monospace;
     font-size: 14px;
     line-height: 1.5;
-    padding: 10px;
-    overflow: auto;
-    background-color: #f8f9fa;
-    border: 1px solid #ddd;
-    border-radius: 5px;
   }
   
-  .git-diff-view div {
-    margin-bottom: 2px;
-    padding: 2px 5px;
-    border-radius: 3px;
-  }
-  
-  .git-diff-view div.added {
+  /* Styling for added lines */
+  .git-diff-view .added {
+    color: green;
     background-color: rgba(0, 255, 0, 0.1);
+    white-space: pre-wrap;
   }
   
-  .git-diff-view div.removed {
+  /* Styling for removed lines */
+  .git-diff-view .removed {
+    color: red;
     background-color: rgba(255, 0, 0, 0.1);
+    white-space: pre-wrap;
   }
   
-  .git-diff-view div.unchanged {
+  /* Styling for unchanged lines */
+  .git-diff-view .unchanged {
+    color: black;
     background-color: transparent;
+    white-space: pre-wrap;
   }
   

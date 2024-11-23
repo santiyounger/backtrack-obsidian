@@ -1,3 +1,5 @@
+// git_operations.ts
+
 import git from 'isomorphic-git';
 import LightningFS from '@isomorphic-git/lightning-fs';
 import { App } from 'obsidian';
@@ -11,17 +13,17 @@ export async function getGitDiff(app: App, filePath: string): Promise<string> {
   const fullPath = `${vaultPath}/${filePath}`;
 
   try {
-    // Initialize git repository if not already initialized
+    // Initialize git if not already initialized
     await git.init({ fs, dir });
 
-    // Read the current file content
+    // Read file content into the in-memory fs
     const currentContent = await app.vault.adapter.read(filePath);
     await fs.promises.writeFile(fullPath, currentContent);
 
-    // Get the latest commit for the file
+    // Fetch the latest commit content for the file
     const commits = await git.log({ fs, dir, filepath: filePath, depth: 1 });
     if (commits.length === 0) {
-      throw new Error('No commits found for this file.');
+      throw new Error('No commits found for the current file.');
     }
 
     const latestCommitOid = commits[0].oid;
@@ -34,7 +36,7 @@ export async function getGitDiff(app: App, filePath: string): Promise<string> {
 
     const latestContent = new TextDecoder('utf-8').decode(latestContentBlob);
 
-    // Generate diff using `diff` library
+    // Generate the diff
     const diffs = Diff.diffLines(latestContent, currentContent);
     return diffs
       .map((part) => {
@@ -49,6 +51,6 @@ export async function getGitDiff(app: App, filePath: string): Promise<string> {
       .join('');
   } catch (error) {
     console.error('Error generating git diff:', error);
-    throw new Error('Failed to generate git diff.');
+    throw new Error('Unable to generate git diff.');
   }
 }
