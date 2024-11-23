@@ -1,38 +1,24 @@
-import { readFile } from 'fs/promises';
-import esbuild from 'esbuild';
-import { builtinModules } from 'module';
+import * as esbuild from 'esbuild';
 
-const isProduction = process.argv[2] === 'production';
+const isWatchMode = process.argv.includes('--watch');
 
-// Read dependencies from package.json
-const { dependencies } = JSON.parse(
-  await readFile(new URL('./package.json', import.meta.url))
-);
+(async () => {
+  const buildContext = await esbuild.context({
+    entryPoints: ['main.ts'],
+    bundle: true,
+    outfile: 'main.js',
+    platform: 'node',
+    target: 'es6',
+    sourcemap: true,
+    external: ['obsidian'], // Mark Obsidian module as external
+  });
 
-// List of external dependencies to exclude from the bundle
-const external = [
-  ...builtinModules,
-  ...Object.keys(dependencies || {}),
-];
-
-await esbuild.build({
-  entryPoints: ['main.ts'],
-  bundle: true,
-  outfile: 'main.js',
-  target: 'es2017',
-  platform: 'node',
-  external,
-  format: 'cjs',
-  sourcemap: !isProduction,
-  minify: isProduction,
-  watch: !isProduction && {
-    onRebuild(error, result) {
-      if (error) console.error('Watch build failed:', error);
-      else console.log('Watch build succeeded');
-    },
-  },
-});
-
-if (!isProduction) {
-  console.log('Watching for changes...');
-}
+  if (isWatchMode) {
+    console.log('Watching for changes...');
+    await buildContext.watch();
+  } else {
+    console.log('Building...');
+    await buildContext.rebuild();
+    await buildContext.dispose();
+  }
+})();

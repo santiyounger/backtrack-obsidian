@@ -3,14 +3,17 @@
 	"version": "1.0.0",
 	"main": "main.js",
 	"scripts": {
-	  "dev": "node esbuild.config.mjs",
-	  "build": "node esbuild.config.mjs production"
+		"dev": "node esbuild.config.mjs --watch",
+		"build": "node esbuild.config.mjs"
 	},
 	"devDependencies": {
-	  "@types/node": "^14.14.41",
-	  "esbuild": "^0.17.19",
-	  "obsidian": "latest"
+		"@types/node": "^14.14.41",
+		"esbuild": "^0.17.19",
+		"obsidian": "^1.7.2"
 	},
-	"dependencies": {}
-  }
-  
+	"dependencies": {
+		"@isomorphic-git/lightning-fs": "^4.6.0",
+		"diff": "^5.0.0",
+		"isomorphic-git": "^1.15.0"
+	}
+}

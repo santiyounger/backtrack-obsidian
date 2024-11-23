@@ -1,8 +1,29 @@
-/*
-
-This CSS file will be included with your plugin, and
-available in the app when your plugin is enabled.
-
-If your plugin does not need CSS, delete this file.
-
-*/
+.git-diff-view {
+    font-family: monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 10px;
+    overflow: auto;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .git-diff-view div {
+    margin-bottom: 2px;
+    padding: 2px 5px;
+    border-radius: 3px;
+  }
+  
+  .git-diff-view div.added {
+    background-color: rgba(0, 255, 0, 0.1);
+  }
+  
+  .git-diff-view div.removed {
+    background-color: rgba(255, 0, 0, 0.1);
+  }
+  
+  .git-diff-view div.unchanged {
+    background-color: transparent;
+  }
+  
