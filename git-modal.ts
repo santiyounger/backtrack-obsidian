@@ -29,7 +29,7 @@ export class GitModal extends Modal {
 
     try {
       const diffHtml = await getGitDiff(this.app, this.filePath);
-      contentEl.createDiv({ cls: "git-diff-view", html: diffHtml });
+      contentEl.createDiv({ cls: "git-diff-view" }).innerHTML = diffHtml;
     } catch (error) {
       new Notice("Error displaying diff.");
       console.error("Git Diff Error:", error);
