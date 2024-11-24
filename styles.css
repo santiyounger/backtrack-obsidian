@@ -110,8 +110,8 @@
   border-right: 1px solid var(--background-modifier-border);
   user-select: text; /* Enable text selection */
   font-family: 'Inter', sans-serif; /* Set font to Inter */
-  padding-left: 40px;
-  padding-right: 40px;
+  padding-left: 32px;
+  padding-right: 32px;
 }
 
 .git-column:last-child {
