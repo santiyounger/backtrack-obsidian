@@ -112,7 +112,9 @@
   font-family: 'Inter', sans-serif; /* Set font to Inter */
   padding-left: 32px;
   padding-right: 32px;
+  line-height: 1.5; /* Increase line height for better readability */
 }
+
 
 .git-column:last-child {
   border-right: none; /* Remove the border on the last column */
