@@ -1,3 +1,19 @@
+/* Make the entire modal take up maximum width */
+.modal {
+  max-width: 95vw; /* Set the modal's maximum width to 95% of the viewport width */
+  width: 95vw; /* Ensure it spans 95% of the viewport width */
+  height: 90vh; /* Optional: Adjust the modal's height to 90% of the viewport height */
+  margin: 0 auto; /* Center the modal horizontally */
+}
+
+/* Ensure the modal content spans the new size */
+.modal-content {
+  width: 100%;
+  height: 100%; /* Allow content to use the full modal height */
+  display: flex; /* Ensure child elements respect the layout */
+  flex-direction: column; /* Stack child elements vertically if needed */
+}
+
 .git-modal-container {
   display: flex;
   height: 100%;
@@ -37,12 +53,4 @@
   white-space: pre-wrap;
   background-color: var(--background-primary);
   color: var(--text-normal);
-}
-
-.modal {
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  margin: 0;
 }
