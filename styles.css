@@ -3,8 +3,8 @@
 /* Make the entire modal take up maximum width */
 .git-diff-modal {
   max-width: 95vw;
-  width: 95vw;
-  height: 90vh;
+  width: 100vw;
+  height: 100vh;
   margin: 0 auto;
   overflow: hidden;
 }
@@ -30,7 +30,7 @@
   width: 20%; /* Reduced width for the sidebar */
   background-color: var(--background-secondary);
   border-right: 1px solid var(--background-modifier-border);
-  padding: 10px;
+  padding: 0px;
   overflow-y: auto;
   overflow-x: auto;
   box-sizing: border-box;
