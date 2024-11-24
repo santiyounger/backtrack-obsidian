@@ -72,12 +72,13 @@ export class GitModal extends Modal {
         const commitItem = commitList.createDiv({ cls: 'commit-item' });
 
         // Add formatted commit details
+        const TRUNCATION_LIMIT = 30;
         commitItem.innerHTML = `
-        <strong class="commit-date">${new Date(commit.commit.author.timestamp * 1000).toISOString().split('T')[0].replace(/-/g, '/')} - ${new Date(commit.commit.author.timestamp * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}</strong>
-        <div class="commit-details">
-            ${commit.commit.message.length > 10 ? commit.commit.message.substring(0, 10) + '...' : commit.commit.message}<br>
-        </div>
-      `;               
+          <strong class="commit-date">${new Date(commit.commit.author.timestamp * 1000).toISOString().split('T')[0].replace(/-/g, '/')} - ${new Date(commit.commit.author.timestamp * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}</strong>
+          <div class="commit-details">
+              ${commit.commit.message.length > TRUNCATION_LIMIT ? commit.commit.message.substring(0, TRUNCATION_LIMIT) + '...' : commit.commit.message}<br>
+          </div>
+        `;                   
 
         commitItem.onclick = async () => {
           // Remove the `selected` class from the previously active commit
