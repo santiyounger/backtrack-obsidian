@@ -1,3 +1,5 @@
+/* Updated styles for the git-diff-modal and related components */
+
 /* Make the entire modal take up maximum width */
 .git-diff-modal {
   max-width: 95vw;
@@ -22,13 +24,29 @@
   overflow: hidden;
 }
 
+/* Sidebar width adjustment and layout consistency */
 .git-sidebar {
-  width: 25%;
+  width: 20%; /* Reduced width for the sidebar */
   background-color: var(--background-secondary);
   border-right: 1px solid var(--background-modifier-border);
   padding: 10px;
   overflow-y: auto;
   overflow-x: auto;
+  box-sizing: border-box;
+  flex-shrink: 0; /* Prevent shrinking of the sidebar */
+}
+
+/* Adjust content area to fill remaining space */
+.git-content-area {
+  flex: 1; /* Dynamically take remaining space */
+  display: flex;
+  gap: 10px;
+  overflow-y: auto;
+  padding: 10px;
+  font-family: var(--font-monospace);
+  white-space: pre-wrap;
+  background-color: var(--background-primary);
+  color: var(--text-normal);
   box-sizing: border-box;
 }
 
@@ -53,7 +71,6 @@
 
 /* Wrapper for the diff area */
 .git-diff-wrapper {
-  width: 70%;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -79,19 +96,6 @@
 }
 
 /* Scrollable content area */
-.git-content-area {
-  display: flex;
-  gap: 10px;
-  flex: 1;
-  overflow-y: auto;
-  padding: 10px;
-  font-family: var(--font-monospace);
-  white-space: pre-wrap;
-  background-color: var(--background-primary);
-  color: var(--text-normal);
-  box-sizing: border-box;
-}
-
 .git-column {
   flex: 1;
   overflow-y: auto;
