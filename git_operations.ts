@@ -3,26 +3,57 @@ import git from "isomorphic-git";
 import LightningFS from "@isomorphic-git/lightning-fs";
 import { diffLines } from "diff";
 
-// Initialize LightningFS and directory
+// Initialize LightningFS
 const fs = new LightningFS("fs");
-const dir = "/";
 const pfs = fs.promises;
 
-// Ensure the repository is initialized and ready
-async function ensureRepoInitialized(): Promise<void> {
+// Get the latest commit's content for a specific file
+async function getLatestCommitContent(app: App, filepath: string): Promise<string> {
+    // @ts-ignore - Obsidian's internal API
+    const dir = (app.vault.adapter as any).basePath;
+    
     try {
-        const branches = await git.listBranches({ fs, dir });
-        if (branches.length === 0) {
-            await git.init({ fs, dir });
-            await git.branch({ fs, dir, ref: "main" }); // Create 'main' branch if none exists
+        // Check if .git directory exists
+        try {
+            await fs.promises.stat(`${dir}/.git`);
+        } catch {
+            return ''; // Return empty string if no git repository exists
+        }
+
+        try {
+            const commits = await git.log({ fs, dir, depth: 1 });
+            if (commits.length === 0) {
+                return '';
+            }
+            const latestCommitOid = commits[0].oid;
+
+            try {
+                const { blob } = await git.readBlob({
+                    fs,
+                    dir,
+                    oid: latestCommitOid,
+                    filepath,
+                });
+                return new TextDecoder("utf-8").decode(blob);
+            } catch (error) {
+                if (error.code === 'NotFoundError') {
+                    return '';
+                }
+                throw error;
+            }
+        } catch (error) {
+            if (error.message.includes('Could not find HEAD')) {
+                return ''; // Return empty string if no commits exist
+            }
+            throw error;
         }
     } catch (error) {
-        console.error("Failed to initialize Git repository:", error);
-        throw new Error("Git repository initialization failed.");
+        console.error("Error fetching latest commit content:", error);
+        throw new Error("Failed to fetch the latest commit content.");
     }
 }
 
-// Read file content from the Obsidian vault
+// Read the current file's content from the Obsidian vault
 async function readFileContent(app: App, filePath: string): Promise<string> {
     const file = app.vault.getAbstractFileByPath(filePath);
     if (!(file instanceof TFile)) {
@@ -31,39 +62,16 @@ async function readFileContent(app: App, filePath: string): Promise<string> {
     return app.vault.read(file);
 }
 
-// Get the latest committed content
-async function getLatestCommitContent(filepath: string): Promise<string> {
-    const commits = await git.log({ fs, dir, depth: 1, ref: "main" });
-    if (commits.length === 0) {
-        throw new Error("No commits found in the repository.");
-    }
-    const latestCommitOid = commits[0].oid;
-
-    const { blob } = await git.readBlob({
-        fs,
-        dir,
-        oid: latestCommitOid,
-        filepath,
-    });
-
-    return new TextDecoder("utf-8").decode(blob);
-}
-
-// Generate the Git diff
+// Generate the Git diff for a file
 export async function getGitDiff(app: App, filePath: string): Promise<string> {
     try {
-        await ensureRepoInitialized();
-
+        // Read the current file's content
         const content = await readFileContent(app, filePath);
-        const virtualFilePath = `${dir}${filePath}`;
 
-        // Write current file content to the virtual filesystem
-        await pfs.writeFile(virtualFilePath, content);
+        // Fetch the latest committed content
+        const latestContent = await getLatestCommitContent(app, filePath);
 
-        // Fetch the latest commit's content
-        const latestContent = await getLatestCommitContent(filePath);
-
-        // Generate and return the diff
+        // Generate and return the formatted diff
         return formatDiff(latestContent, content);
     } catch (error) {
         console.error("Error generating Git diff:", error);
@@ -72,7 +80,7 @@ export async function getGitDiff(app: App, filePath: string): Promise<string> {
     }
 }
 
-// Format diff results for HTML display
+// Format the diff for HTML display
 function formatDiff(oldContent: string, newContent: string): string {
     const diffs = diffLines(oldContent, newContent);
     let diffHtml = `<div class="git-diff-view" style="font-family: monospace; white-space: pre-wrap;">`;
