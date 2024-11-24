@@ -23,11 +23,12 @@
 }
 
 .git-sidebar {
-  width: 30%;
+  width: 25%;
   background-color: var(--background-secondary);
   border-right: 1px solid var(--background-modifier-border);
   padding: 10px;
   overflow-y: auto;
+  overflow-x: auto;
   box-sizing: border-box;
 }
 
