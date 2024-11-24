@@ -5,8 +5,8 @@
 
 .git-sidebar {
   width: 30%;
-  background-color: #f0f0f0;
-  border-right: 1px solid #ddd;
+  background-color: var(--background-secondary);
+  border-right: 1px solid var(--background-modifier-border);
   padding: 10px;
   overflow-y: auto;
 }
@@ -18,22 +18,23 @@
 .commit-item {
   padding: 5px;
   margin-bottom: 5px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--background-modifier-border);
   border-radius: 5px;
   cursor: pointer;
-  background-color: #ffffff;
-  transition: background-color 0.2s;
+  background-color: var(--background-primary);
+  transition: background-color 0.2s, color 0.2s;
 }
 
 .commit-item:hover {
-  background-color: #e0e0e0;
+  background-color: var(--background-hover);
 }
 
 .git-content-area {
   width: 70%;
   padding: 10px;
   overflow-y: auto;
-  font-family: monospace;
+  font-family: var(--font-monospace);
   white-space: pre-wrap;
-  background-color: #ffffff;
+  background-color: var(--background-primary);
+  color: var(--text-normal);
 }
