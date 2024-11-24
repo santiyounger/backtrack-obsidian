@@ -54,8 +54,8 @@ export class GitModal extends Modal {
 
       // Add centered headings for each column
       const headings = diffWrapper.createDiv({ cls: 'git-diff-headings' });
-      headings.createDiv({ cls: 'git-diff-heading', text: 'Previous Commit' });
-      headings.createDiv({ cls: 'git-diff-heading', text: 'Current Commit' });
+      headings.createDiv({ cls: 'git-diff-heading', text: 'Before' });
+      headings.createDiv({ cls: 'git-diff-heading', text: 'After' });
 
       // Create content area for file diff
       const contentArea = diffWrapper.createDiv({ cls: 'git-content-area' });
