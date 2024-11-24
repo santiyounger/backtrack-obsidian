@@ -69,7 +69,7 @@ export class GitModal extends Modal {
       // Populate commit list
       commits.forEach((commit, index) => {
         const commitItem = commitList.createDiv({ cls: 'commit-item' });
-        commitItem.setText(`#${index + 1} - ${commit.commit.message}`);
+        commitItem.setText(commit.commit.message); // Only display the commit message
         commitItem.onclick = async () => {
           // Remove the `selected` class from the previously active commit
           if (activeCommitItem) {
