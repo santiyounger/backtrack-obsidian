@@ -1,6 +1,6 @@
 import { App, Notice, TFile } from "obsidian";
 import git from "isomorphic-git";
-import LightningFS from "@isomorphic-git/lightning-fs"; // Updated import
+import LightningFS from "@isomorphic-git/lightning-fs";
 import { diffLines } from "diff";
 
 const fs = new LightningFS("fs");
