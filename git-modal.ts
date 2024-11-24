@@ -75,9 +75,9 @@ export class GitModal extends Modal {
         commitItem.innerHTML = `
         <strong class="commit-date">${new Date(commit.commit.author.timestamp * 1000).toISOString().split('T')[0].replace(/-/g, '/')} - ${new Date(commit.commit.author.timestamp * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}</strong>
         <div class="commit-details">
-            ${commit.commit.message}<br>
+            ${commit.commit.message.length > 10 ? commit.commit.message.substring(0, 10) + '...' : commit.commit.message}<br>
         </div>
-      `;            
+      `;               
 
         commitItem.onclick = async () => {
           // Remove the `selected` class from the previously active commit
