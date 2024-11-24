@@ -52,14 +52,17 @@ export class GitModal extends Modal {
       // Create wrapper for the diff area
       const diffWrapper = container.createDiv({ cls: 'git-diff-wrapper' });
 
-      // Add sticky headings above the content area
+      // Add centered headings for each column
       const headings = diffWrapper.createDiv({ cls: 'git-diff-headings' });
-      headings.createEl('h3', { text: 'Previous Commit' });
-      headings.createEl('h3', { text: 'Current Commit' });
+      headings.createDiv({ cls: 'git-diff-heading', text: 'Previous Commit' });
+      headings.createDiv({ cls: 'git-diff-heading', text: 'Current Commit' });
 
       // Create content area for file diff
       const contentArea = diffWrapper.createDiv({ cls: 'git-content-area' });
-      contentArea.setText('Select a commit to view the diff.');
+
+      // Create two scrollable columns for diffs
+      const prevColumn = contentArea.createDiv({ cls: 'git-column' });
+      const currColumn = contentArea.createDiv({ cls: 'git-column' });
 
       // Populate commit list
       commits.forEach((commit, index) => {
@@ -70,9 +73,13 @@ export class GitModal extends Modal {
             const prevCommitOid = index + 1 < commits.length ? commits[index + 1].oid : null;
             const currentCommitOid = commit.oid;
             const diffContent = await this.getFileDiff(dir, prevCommitOid, currentCommitOid);
-            contentArea.innerHTML = diffContent; // Set diff content as HTML
+
+            const [prevContent, currContent] = diffContent.split('|SPLIT|'); // Ensure split
+            prevColumn.innerHTML = prevContent;
+            currColumn.innerHTML = currContent;
           } catch (error) {
-            contentArea.setText('Error displaying diff.');
+            prevColumn.setText('Error displaying diff.');
+            currColumn.setText('Error displaying diff.');
             console.error(error);
           }
         };
@@ -134,16 +141,7 @@ export class GitModal extends Modal {
         })
         .join('');
 
-      return `
-        <div style="display: flex; gap: 10px;">
-          <div style="flex: 1; border-right: 1px solid var(--background-modifier-border); padding: 5px;">
-            ${leftColumn}
-          </div>
-          <div style="flex: 1; padding: 5px;">
-            ${rightColumn}
-          </div>
-        </div>
-      `;
+      return `${leftColumn}|SPLIT|${rightColumn}`;
     } catch (error) {
       console.error('Error generating file diff:', error);
       throw new Error('Failed to generate file diff.');

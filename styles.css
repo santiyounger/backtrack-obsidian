@@ -50,7 +50,7 @@
   background-color: var(--background-hover);
 }
 
-/* Wrapper for the headings and content area */
+/* Wrapper for the diff area */
 .git-diff-wrapper {
   width: 70%;
   display: flex;
@@ -59,19 +59,28 @@
   overflow: hidden;
 }
 
-/* Sticky headings */
+/* Centered headings for each column */
 .git-diff-headings {
   display: flex;
   justify-content: space-between;
+  padding: 0 10px;
+  margin-bottom: 10px;
+}
+
+.git-diff-heading {
+  width: 50%; /* Equal width for each heading to match the columns */
+  text-align: center; /* Center text horizontally */
   background-color: var(--background-primary);
   padding: 10px;
   border-bottom: 1px solid var(--background-modifier-border);
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-  z-index: 100;
-  position: relative; /* Adjusted to align correctly with content */
+  font-weight: bold;
+  box-sizing: border-box;
 }
 
+/* Scrollable content area */
 .git-content-area {
+  display: flex;
+  gap: 10px;
   flex: 1;
   overflow-y: auto;
   padding: 10px;
@@ -80,4 +89,14 @@
   background-color: var(--background-primary);
   color: var(--text-normal);
   box-sizing: border-box;
+}
+
+.git-column {
+  flex: 1;
+  overflow-y: auto;
+  border-right: 1px solid var(--background-modifier-border);
+}
+
+.git-column:last-child {
+  border-right: none; /* Remove the border on the last column */
 }
