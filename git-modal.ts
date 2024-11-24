@@ -21,7 +21,7 @@ export class GitModal extends Modal {
 
   async onOpen() {
     const { contentEl } = this;
-    this.titleEl.setText('Git Diff Viewer');
+    this.titleEl.setText('Draft Keep History');
 
     if (!this.filePath) {
       new Notice('No file selected.');
