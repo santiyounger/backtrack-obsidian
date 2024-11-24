@@ -72,7 +72,7 @@ export class GitModal extends Modal {
 
         // Add formatted commit details
         commitItem.innerHTML = `
-        <strong class="commit-date">${new Date(commit.commit.author.timestamp * 1000).toISOString().split('T')[0].replace(/-/g, '/')} ${new Date(commit.commit.author.timestamp * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })}</strong>
+        <strong class="commit-date">${new Date(commit.commit.author.timestamp * 1000).toISOString().split('T')[0].replace(/-/g, '/')} ${new Date(commit.commit.author.timestamp * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}</strong>
         <div class="commit-details">
             <strong>Message:</strong> ${commit.commit.message}<br>
             <strong>Author:</strong> ${commit.commit.author.name}
