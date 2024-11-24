@@ -21,7 +21,8 @@ export class GitModal extends Modal {
 
   async onOpen() {
     const { contentEl } = this;
-    this.titleEl.setText('Draft Keep History');
+    this.modalEl.addClass('git-diff-modal'); // Add the unique class
+    this.titleEl.setText('Draft Keep History');  
 
     if (!this.filePath) {
       new Notice('No file selected.');

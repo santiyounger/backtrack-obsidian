@@ -1,5 +1,5 @@
 /* Make the entire modal take up maximum width */
-.modal {
+.git-diff-modal {
   max-width: 95vw;
   width: 95vw;
   height: 90vh;
@@ -8,7 +8,7 @@
 }
 
 /* Ensure the modal content spans the new size */
-.modal-content {
+.git-diff-modal .modal-content {
   width: 100%;
   height: 100%;
   display: flex;
