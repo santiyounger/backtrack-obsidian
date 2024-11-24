@@ -22,7 +22,7 @@ export class GitModal extends Modal {
   async onOpen() {
     const { contentEl } = this;
     this.modalEl.addClass('git-diff-modal'); // Add the unique class
-    this.titleEl.setText('Draft Keep History');  
+    this.titleEl.setText('Draft Keep History');
 
     if (!this.filePath) {
       new Notice('No file selected.');
@@ -61,9 +61,17 @@ export class GitModal extends Modal {
       // Create content area for file diff
       const contentArea = diffWrapper.createDiv({ cls: 'git-content-area' });
 
-      // Create two scrollable columns for diffs
+      // Create two scrollable columns for diffs with synchronized scrolling
       const prevColumn = contentArea.createDiv({ cls: 'git-column' });
       const currColumn = contentArea.createDiv({ cls: 'git-column' });
+
+      // Add synchronized scrolling between the two columns
+      prevColumn.onscroll = () => {
+        currColumn.scrollTop = prevColumn.scrollTop;
+      };
+      currColumn.onscroll = () => {
+        prevColumn.scrollTop = currColumn.scrollTop;
+      };
 
       let activeCommitItem: HTMLDivElement | null = null;
 
@@ -78,7 +86,7 @@ export class GitModal extends Modal {
           <div class="commit-details">
               ${commit.commit.message.length > TRUNCATION_LIMIT ? commit.commit.message.substring(0, TRUNCATION_LIMIT) + '...' : commit.commit.message}<br>
           </div>
-        `;                   
+        `;
 
         commitItem.onclick = async () => {
           // Remove the `selected` class from the previously active commit
@@ -147,23 +155,33 @@ export class GitModal extends Modal {
       // Format the diff as a split view with HTML and color coding
       const leftColumn = diffs
         .map((part) => {
-          if (part.removed || !part.added) {
-            const color = part.removed ? 'var(--text-error)' : 'var(--text-normal)';
-            const background = part.removed ? 'rgba(255, 0, 0, 0.1)' : 'transparent';
+          if (part.removed) {
+            const color = 'var(--text-error)';
+            const background = 'rgba(255, 0, 0, 0.1)';
             return `<div style="color:${color}; background:${background}; white-space:pre-wrap;">${part.value}</div>`;
           }
-          return '';
+          if (!part.added) {
+            return `<div style="white-space:pre-wrap;">${part.value}</div>`;
+          }
+          // Add blank lines to match added content in the right column
+          const blankLines = part.value.split('\n').length;
+          return `<div style="height: ${blankLines * 1.5}em;"></div>`;
         })
         .join('');
 
       const rightColumn = diffs
         .map((part) => {
-          if (part.added || !part.removed) {
-            const color = part.added ? 'var(--text-success)' : 'var(--text-normal)';
-            const background = part.added ? 'rgba(0, 255, 0, 0.1)' : 'transparent';
+          if (part.added) {
+            const color = 'var(--text-success)';
+            const background = 'rgba(0, 255, 0, 0.1)';
             return `<div style="color:${color}; background:${background}; white-space:pre-wrap;">${part.value}</div>`;
           }
-          return '';
+          if (!part.removed) {
+            return `<div style="white-space:pre-wrap;">${part.value}</div>`;
+          }
+          // Add blank lines to match removed content in the left column
+          const blankLines = part.value.split('\n').length;
+          return `<div style="height: ${blankLines * 1.5}em;"></div>`;
         })
         .join('');
 
