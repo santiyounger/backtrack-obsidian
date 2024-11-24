@@ -38,3 +38,11 @@
   background-color: var(--background-primary);
   color: var(--text-normal);
 }
+
+.modal {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  margin: 0;
+}
