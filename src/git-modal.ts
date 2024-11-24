@@ -158,7 +158,8 @@ export class GitModal extends Modal {
           if (part.removed) {
             const color = 'var(--text-error)';
             const background = 'rgba(255, 0, 0, 0.1)';
-            return `<div style="color:${color}; background:${background}; white-space:pre-wrap;">${part.value}</div>`;
+            const lineHeight = part.value.split('\n').length * 1.5 + 'em';
+            return `<div style="color:${color}; background:${background}; white-space:pre-wrap; height: auto;">${part.value}</div>`;
           }
           if (!part.added) {
             return `<div style="white-space:pre-wrap;">${part.value}</div>`;
@@ -174,7 +175,8 @@ export class GitModal extends Modal {
           if (part.added) {
             const color = 'var(--text-success)';
             const background = 'rgba(0, 255, 0, 0.1)';
-            return `<div style="color:${color}; background:${background}; white-space:pre-wrap;">${part.value}</div>`;
+            const lineHeight = part.value.split('\n').length * 1.5 + 'em';
+            return `<div style="color:${color}; background:${background}; white-space:pre-wrap; height: auto;">${part.value}</div>`;
           }
           if (!part.removed) {
             return `<div style="white-space:pre-wrap;">${part.value}</div>`;
