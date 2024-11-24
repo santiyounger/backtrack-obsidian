@@ -1,29 +1,39 @@
-.git-diff-view {
-    font-family: monospace;
-    font-size: 14px;
-    line-height: 1.5;
-    padding: 10px;
-    overflow: auto;
-    background-color: #f8f9fa;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  .git-diff-view div {
-    margin-bottom: 2px;
-    padding: 2px 5px;
-    border-radius: 3px;
-  }
-  
-  .git-diff-view div.added {
-    background-color: rgba(0, 255, 0, 0.1);
-  }
-  
-  .git-diff-view div.removed {
-    background-color: rgba(255, 0, 0, 0.1);
-  }
-  
-  .git-diff-view div.unchanged {
-    background-color: transparent;
-  }
-  
+.git-modal-container {
+  display: flex;
+  height: 100%;
+}
+
+.git-sidebar {
+  width: 30%;
+  background-color: #f0f0f0;
+  border-right: 1px solid #ddd;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.commit-list {
+  margin-top: 10px;
+}
+
+.commit-item {
+  padding: 5px;
+  margin-bottom: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #ffffff;
+  transition: background-color 0.2s;
+}
+
+.commit-item:hover {
+  background-color: #e0e0e0;
+}
+
+.git-content-area {
+  width: 70%;
+  padding: 10px;
+  overflow-y: auto;
+  font-family: monospace;
+  white-space: pre-wrap;
+  background-color: #ffffff;
+}
