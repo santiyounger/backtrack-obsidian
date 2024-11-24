@@ -1,25 +1,25 @@
-/* Updated modal to prevent unnecessary scrollbars */
+/* Make the entire modal take up maximum width */
 .modal {
-  max-width: 95vw; /* Set the modal's maximum width to 95% of the viewport width */
-  width: 95vw; /* Ensure it spans 95% of the viewport width */
-  height: 90vh; /* Adjust the modal's height to 90% of the viewport height */
-  margin: 0 auto; /* Center the modal horizontally */
-  overflow: hidden; /* Prevent scrolling unless explicitly needed */
+  max-width: 95vw;
+  width: 95vw;
+  height: 90vh;
+  margin: 0 auto;
+  overflow: hidden;
 }
 
 /* Ensure the modal content spans the new size */
 .modal-content {
   width: 100%;
-  height: 100%; /* Allow content to use the full modal height */
-  display: flex; /* Ensure child elements respect the layout */
-  flex-direction: column; /* Stack child elements vertically if needed */
-  overflow: hidden; /* Avoid unintentional scrolling */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .git-modal-container {
   display: flex;
   height: 100%;
-  overflow: hidden; /* Ensure container doesn't create scrollbars */
+  overflow: hidden;
 }
 
 .git-sidebar {
@@ -27,13 +27,13 @@
   background-color: var(--background-secondary);
   border-right: 1px solid var(--background-modifier-border);
   padding: 10px;
-  overflow-y: auto; /* Allow vertical scrolling only when needed */
-  box-sizing: border-box; /* Include padding in width calculations */
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .commit-list {
   margin-top: 10px;
-  overflow-y: auto; /* Ensure long lists scroll inside this container */
+  overflow-y: auto;
 }
 
 .commit-item {
@@ -50,13 +50,34 @@
   background-color: var(--background-hover);
 }
 
-.git-content-area {
+/* Wrapper for the headings and content area */
+.git-diff-wrapper {
   width: 70%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Sticky headings */
+.git-diff-headings {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--background-primary);
   padding: 10px;
-  overflow-y: auto; /* Allow vertical scrolling only when needed */
+  border-bottom: 1px solid var(--background-modifier-border);
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+  position: relative; /* Adjusted to align correctly with content */
+}
+
+.git-content-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
   font-family: var(--font-monospace);
   white-space: pre-wrap;
   background-color: var(--background-primary);
   color: var(--text-normal);
-  box-sizing: border-box; /* Include padding in width calculations */
+  box-sizing: border-box;
 }

@@ -49,8 +49,16 @@ export class GitModal extends Modal {
       sidebar.setText('Commit History');
       const commitList = sidebar.createDiv({ cls: 'commit-list' });
 
+      // Create wrapper for the diff area
+      const diffWrapper = container.createDiv({ cls: 'git-diff-wrapper' });
+
+      // Add sticky headings above the content area
+      const headings = diffWrapper.createDiv({ cls: 'git-diff-headings' });
+      headings.createEl('h3', { text: 'Previous Commit' });
+      headings.createEl('h3', { text: 'Current Commit' });
+
       // Create content area for file diff
-      const contentArea = container.createDiv({ cls: 'git-content-area' });
+      const contentArea = diffWrapper.createDiv({ cls: 'git-content-area' });
       contentArea.setText('Select a commit to view the diff.');
 
       // Populate commit list
@@ -129,11 +137,9 @@ export class GitModal extends Modal {
       return `
         <div style="display: flex; gap: 10px;">
           <div style="flex: 1; border-right: 1px solid var(--background-modifier-border); padding: 5px;">
-            <h3 style="margin: 0;">Previous Commit</h3>
             ${leftColumn}
           </div>
           <div style="flex: 1; padding: 5px;">
-            <h3 style="margin: 0;">Current Commit</h3>
             ${rightColumn}
           </div>
         </div>
