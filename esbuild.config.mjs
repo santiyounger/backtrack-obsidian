@@ -4,7 +4,7 @@ const isWatchMode = process.argv.includes('--watch');
 
 (async () => {
   const buildContext = await esbuild.context({
-    entryPoints: ['main.ts'],
+    entryPoints: ['src/main.ts'],
     bundle: true,
     outfile: 'main.js',
     platform: 'node',
