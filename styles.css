@@ -108,6 +108,7 @@
   flex: 1;
   overflow-y: auto;
   border-right: 1px solid var(--background-modifier-border);
+  user-select: text; /* Enable text selection */
 }
 
 .git-column:last-child {
