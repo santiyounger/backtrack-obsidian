@@ -2,7 +2,7 @@
 
 /* Make the entire modal take up maximum width */
 .git-diff-modal {
-  max-width: 95vw;
+  max-width: 98vw;
   width: 100vw;
   height: 100vh;
   margin: 0 auto;
@@ -109,6 +109,9 @@
   overflow-y: auto;
   border-right: 1px solid var(--background-modifier-border);
   user-select: text; /* Enable text selection */
+  font-family: 'Inter', sans-serif; /* Set font to Inter */
+  padding-left: 40px;
+  padding-right: 40px;
 }
 
 .git-column:last-child {
