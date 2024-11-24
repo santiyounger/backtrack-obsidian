@@ -72,12 +72,12 @@ export class GitModal extends Modal {
 
         // Add formatted commit details
         commitItem.innerHTML = `
-          <strong class="commit-date">${new Date(commit.commit.author.timestamp * 1000).toLocaleString()}</strong>
-          <div class="commit-details">
-              <strong>Message:</strong> ${commit.commit.message}<br>
-              <strong>Author:</strong> ${commit.commit.author.name}
-          </div>
-        `;
+        <strong class="commit-date">${new Date(commit.commit.author.timestamp * 1000).toISOString().split('T')[0].replace(/-/g, '/')} ${new Date(commit.commit.author.timestamp * 1000).toLocaleTimeString()}</strong>
+        <div class="commit-details">
+            <strong>Message:</strong> ${commit.commit.message}<br>
+            <strong>Author:</strong> ${commit.commit.author.name}
+        </div>
+      `;       
 
         commitItem.onclick = async () => {
           // Remove the `selected` class from the previously active commit
