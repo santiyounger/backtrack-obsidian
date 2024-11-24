@@ -59,7 +59,9 @@ export class GitModal extends Modal {
         commitItem.setText(`#${index + 1} - ${commit.commit.message}`);
         commitItem.onclick = async () => {
           try {
-            const diffContent = await this.getFileDiff(dir, commit.oid);
+            const prevCommitOid = index + 1 < commits.length ? commits[index + 1].oid : null;
+            const currentCommitOid = commit.oid;
+            const diffContent = await this.getFileDiff(dir, prevCommitOid, currentCommitOid);
             contentArea.innerHTML = diffContent; // Set diff content as HTML
           } catch (error) {
             contentArea.setText('Error displaying diff.');
@@ -73,41 +75,69 @@ export class GitModal extends Modal {
     }
   }
 
-  async getFileDiff(dir: string, oid: string): Promise<string> {
+  async getFileDiff(dir: string, prevOid: string | null, currentOid: string): Promise<string> {
     const relativeFilePath = this.filePath;
 
     try {
-      // Get the current content of the file
-      const currentContent = await this.app.vault.adapter.read(relativeFilePath);
-
-      // Get the content from the selected commit
-      const { blob: latestContentBlob } = await git.readBlob({
+      // Get the content from the current commit
+      const { blob: currentBlob } = await git.readBlob({
         fs,
         dir,
-        oid,
+        oid: currentOid,
         filepath: relativeFilePath,
       });
-      const latestContent = new TextDecoder('utf-8').decode(latestContentBlob);
+      const currentContent = new TextDecoder('utf-8').decode(currentBlob);
 
-      // Generate the diff
-      const diffs = diffLines(latestContent, currentContent);
+      // Get the content from the previous commit (if available)
+      let prevContent = '';
+      if (prevOid) {
+        const { blob: prevBlob } = await git.readBlob({
+          fs,
+          dir,
+          oid: prevOid,
+          filepath: relativeFilePath,
+        });
+        prevContent = new TextDecoder('utf-8').decode(prevBlob);
+      }
 
-      // Format the diff as HTML with color coding
-      return diffs
+      // Generate the diff for the split view
+      const diffs = diffLines(prevContent, currentContent);
+
+      // Format the diff as a split view with HTML and color coding
+      const leftColumn = diffs
         .map((part) => {
-          const color = part.added
-            ? 'var(--text-success)'
-            : part.removed
-            ? 'var(--text-error)'
-            : 'var(--text-normal)';
-          const background = part.added
-            ? 'rgba(0, 255, 0, 0.1)'
-            : part.removed
-            ? 'rgba(255, 0, 0, 0.1)'
-            : 'transparent';
-          return `<div style="color:${color}; background:${background}; white-space:pre-wrap;">${part.value}</div>`;
+          if (part.removed || !part.added) {
+            const color = part.removed ? 'var(--text-error)' : 'var(--text-normal)';
+            const background = part.removed ? 'rgba(255, 0, 0, 0.1)' : 'transparent';
+            return `<div style="color:${color}; background:${background}; white-space:pre-wrap;">${part.value}</div>`;
+          }
+          return '';
         })
         .join('');
+
+      const rightColumn = diffs
+        .map((part) => {
+          if (part.added || !part.removed) {
+            const color = part.added ? 'var(--text-success)' : 'var(--text-normal)';
+            const background = part.added ? 'rgba(0, 255, 0, 0.1)' : 'transparent';
+            return `<div style="color:${color}; background:${background}; white-space:pre-wrap;">${part.value}</div>`;
+          }
+          return '';
+        })
+        .join('');
+
+      return `
+        <div style="display: flex; gap: 10px;">
+          <div style="flex: 1; border-right: 1px solid var(--background-modifier-border); padding: 5px;">
+            <h3 style="margin: 0;">Previous Commit</h3>
+            ${leftColumn}
+          </div>
+          <div style="flex: 1; padding: 5px;">
+            <h3 style="margin: 0;">Current Commit</h3>
+            ${rightColumn}
+          </div>
+        </div>
+      `;
     } catch (error) {
       console.error('Error generating file diff:', error);
       throw new Error('Failed to generate file diff.');
