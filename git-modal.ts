@@ -83,6 +83,11 @@ export class GitModal extends Modal {
             console.error(error);
           }
         };
+
+        // Automatically trigger the first commit
+        if (index === 0) {
+          commitItem.click();
+        }
       });
     } catch (error) {
       new Notice('Error displaying commits.');
