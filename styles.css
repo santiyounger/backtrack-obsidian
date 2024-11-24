@@ -100,3 +100,9 @@
 .git-column:last-child {
   border-right: none; /* Remove the border on the last column */
 }
+
+.commit-item.selected {
+  background-color: var(--interactive-accent);
+  color: var(--text-on-accent);
+  font-weight: bold;
+}

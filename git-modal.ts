@@ -64,11 +64,22 @@ export class GitModal extends Modal {
       const prevColumn = contentArea.createDiv({ cls: 'git-column' });
       const currColumn = contentArea.createDiv({ cls: 'git-column' });
 
+      let activeCommitItem: HTMLDivElement | null = null;
+
       // Populate commit list
       commits.forEach((commit, index) => {
         const commitItem = commitList.createDiv({ cls: 'commit-item' });
         commitItem.setText(`#${index + 1} - ${commit.commit.message}`);
         commitItem.onclick = async () => {
+          // Remove the `selected` class from the previously active commit
+          if (activeCommitItem) {
+            activeCommitItem.removeClass('selected');
+          }
+
+          // Add the `selected` class to the currently clicked commit
+          commitItem.addClass('selected');
+          activeCommitItem = commitItem;
+
           try {
             const prevCommitOid = index + 1 < commits.length ? commits[index + 1].oid : null;
             const currentCommitOid = commit.oid;
