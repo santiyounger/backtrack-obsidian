@@ -7,6 +7,7 @@
   height: 100vh;
   margin: 0 auto;
   overflow: hidden;
+  padding: 0; /* Override any default padding */
 }
 
 /* Ensure the modal content spans the new size */
@@ -30,7 +31,7 @@
   width: 20%; /* Reduced width for the sidebar */
   background-color: var(--background-secondary);
   border-right: 1px solid var(--background-modifier-border);
-  padding: 0px;
+  padding: 10px;
   overflow-y: auto;
   overflow-x: auto;
   box-sizing: border-box;
