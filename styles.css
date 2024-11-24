@@ -1,9 +1,10 @@
-/* Make the entire modal take up maximum width */
+/* Updated modal to prevent unnecessary scrollbars */
 .modal {
   max-width: 95vw; /* Set the modal's maximum width to 95% of the viewport width */
   width: 95vw; /* Ensure it spans 95% of the viewport width */
-  height: 90vh; /* Optional: Adjust the modal's height to 90% of the viewport height */
+  height: 90vh; /* Adjust the modal's height to 90% of the viewport height */
   margin: 0 auto; /* Center the modal horizontally */
+  overflow: hidden; /* Prevent scrolling unless explicitly needed */
 }
 
 /* Ensure the modal content spans the new size */
@@ -12,11 +13,13 @@
   height: 100%; /* Allow content to use the full modal height */
   display: flex; /* Ensure child elements respect the layout */
   flex-direction: column; /* Stack child elements vertically if needed */
+  overflow: hidden; /* Avoid unintentional scrolling */
 }
 
 .git-modal-container {
   display: flex;
   height: 100%;
+  overflow: hidden; /* Ensure container doesn't create scrollbars */
 }
 
 .git-sidebar {
@@ -24,11 +27,13 @@
   background-color: var(--background-secondary);
   border-right: 1px solid var(--background-modifier-border);
   padding: 10px;
-  overflow-y: auto;
+  overflow-y: auto; /* Allow vertical scrolling only when needed */
+  box-sizing: border-box; /* Include padding in width calculations */
 }
 
 .commit-list {
   margin-top: 10px;
+  overflow-y: auto; /* Ensure long lists scroll inside this container */
 }
 
 .commit-item {
@@ -48,9 +53,10 @@
 .git-content-area {
   width: 70%;
   padding: 10px;
-  overflow-y: auto;
+  overflow-y: auto; /* Allow vertical scrolling only when needed */
   font-family: var(--font-monospace);
   white-space: pre-wrap;
   background-color: var(--background-primary);
   color: var(--text-normal);
+  box-sizing: border-box; /* Include padding in width calculations */
 }
