@@ -1,6 +1,7 @@
 import { diffLines, diffWords } from 'diff';
 import { escapeHtml, calculateSimilarity } from '../utils/diffUtils';
 import { getFileContent } from '../utils/gitUtils';
+import { detectMovedText, MovedTextInfo } from '../utils/movedTextDetector';
 
 export class GitDiffView {
     constructor(private contentArea: HTMLElement) {}
@@ -15,6 +16,8 @@ export class GitDiffView {
 
             // Initialize an array to hold the HTML for each row
             const rows: string[] = [];
+
+            const movedTexts = detectMovedText(diffs);
 
             for (let i = 0; i < diffs.length; i++) {
                 const part = diffs[i];
@@ -48,22 +51,28 @@ export class GitDiffView {
                     i++; // Skip the next part since we've handled it
                 } else if (part.added) {
                     const partLines = part.value.split('\n').filter(line => line !== '');
+                    const isMovedText = movedTexts.some(moved => moved.newIndex === i);
                     
                     partLines.forEach(line => {
                         rows.push(`
                             <div class="diff-row">
                                 <div class="diff-before"></div>
-                                <div class="diff-after"><span class="diff-added">${escapeHtml(line)}</span></div>
+                                <div class="diff-after">
+                                    <span class="${isMovedText ? 'diff-moved' : 'diff-added'}">${escapeHtml(line)}</span>
+                                </div>
                             </div>
                         `);
                     });
                 } else if (part.removed) {
                     const partLines = part.value.split('\n').filter(line => line !== '');
+                    const isMovedText = movedTexts.some(moved => moved.originalIndex === i);
                     
                     partLines.forEach(line => {
                         rows.push(`
                             <div class="diff-row">
-                                <div class="diff-before"><span class="diff-removed">${escapeHtml(line)}</span></div>
+                                <div class="diff-before">
+                                    <span class="${isMovedText ? 'diff-moved' : 'diff-removed'}">${escapeHtml(line)}</span>
+                                </div>
                                 <div class="diff-after"></div>
                             </div>
                         `);

@@ -110,6 +110,15 @@
   background-color: rgba(255, 0, 0, 0.2);
   color: var(--text-error);
 }
+.diff-word-moved {
+  background-color: rgba(255, 255, 0, 0.2);
+  color: var(--text-warning);
+}
+.diff-moved {
+  background-color: rgba(255, 255, 0, 0.1);
+  color: var(--text-warning);
+  display: block;
+}
 .commit-list {
   margin-top: 10px;
   overflow-y: auto;
