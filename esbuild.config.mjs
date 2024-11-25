@@ -1,6 +1,7 @@
 import * as esbuild from 'esbuild';
 import { exec } from 'child_process';
 import { promisify } from 'util';
+import * as fs from 'fs/promises';
 
 const execAsync = promisify(exec);
 const isWatchMode = process.argv.includes('--watch');
@@ -21,6 +22,19 @@ const buildOptions = {
   target: 'es6',
   sourcemap: true,
   external: ['obsidian'],
+  plugins: [
+    {
+      name: 'css-loader',
+      setup(build) {
+        build.onLoad({ filter: /\.css$/ }, async (args) => {
+          return {
+            contents: await fs.readFile(args.path, 'utf8'),
+            loader: 'css'
+          };
+        });
+      }
+    }
+  ],
 };
 
 (async () => {
