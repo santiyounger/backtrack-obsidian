@@ -3,7 +3,7 @@
     --sidebar-width: 250px;
     --diff-line-height: 1.8;
     --commit-item-padding: 10px;
-    --removed-text: rgba(255, 255, 255, 0.783);
-    --removed-bg: rgba(208, 123, 11, 0.581);
+    --removed-text: rgb(255, 181, 142);
+    --removed-bg: rgba(226, 85, 9, 0.509);
   }
   
