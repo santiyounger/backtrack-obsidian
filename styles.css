@@ -87,6 +87,8 @@
 .diff-row {
   display: flex;
   width: 100%;
+  line-height: 1.8; /* Reduces the height of each line within the element */
+  margin-bottom: -70px;        /* Removes any default margins */
 }
 
 .diff-before,
