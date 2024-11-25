@@ -1,19 +1,17 @@
 /* Import all component styles */
 :root {
-  /* Add your CSS variables here */
-  --modal-max-width: 98vw;
-  --sidebar-width: 250px;
-  --diff-line-height: 1.8;
-  --commit-item-padding: 10px;
-}
+    /* Add your CSS variables here */
+    --sidebar-width: 250px;
+    --diff-line-height: 1.8;
+    --commit-item-padding: 10px;
+  }
 .git-diff-modal {
-  max-width: var(--modal-max-width);
-  width: 100vw;
-  height: 100vh;
-  margin: 0 auto;
-  overflow: hidden;
-  padding: 0;
-}
+    min-width: 98vw; /* Enforce minimum width of 98vw */
+    height: 100vh;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 0;
+  }
 .git-diff-modal .modal-content {
   width: 100%;
   height: 100%;

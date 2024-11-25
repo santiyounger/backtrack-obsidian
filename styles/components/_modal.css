@@ -1,11 +1,10 @@
 .git-diff-modal {
-  max-width: var(--modal-max-width);
-  width: 100vw;
-  height: 100vh;
-  margin: 0 auto;
-  overflow: hidden;
-  padding: 0;
-}
+    min-width: 98vw; /* Enforce minimum width of 98vw */
+    height: 100vh;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 0;
+  }  
 
 .git-diff-modal .modal-content {
   width: 100%;
