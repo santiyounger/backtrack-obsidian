@@ -54,40 +54,27 @@ export class GitDiffView {
                     const isMovedText = movedTexts.some(moved => moved.newIndex === i);
                     
                     partLines.forEach(line => {
-                        rows.push(`
-                            <div class="diff-row">
-                                <div class="diff-before"></div>
-                                <div class="diff-after">
-                                    <span class="${isMovedText ? 'diff-moved' : 'diff-added'}">${escapeHtml(line)}</span>
-                                </div>
-                            </div>
-                        `);
+                        rows.push(
+                            `<div class="diff-row"><div class="diff-before"></div><div class="diff-after"><span class="${isMovedText ? 'diff-moved' : 'diff-added'}">${escapeHtml(line)}</span></div></div>`
+                        );
                     });
                 } else if (part.removed) {
                     const partLines = part.value.split('\n').filter(line => line !== '');
                     const isMovedText = movedTexts.some(moved => moved.originalIndex === i);
                     
                     partLines.forEach(line => {
-                        rows.push(`
-                            <div class="diff-row">
-                                <div class="diff-before">
-                                    <span class="${isMovedText ? 'diff-moved' : 'diff-removed'}">${escapeHtml(line)}</span>
-                                </div>
-                                <div class="diff-after"></div>
-                            </div>
-                        `);
+                        rows.push(
+                            `<div class="diff-row"><div class="diff-before"><span class="${isMovedText ? 'diff-moved' : 'diff-removed'}">${escapeHtml(line)}</span></div><div class="diff-after"></div></div>`
+                        );
                     });
                 } else {
                     // Unchanged lines
                     const partLines = part.value.split('\n').filter(line => line !== '');
                     
                     partLines.forEach(line => {
-                        rows.push(`
-                            <div class="diff-row">
-                                <div class="diff-before">${escapeHtml(line)}</div>
-                                <div class="diff-after">${escapeHtml(line)}</div>
-                            </div>
-                        `);
+                        rows.push(
+                            `<div class="diff-row"><div class="diff-before">${escapeHtml(line)}</div><div class="diff-after">${escapeHtml(line)}</div></div>`
+                        );
                     });
                 }
             }
