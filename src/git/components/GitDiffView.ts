@@ -24,10 +24,8 @@ export class GitDiffView {
                 const nextPart = i + 1 < diffs.length ? diffs[i + 1] : null;
 
                 if (part.removed && nextPart?.added) {
-                    // Calculate similarity between the removed and added content
                     const similarity = calculateSimilarity(part.value, nextPart.value);
-                    
-                    // If similarity is below threshold (30%), treat as completely different sentences
+
                     if (similarity < 0.3) {
                         const beforeLines = part.value.trim().split('\n').filter(line => line !== '');
                         const afterLines = nextPart.value.trim().split('\n').filter(line => line !== '');
@@ -73,7 +71,7 @@ export class GitDiffView {
                         `);
                     }
 
-                    i++; // Skip the next part since we've handled it
+                    i++;
                 } else if (part.added) {
                     const partLines = part.value.trim().split('\n').filter(line => line !== '');
                     const isMovedText = movedTexts.some(moved => moved.newIndex === i);
