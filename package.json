@@ -4,26 +4,31 @@
 	"main": "main.js",
 	"type": "module",
 	"scripts": {
-		"dev": "node esbuild.config.mjs --watch",
-		"build": "node esbuild.config.mjs",
-		"preprocess-css": "npx glob \"styles/**/*.css\" | type > temp.css",
-		"build-css": "node build-css.js"
+		"dev": "concurrently \"npm run dev:ts\" \"npm run watch-css\"",
+		"dev:ts": "node esbuild.config.mjs --watch",
+		"build": "npm run build-ts && npm run build-css",
+		"build-ts": "node esbuild.config.mjs",
+		"watch-css": "chokidar 'styles/**/*.css' -c \"npm run build-css\"",
+		"build-css": "npx postcss styles/main.css -o styles/styles.css"
 	},
 	"devDependencies": {
-		"@types/diff": "^6.0.0",
-		"@types/node": "^14.14.41",
-		"esbuild": "^0.17.19",
-		"obsidian": "^1.7.2",
-		"postcss": "^8.4.31",
-		"postcss-cli": "^10.1.0",
-		"postcss-import": "^15.1.0",
-		"postcss-nested": "^6.0.1"
+	  "@types/diff": "^6.0.0",
+	  "@types/node": "^14.14.41",
+	  "chokidar-cli": "^3.0.0",
+	  "concurrently": "^8.2.0",
+	  "esbuild": "^0.17.19",
+	  "obsidian": "^1.7.2",
+	  "postcss": "^8.4.31",
+	  "postcss-cli": "^10.1.0",
+	  "postcss-import": "^15.1.0",
+	  "postcss-nested": "^6.0.1"
 	},
 	"dependencies": {
-		"@isomorphic-git/lightning-fs": "^4.6.0",
-		"diff": "^5.2.0",
-		"glob": "^11.0.0",
-		"isomorphic-git": "^1.15.0",
-		"tslib": "^2.8.1"
+	  "@isomorphic-git/lightning-fs": "^4.6.0",
+	  "diff": "^5.2.0",
+	  "glob": "^11.0.0",
+	  "isomorphic-git": "^1.15.0",
+	  "tslib": "^2.8.1"
 	}
-}
+  }
+  

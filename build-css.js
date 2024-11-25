@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { glob } from 'glob';
 import postcss from 'postcss';
-import postcssConfig from './postcss.config.js';
+import postcssConfig from './postcss.config.cjs';
 
 const outputFile = 'styles.css';
 
