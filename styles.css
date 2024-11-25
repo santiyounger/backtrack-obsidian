@@ -4,6 +4,8 @@
     --sidebar-width: 250px;
     --diff-line-height: 1.8;
     --commit-item-padding: 10px;
+    --removed-text: var(--text-error);
+    --removed-bg: rgba(255, 0, 0, 0.2);
   }
 .git-diff-modal {
     min-width: 98vw; /* Enforce minimum width of 98vw */
@@ -56,9 +58,7 @@
 }
 .git-diff-headings {
   display: flex;
-  justify-content: space-between;
-  padding: 0 10px;
-  margin-bottom: -55px;
+  width: 100%;
 }
 .git-diff-heading {
   width: 50%;
@@ -71,6 +71,12 @@
   font-size: 1.4em;
   margin: 0;
   line-height: 1.3;
+}
+.git-diff-heading.before {
+  border-right: 1px solid var(--background-modifier-border);
+}
+.git-diff-heading.after {
+  border-left: 1px solid var(--background-modifier-border);
 }
 .git-content-area {
   flex: 1;
@@ -113,8 +119,8 @@
   color: var(--text-success);
 }
 .diff-word-removed {
-  background-color: rgba(255, 0, 0, 0.2);
-  color: var(--text-error);
+  background-color: var(--removed-bg);
+  color: var(--removed-text);
 }
 .diff-word-moved {
   background-color: rgba(255, 255, 0, 0.2);
@@ -137,9 +143,6 @@
   display: flex;
   flex-direction: column;
   padding: 1rem;
-}
-.git-diff-heading {
-  font-weight: bold;
 }
 .git-content-area {
   flex: 1;

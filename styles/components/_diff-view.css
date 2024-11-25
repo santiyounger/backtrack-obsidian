@@ -12,6 +12,11 @@
   box-sizing: border-box;
 }
 
+.git-diff-headings {
+  display: flex;
+  width: 100%;
+}
+
 .git-diff-heading {
   width: 50%;
   text-align: center;
@@ -23,6 +28,14 @@
   font-size: 1.4em;
   margin: 0;
   line-height: 1.3;
+}
+
+.git-diff-heading.before {
+  border-right: 1px solid var(--background-modifier-border);
+}
+
+.git-diff-heading.after {
+  border-left: 1px solid var(--background-modifier-border);
 }
 
 .git-content-area {
@@ -72,8 +85,8 @@
 }
 
 .diff-word-removed {
-  background-color: rgba(255, 0, 0, 0.2);
-  color: var(--text-error);
+  background-color: var(--removed-bg);
+  color: var(--removed-text);
 }
 
 .diff-word-moved {
