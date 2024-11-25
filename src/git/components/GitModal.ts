@@ -48,15 +48,10 @@ export class GitModal extends Modal {
             // Create the main container for the modal
             const container = contentEl.createDiv({ cls: 'git-modal-container' });
 
-            // Instantiate GitSidebar and render the commit list
+            // Create sidebar first (left side)
             this.gitSidebar = new GitSidebar(container);
-            this.gitSidebar.renderCommitList(commits, async (commit, index) => {
-                const prevCommitOid = index + 1 < commits.length ? commits[index + 1].oid : null;
-                const currentCommitOid = commit.oid;
-                await this.gitDiffView.renderDiff(dir, prevCommitOid, currentCommitOid, this.filePath);
-            });
 
-            // Instantiate GitDiffView for rendering diffs
+            // Create diff view wrapper (right side)
             const diffWrapper = container.createDiv({ cls: 'git-diff-wrapper' });
 
             // Add centered headings for each column
@@ -64,9 +59,16 @@ export class GitModal extends Modal {
             headings.createDiv({ cls: 'git-diff-heading', text: 'Before' });
             headings.createDiv({ cls: 'git-diff-heading', text: 'After' });
 
-            // Create content area for file diff
+            // Create content area and initialize GitDiffView
             const contentArea = diffWrapper.createDiv({ cls: 'git-content-area' });
             this.gitDiffView = new GitDiffView(contentArea);
+
+            // Render the commit list
+            this.gitSidebar.renderCommitList(commits, async (commit, index) => {
+                const prevCommitOid = index + 1 < commits.length ? commits[index + 1].oid : null;
+                const currentCommitOid = commit.oid;
+                await this.gitDiffView.renderDiff(dir, prevCommitOid, currentCommitOid, this.filePath);
+            });
 
             // After rendering the commits, focus the latest one
             const commitItems = this.contentEl.querySelectorAll('.commit-item');
