@@ -1,0 +1,6 @@
+/* Import all component styles */
+@import 'utils/_variables.css';
+@import 'components/_modal.css';
+@import 'components/_sidebar.css';
+@import 'components/_diff-view.css';
+@import 'components/_commit-list.css'; 

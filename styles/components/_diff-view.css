@@ -1,0 +1,78 @@
+.git-diff-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  padding: 10px 40px;
+  font-family: var(--font-monospace);
+  white-space: pre-wrap;
+  background-color: var(--background-primary);
+  color: var(--text-normal);
+  box-sizing: border-box;
+}
+
+.git-diff-headings {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  margin-bottom: 10px;
+}
+
+.git-diff-heading {
+  width: 50%;
+  text-align: center;
+  background-color: var(--background-primary);
+  padding: var(--commit-item-padding);
+  border-bottom: 1px solid var(--background-modifier-border);
+  font-weight: bold;
+  box-sizing: border-box;
+}
+
+.git-content-area {
+  flex: 1;
+  overflow-y: auto;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.5;
+}
+
+.diff-row {
+  display: flex;
+  width: 100%;
+  line-height: var(--diff-line-height);
+  margin-bottom: -70px;
+}
+
+.diff-before,
+.diff-after {
+  width: 50%;
+  padding: 2px 8px;
+  box-sizing: border-box;
+  white-space: pre-wrap;
+  word-break: break-word;
+  user-select: text;
+  cursor: text;
+  min-height: 1.5em;
+}
+
+.diff-before .diff-removed {
+  color: var(--text-error);
+  background-color: rgba(255, 0, 0, 0.1);
+  display: block;
+}
+
+.diff-after .diff-added {
+  color: var(--text-success);
+  background-color: rgba(0, 255, 0, 0.1);
+  display: block;
+}
+
+.diff-word-added {
+  background-color: rgba(0, 255, 0, 0.2);
+  color: var(--text-success);
+}
+
+.diff-word-removed {
+  background-color: rgba(255, 0, 0, 0.2);
+  color: var(--text-error);
+} 

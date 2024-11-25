@@ -1,24 +1,45 @@
 import * as esbuild from 'esbuild';
+import { exec } from 'child_process';
+import { promisify } from 'util';
 
+const execAsync = promisify(exec);
 const isWatchMode = process.argv.includes('--watch');
 
-(async () => {
-  const buildContext = await esbuild.context({
-    entryPoints: ['src/main.ts'],
-    bundle: true,
-    outfile: 'main.js',
-    platform: 'node',
-    target: 'es6',
-    sourcemap: true,
-    external: ['obsidian'], // Mark Obsidian module as external
-  });
+async function processCSS() {
+  try {
+    await execAsync('npm run postcss');
+  } catch (error) {
+    console.error('Error processing CSS:', error);
+  }
+}
 
-  if (isWatchMode) {
-    console.log('Watching for changes...');
-    await buildContext.watch();
-  } else {
-    console.log('Building...');
-    await buildContext.rebuild();
-    await buildContext.dispose();
+const buildOptions = {
+  entryPoints: ['src/main.ts'],
+  bundle: true,
+  outfile: 'main.js',
+  platform: 'node',
+  target: 'es6',
+  sourcemap: true,
+  external: ['obsidian'],
+};
+
+(async () => {
+  try {
+    const ctx = await esbuild.context(buildOptions);
+
+    if (isWatchMode) {
+      console.log('Watching for changes...');
+      await ctx.watch();
+      // Run PostCSS in watch mode
+      exec('npm run postcss');
+    } else {
+      console.log('Building...');
+      await ctx.rebuild();
+      await processCSS();
+      await ctx.dispose();
+    }
+  } catch (err) {
+    console.error('Build failed:', err);
+    process.exit(1);
   }
 })();

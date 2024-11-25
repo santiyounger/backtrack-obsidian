@@ -2,15 +2,21 @@
 	"name": "git-diff-plugin",
 	"version": "1.0.0",
 	"main": "main.js",
+	"type": "module",
 	"scripts": {
 		"dev": "node esbuild.config.mjs --watch",
-		"build": "node esbuild.config.mjs"
+		"build": "node esbuild.config.mjs",
+		"postcss": "postcss styles/main.css -o main.css --watch"
 	},
 	"devDependencies": {
 		"@types/diff": "^6.0.0",
 		"@types/node": "^14.14.41",
 		"esbuild": "^0.17.19",
-		"obsidian": "^1.7.2"
+		"obsidian": "^1.7.2",
+		"postcss": "^8.4.31",
+		"postcss-cli": "^10.1.0",
+		"postcss-import": "^15.1.0",
+		"postcss-nested": "^6.0.1"
 	},
 	"dependencies": {
 		"@isomorphic-git/lightning-fs": "^4.6.0",
