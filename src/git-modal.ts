@@ -61,18 +61,6 @@ export class GitModal extends Modal {
       // Create content area for file diff
       const contentArea = diffWrapper.createDiv({ cls: 'git-content-area' });
 
-      // Create two scrollable columns for diffs with synchronized scrolling
-      const prevColumn = contentArea.createDiv({ cls: 'git-column' });
-      const currColumn = contentArea.createDiv({ cls: 'git-column' });
-
-      // Add synchronized scrolling between the two columns
-      prevColumn.onscroll = () => {
-        currColumn.scrollTop = prevColumn.scrollTop;
-      };
-      currColumn.onscroll = () => {
-        prevColumn.scrollTop = currColumn.scrollTop;
-      };
-
       let activeCommitItem: HTMLDivElement | null = null;
 
       // Format commit items
@@ -103,12 +91,10 @@ export class GitModal extends Modal {
             const currentCommitOid = commit.oid;
             const diffContent = await this.getFileDiff(dir, prevCommitOid, currentCommitOid);
 
-            const [prevContent, currContent] = diffContent.split('|SPLIT|'); // Ensure split
-            prevColumn.innerHTML = prevContent;
-            currColumn.innerHTML = currContent;
+            const [diffRows] = diffContent.split('|SPLIT|');
+            contentArea.innerHTML = diffRows;
           } catch (error) {
-            prevColumn.setText('Error displaying diff.');
-            currColumn.setText('Error displaying diff.');
+            contentArea.setText('Error displaying diff.');
             console.error(error);
           }
         };
@@ -152,46 +138,69 @@ export class GitModal extends Modal {
       // Generate the diff for the split view
       const diffs = diffLines(prevContent, currentContent);
 
-      // Format the diff as a split view with HTML and color coding
-      const leftColumn = diffs
-        .map((part) => {
+      // Initialize an array to hold the HTML for each row
+      const rows: string[] = [];
+
+      diffs.forEach((part) => {
+        const partLines = part.value.split('\n');
+        // Remove the last empty string if the string ends with a newline
+        if (partLines[partLines.length - 1] === '') {
+          partLines.pop();
+        }
+
+        partLines.forEach((line) => {
+          let beforeLine = '';
+          let afterLine = '';
+
           if (part.removed) {
-            const color = 'var(--text-error)';
-            const background = 'rgba(255, 0, 0, 0.1)';
-            const lineHeight = part.value.split('\n').length * 1.5 + 'em';
-            return `<div style="color:${color}; background:${background}; white-space:pre-wrap; height: auto;">${part.value}</div>`;
+            beforeLine = line;
+            afterLine = ''; // Empty space to match the removed line
+          } else if (part.added) {
+            beforeLine = ''; // Empty space to match the added line
+            afterLine = line;
+          } else {
+            beforeLine = line;
+            afterLine = line;
           }
-          if (!part.added) {
-            return `<div style="white-space:pre-wrap;">${part.value}</div>`;
-          }
-          // Add blank lines to match added content in the right column
-          const blankLines = part.value.split('\n').length;
-          return `<div style="height: ${blankLines * 1.5}em;"></div>`;
-        })
-        .join('');
 
-      const rightColumn = diffs
-        .map((part) => {
+          // Escape HTML entities to prevent XSS
+          beforeLine = this.escapeHtml(beforeLine);
+          afterLine = this.escapeHtml(afterLine);
+
+          // Add styling for removed and added lines
+          if (part.removed) {
+            beforeLine = `<span class="diff-removed">${beforeLine}</span>`;
+          }
           if (part.added) {
-            const color = 'var(--text-success)';
-            const background = 'rgba(0, 255, 0, 0.1)';
-            const lineHeight = part.value.split('\n').length * 1.5 + 'em';
-            return `<div style="color:${color}; background:${background}; white-space:pre-wrap; height: auto;">${part.value}</div>`;
+            afterLine = `<span class="diff-added">${afterLine}</span>`;
           }
-          if (!part.removed) {
-            return `<div style="white-space:pre-wrap;">${part.value}</div>`;
-          }
-          // Add blank lines to match removed content in the left column
-          const blankLines = part.value.split('\n').length;
-          return `<div style="height: ${blankLines * 1.5}em;"></div>`;
-        })
-        .join('');
 
-      return `${leftColumn}|SPLIT|${rightColumn}`;
+          // Create a row with before and after lines
+          rows.push(`
+            <div class="diff-row">
+              <div class="diff-before">${beforeLine}</div>
+              <div class="diff-after">${afterLine}</div>
+            </div>
+          `);
+        });
+      });
+
+      return `${rows.join('')}|SPLIT|`;
     } catch (error) {
       console.error('Error generating file diff:', error);
       throw new Error('Failed to generate file diff.');
     }
+  }
+
+  escapeHtml(text: string): string {
+    const map: { [key: string]: string } = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;',
+    };
+    return text.replace(/[&<>"']/g, (m) => map[m]);
   }
 
   onClose() {

@@ -33,57 +33,29 @@
   border-right: 1px solid var(--background-modifier-border);
   padding: 10px;
   overflow-y: auto;
-  overflow-x: auto;
+  overflow-x: hidden;
   box-sizing: border-box;
   flex-shrink: 0; /* Prevent shrinking of the sidebar */
 }
 
+.git-sidebar.set-width {
+  width: 250px; /* Fixed width for better consistency */
+}
+
 /* Adjust content area to fill remaining space */
-.git-content-area {
+.git-diff-wrapper {
   flex: 1; /* Dynamically take remaining space */
   display: flex;
+  flex-direction: column;
   gap: 10px;
   overflow-y: auto;
-  padding: 0 40px 0 40px;
+  padding: 10px 40px; /* Consistent padding */
   font-family: var(--font-monospace);
   white-space: pre-wrap;
   background-color: var(--background-primary);
   color: var(--text-normal);
   box-sizing: border-box;
 }
-
-.commit-list {
-  margin-top: 10px;
-  overflow-y: auto;
-}
-
-.commit-item {
-  padding: 10px;
-  margin-bottom: 5px;
-  border: 1px solid var(--background-modifier-border);
-  border-radius: 5px;
-  cursor: pointer;
-  background-color: var(--background-primary);
-  transition: background-color 0.2s, color 0.2s;
-}
-
-.commit-item:hover {
-  background-color: var(--background-hover);
-}
-
-/* Wrapper for the diff area */
-.git-diff-wrapper {
-  flex: 1; /* Allow it to take up remaining space */
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow: hidden;
-
-   /* Adjust padding to remove unnecessary inner spacing */
-   margin: 0; /* Remove margins */
-   padding: 10px; /* Inner spacing if needed */
-   box-sizing: border-box; /* Prevents width misalignment */
- }
 
 /* Centered headings for each column */
 .git-diff-headings {
@@ -104,22 +76,69 @@
 }
 
 /* Scrollable content area */
-.git-column {
+.git-content-area {
   flex: 1;
   overflow-y: auto;
-  border-right: 1px solid var(--background-modifier-border);
-  user-select: text; /* Enable text selection */
   font-family: 'Inter', sans-serif; /* Set font to Inter */
-  padding-left: 32px;
-  padding-right: 32px;
   line-height: 1.5; /* Increase line height for better readability */
 }
 
-
-.git-column:last-child {
-  border-right: none; /* Remove the border on the last column */
+/* Style for each diff row */
+.diff-row {
+  display: flex;
+  width: 100%;
 }
 
+.diff-before,
+.diff-after {
+  width: 50%;
+  padding: 2px 8px;
+  box-sizing: border-box;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Highlight removed lines */
+.diff-before .diff-removed {
+  color: var(--text-error);
+  background-color: rgba(255, 0, 0, 0.1);
+  display: block;
+}
+
+/* Highlight added lines */
+.diff-after .diff-added {
+  color: var(--text-success);
+  background-color: rgba(0, 255, 0, 0.1);
+  display: block;
+}
+
+/* Ensure empty spaces occupy the same height */
+.diff-before,
+.diff-after {
+  min-height: 1.5em; /* Match the line-height */
+}
+
+/* Commit list styling */
+.commit-list {
+  margin-top: 10px;
+  overflow-y: auto;
+}
+
+.commit-item {
+  padding: 10px;
+  margin-bottom: 5px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: var(--background-primary);
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.commit-item:hover {
+  background-color: var(--background-hover);
+}
+
+/* Selected commit styling */
 .commit-item.selected {
   background-color: var(--interactive-accent);
   color: var(--text-on-accent);
