@@ -24,29 +24,56 @@ export class GitDiffView {
                 const nextPart = i + 1 < diffs.length ? diffs[i + 1] : null;
 
                 if (part.removed && nextPart?.added) {
-                    // Use diffWords instead of character-by-character comparison
-                    const wordDiffs = diffWords(part.value, nextPart.value);
+                    // Calculate similarity between the removed and added content
+                    const similarity = calculateSimilarity(part.value, nextPart.value);
                     
-                    let beforeLine = '';
-                    let afterLine = '';
-                    
-                    wordDiffs.forEach(diff => {
-                        if (diff.removed) {
-                            beforeLine += `<span class="diff-word-removed">${escapeHtml(diff.value)}</span>`;
-                        } else if (diff.added) {
-                            afterLine += `<span class="diff-word-added">${escapeHtml(diff.value)}</span>`;
-                        } else {
-                            beforeLine += escapeHtml(diff.value);
-                            afterLine += escapeHtml(diff.value);
-                        }
-                    });
-                    
-                    rows.push(`
-                        <div class="diff-row">
-                            <div class="diff-before">${beforeLine}</div>
-                            <div class="diff-after">${afterLine}</div>
-                        </div>
-                    `);
+                    // If similarity is below threshold (30%), treat as completely different sentences
+                    if (similarity < 0.3) {
+                        // Handle as completely different content
+                        const beforeLines = part.value.split('\n').filter(line => line !== '');
+                        const afterLines = nextPart.value.split('\n').filter(line => line !== '');
+                        
+                        beforeLines.forEach(line => {
+                            rows.push(`
+                                <div class="diff-row">
+                                    <div class="diff-before"><span class="diff-removed">${escapeHtml(line)}</span></div>
+                                    <div class="diff-after"></div>
+                                </div>
+                            `);
+                        });
+                        
+                        afterLines.forEach(line => {
+                            rows.push(`
+                                <div class="diff-row">
+                                    <div class="diff-before"></div>
+                                    <div class="diff-after"><span class="diff-added">${escapeHtml(line)}</span></div>
+                                </div>
+                            `);
+                        });
+                    } else {
+                        // Existing word-level diff logic for similar content
+                        const wordDiffs = diffWords(part.value, nextPart.value);
+                        let beforeLine = '';
+                        let afterLine = '';
+                        
+                        wordDiffs.forEach(diff => {
+                            if (diff.removed) {
+                                beforeLine += `<span class="diff-word-removed">${escapeHtml(diff.value)}</span>`;
+                            } else if (diff.added) {
+                                afterLine += `<span class="diff-word-added">${escapeHtml(diff.value)}</span>`;
+                            } else {
+                                beforeLine += escapeHtml(diff.value);
+                                afterLine += escapeHtml(diff.value);
+                            }
+                        });
+                        
+                        rows.push(`
+                            <div class="diff-row">
+                                <div class="diff-before">${beforeLine}</div>
+                                <div class="diff-after">${afterLine}</div>
+                            </div>
+                        `);
+                    }
                     
                     i++; // Skip the next part since we've handled it
                 } else if (part.added) {
