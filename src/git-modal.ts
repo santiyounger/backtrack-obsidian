@@ -1,6 +1,6 @@
 import { App, Modal, Notice } from 'obsidian';
 import git from 'isomorphic-git';
-import { diffLines } from 'diff'; // Import diffLines for diff generation
+import { diffLines, diffWords } from 'diff'; // Add diffWords import
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -183,15 +183,31 @@ export class GitModal extends Modal {
 
             partLines.forEach((line, idx) => {
               const beforeLine = `<span class="diff-modified">${this.escapeHtml(line)}</span>`;
-              const afterLine = idx < nextPartLines.length ? 
-                `<span class="diff-modified">${this.escapeHtml(nextPartLines[idx])}</span>` : '';
+              
+              if (idx < nextPartLines.length) {
+                // Generate word-level diff for the modified lines
+                const wordDiffs = diffWords(line, nextPartLines[idx]);
+                let afterLine = '<span class="diff-modified">';
+                
+                wordDiffs.forEach(wordPart => {
+                  if (wordPart.added) {
+                    afterLine += `<span class="diff-word-added">${this.escapeHtml(wordPart.value)}</span>`;
+                  } else if (wordPart.removed) {
+                    afterLine += `<span class="diff-word-removed">${this.escapeHtml(wordPart.value)}</span>`;
+                  } else {
+                    afterLine += this.escapeHtml(wordPart.value);
+                  }
+                });
+                
+                afterLine += '</span>';
 
-              rows.push(`
-                <div class="diff-row">
-                  <div class="diff-before">${beforeLine}</div>
-                  <div class="diff-after">${afterLine}</div>
-                </div>
-              `);
+                rows.push(`
+                  <div class="diff-row">
+                    <div class="diff-before">${beforeLine}</div>
+                    <div class="diff-after">${afterLine}</div>
+                  </div>
+                `);
+              }
             });
             
             i++; // Skip the next part since we've handled it

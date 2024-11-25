@@ -176,3 +176,13 @@
   background-color: rgba(0, 255, 0, 0.2);
   color: var(--text-success);
 }
+
+.diff-word-added {
+  background-color: rgba(0, 255, 0, 0.2);
+  color: var(--text-success);
+}
+
+.diff-word-removed {
+  background-color: rgba(255, 0, 0, 0.2);
+  color: var(--text-error);
+}
