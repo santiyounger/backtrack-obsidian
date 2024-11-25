@@ -187,7 +187,7 @@ export class GitModal extends Modal {
                 const wordDiffs = diffWords(line, nextPartLines[idx]);
                 
                 // Build the before line (with removed words in red)
-                let beforeLine = '<span class="diff-modified">';
+                let beforeLine = '';
                 wordDiffs.forEach(wordPart => {
                   if (wordPart.removed) {
                     beforeLine += `<span class="diff-word-removed">${this.escapeHtml(wordPart.value)}</span>`;
@@ -195,10 +195,9 @@ export class GitModal extends Modal {
                     beforeLine += this.escapeHtml(wordPart.value);
                   }
                 });
-                beforeLine += '</span>';
 
                 // Build the after line (with added words in green)
-                let afterLine = '<span class="diff-modified">';
+                let afterLine = '';
                 wordDiffs.forEach(wordPart => {
                   if (wordPart.added) {
                     afterLine += `<span class="diff-word-added">${this.escapeHtml(wordPart.value)}</span>`;
@@ -206,7 +205,6 @@ export class GitModal extends Modal {
                     afterLine += this.escapeHtml(wordPart.value);
                   }
                 });
-                afterLine += '</span>';
 
                 rows.push(`
                   <div class="diff-row">
