@@ -53,4 +53,4 @@ export class GitCommitItem {
             this.element.removeClass('selected');
         }
     }
-} 
+}

@@ -1,5 +1,3 @@
-import { diffLines, diffWords } from 'diff';
-
 export interface DiffPart {
     value: string;
     added?: boolean;
@@ -39,4 +37,4 @@ export function escapeHtml(text: string): string {
         "'": '&#039;',
     };
     return text.replace(/[&<>"']/g, (m) => map[m]);
-} 
+}

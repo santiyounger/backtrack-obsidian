@@ -31,9 +31,9 @@ export class GitSidebar {
     }
 
     private handleCommitSelect(
-        selectedItem: GitCommitItem, 
-        commit: any, 
-        index: number, 
+        selectedItem: GitCommitItem,
+        commit: any,
+        index: number,
         onCommitSelect: (commit: any, index: number) => void
     ): void {
         if (this.activeCommitItem) {
@@ -43,4 +43,4 @@ export class GitSidebar {
         this.activeCommitItem = selectedItem;
         onCommitSelect(commit, index);
     }
-} 
+}
