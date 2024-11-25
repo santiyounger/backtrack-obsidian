@@ -71,9 +71,9 @@ export class GitModal extends Modal {
             // After rendering the commits, focus the latest one
             const commitItems = this.contentEl.querySelectorAll('.commit-item');
             if (commitItems.length > 0) {
-                const latestCommit = commitItems[0]; // First item is the latest commit
-                latestCommit.click(); // Simulate click on the latest commit
-                latestCommit.classList.add('is-active'); // Add active class
+                const latestCommit = commitItems[0] as HTMLElement; // Cast to HTMLElement
+                latestCommit.click();
+                latestCommit.classList.add('is-active');
             }
         } catch (error) {
             new Notice('Error displaying commits.');
