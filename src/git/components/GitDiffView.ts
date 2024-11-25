@@ -29,10 +29,9 @@ export class GitDiffView {
                     
                     // If similarity is below threshold (30%), treat as completely different sentences
                     if (similarity < 0.3) {
-                        // Handle as completely different content
-                        const beforeLines = part.value.split('\n').filter(line => line !== '');
-                        const afterLines = nextPart.value.split('\n').filter(line => line !== '');
-                        
+                        const beforeLines = part.value.trim().split('\n').filter(line => line !== '');
+                        const afterLines = nextPart.value.trim().split('\n').filter(line => line !== '');
+
                         beforeLines.forEach(line => {
                             rows.push(`
                                 <div class="diff-row">
@@ -41,7 +40,7 @@ export class GitDiffView {
                                 </div>
                             `);
                         });
-                        
+
                         afterLines.forEach(line => {
                             rows.push(`
                                 <div class="diff-row">
@@ -51,11 +50,10 @@ export class GitDiffView {
                             `);
                         });
                     } else {
-                        // Existing word-level diff logic for similar content
                         const wordDiffs = diffWords(part.value, nextPart.value);
                         let beforeLine = '';
                         let afterLine = '';
-                        
+
                         wordDiffs.forEach(diff => {
                             if (diff.removed) {
                                 beforeLine += `<span class="diff-word-removed">${escapeHtml(diff.value)}</span>`;
@@ -66,7 +64,7 @@ export class GitDiffView {
                                 afterLine += escapeHtml(diff.value);
                             }
                         });
-                        
+
                         rows.push(`
                             <div class="diff-row">
                                 <div class="diff-before">${beforeLine}</div>
@@ -74,34 +72,46 @@ export class GitDiffView {
                             </div>
                         `);
                     }
-                    
+
                     i++; // Skip the next part since we've handled it
                 } else if (part.added) {
-                    const partLines = part.value.split('\n').filter(line => line !== '');
+                    const partLines = part.value.trim().split('\n').filter(line => line !== '');
                     const isMovedText = movedTexts.some(moved => moved.newIndex === i);
-                    
+
                     partLines.forEach(line => {
-                        rows.push(
-                            `<div class="diff-row"><div class="diff-before"></div><div class="diff-after"><span class="${isMovedText ? 'diff-moved' : 'diff-added'}">${escapeHtml(line)}</span></div></div>`
-                        );
+                        rows.push(`
+                            <div class="diff-row">
+                                <div class="diff-before"></div>
+                                <div class="diff-after">
+                                    <span class="${isMovedText ? 'diff-moved' : 'diff-added'}">${escapeHtml(line)}</span>
+                                </div>
+                            </div>
+                        `);
                     });
                 } else if (part.removed) {
-                    const partLines = part.value.split('\n').filter(line => line !== '');
+                    const partLines = part.value.trim().split('\n').filter(line => line !== '');
                     const isMovedText = movedTexts.some(moved => moved.originalIndex === i);
-                    
+
                     partLines.forEach(line => {
-                        rows.push(
-                            `<div class="diff-row"><div class="diff-before"><span class="${isMovedText ? 'diff-moved' : 'diff-removed'}">${escapeHtml(line)}</span></div><div class="diff-after"></div></div>`
-                        );
+                        rows.push(`
+                            <div class="diff-row">
+                                <div class="diff-before">
+                                    <span class="${isMovedText ? 'diff-moved' : 'diff-removed'}">${escapeHtml(line)}</span>
+                                </div>
+                                <div class="diff-after"></div>
+                            </div>
+                        `);
                     });
                 } else {
-                    // Unchanged lines
-                    const partLines = part.value.split('\n').filter(line => line !== '');
-                    
+                    const partLines = part.value.trim().split('\n').filter(line => line !== '');
+
                     partLines.forEach(line => {
-                        rows.push(
-                            `<div class="diff-row"><div class="diff-before">${escapeHtml(line)}</div><div class="diff-after">${escapeHtml(line)}</div></div>`
-                        );
+                        rows.push(`
+                            <div class="diff-row">
+                                <div class="diff-before">${escapeHtml(line)}</div>
+                                <div class="diff-after">${escapeHtml(line)}</div>
+                            </div>
+                        `);
                     });
                 }
             }
