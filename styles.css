@@ -165,3 +165,14 @@
 .git-diff-modal .modal-title {
   padding: 10px;
 }
+
+/* Add these new styles */
+.diff-modified {
+  background-color: rgba(255, 255, 0, 0.2);
+  display: block;
+}
+
+.diff-modified .diff-added {
+  background-color: rgba(0, 255, 0, 0.2);
+  color: var(--text-success);
+}

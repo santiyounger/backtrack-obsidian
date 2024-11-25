@@ -141,49 +141,113 @@ export class GitModal extends Modal {
       // Initialize an array to hold the HTML for each row
       const rows: string[] = [];
 
-      diffs.forEach((part) => {
-        const partLines = part.value.split('\n');
-        // Remove the last empty string if the string ends with a newline
-        if (partLines[partLines.length - 1] === '') {
-          partLines.pop();
-        }
+      // Helper function to calculate similarity between two strings
+      const calculateSimilarity = (str1: string, str2: string): number => {
+        const longer = str1.length > str2.length ? str1 : str2;
+        const shorter = str1.length > str2.length ? str2 : str1;
+        if (longer.length === 0) return 1.0;
+        
+        const editDistance = (str1: string, str2: string): number => {
+          const m = str1.length, n = str2.length;
+          const dp: number[][] = Array(m + 1).fill(0).map(() => Array(n + 1).fill(0));
+          
+          for (let i = 0; i <= m; i++) dp[i][0] = i;
+          for (let j = 0; j <= n; j++) dp[0][j] = j;
+          
+          for (let i = 1; i <= m; i++) {
+            for (let j = 1; j <= n; j++) {
+              if (str1[i - 1] === str2[j - 1]) dp[i][j] = dp[i - 1][j - 1];
+              else dp[i][j] = 1 + Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]);
+            }
+          }
+          return dp[m][n];
+        };
 
-        partLines.forEach((line) => {
-          let beforeLine = '';
-          let afterLine = '';
+        return 1 - editDistance(longer, shorter) / longer.length;
+      };
 
-          if (part.removed) {
-            beforeLine = line;
-            afterLine = ''; // Empty space to match the removed line
-          } else if (part.added) {
-            beforeLine = ''; // Empty space to match the added line
-            afterLine = line;
+      for (let i = 0; i < diffs.length; i++) {
+        const part = diffs[i];
+        const nextPart = i + 1 < diffs.length ? diffs[i + 1] : null;
+
+        if (part.removed && nextPart?.added) {
+          // Check if this is a modification rather than a pure removal/addition
+          const similarity = calculateSimilarity(part.value, nextPart.value);
+          
+          if (similarity > 0.5) { // Threshold for considering it a modification
+            const partLines = part.value.split('\n');
+            const nextPartLines = nextPart.value.split('\n');
+            
+            if (partLines[partLines.length - 1] === '') partLines.pop();
+            if (nextPartLines[nextPartLines.length - 1] === '') nextPartLines.pop();
+
+            partLines.forEach((line, idx) => {
+              const beforeLine = `<span class="diff-modified">${this.escapeHtml(line)}</span>`;
+              const afterLine = idx < nextPartLines.length ? 
+                `<span class="diff-modified">${this.escapeHtml(nextPartLines[idx])}</span>` : '';
+
+              rows.push(`
+                <div class="diff-row">
+                  <div class="diff-before">${beforeLine}</div>
+                  <div class="diff-after">${afterLine}</div>
+                </div>
+              `);
+            });
+            
+            i++; // Skip the next part since we've handled it
           } else {
-            beforeLine = line;
-            afterLine = line;
+            // Handle as regular removal/addition
+            const partLines = part.value.split('\n');
+            if (partLines[partLines.length - 1] === '') partLines.pop();
+            
+            partLines.forEach(line => {
+              rows.push(`
+                <div class="diff-row">
+                  <div class="diff-before"><span class="diff-removed">${this.escapeHtml(line)}</span></div>
+                  <div class="diff-after"></div>
+                </div>
+              `);
+            });
           }
-
-          // Escape HTML entities to prevent XSS
-          beforeLine = this.escapeHtml(beforeLine);
-          afterLine = this.escapeHtml(afterLine);
-
-          // Add styling for removed and added lines
-          if (part.removed) {
-            beforeLine = `<span class="diff-removed">${beforeLine}</span>`;
-          }
-          if (part.added) {
-            afterLine = `<span class="diff-added">${afterLine}</span>`;
-          }
-
-          // Create a row with before and after lines
-          rows.push(`
-            <div class="diff-row">
-              <div class="diff-before">${beforeLine}</div>
-              <div class="diff-after">${afterLine}</div>
-            </div>
-          `);
-        });
-      });
+        } else if (part.added) {
+          const partLines = part.value.split('\n');
+          if (partLines[partLines.length - 1] === '') partLines.pop();
+          
+          partLines.forEach(line => {
+            rows.push(`
+              <div class="diff-row">
+                <div class="diff-before"></div>
+                <div class="diff-after"><span class="diff-added">${this.escapeHtml(line)}</span></div>
+              </div>
+            `);
+          });
+        } else if (part.removed) {
+          const partLines = part.value.split('\n');
+          if (partLines[partLines.length - 1] === '') partLines.pop();
+          
+          partLines.forEach(line => {
+            rows.push(`
+              <div class="diff-row">
+                <div class="diff-before"><span class="diff-removed">${this.escapeHtml(line)}</span></div>
+                <div class="diff-after"></div>
+              </div>
+            `);
+          });
+        } else {
+          // Unchanged lines
+          const partLines = part.value.split('\n');
+          if (partLines[partLines.length - 1] === '') partLines.pop();
+          
+          partLines.forEach(line => {
+            rows.push(`
+              <div class="diff-row">
+                <div class="diff-before">${this.escapeHtml(line)}</div>
+                <div class="diff-after">${this.escapeHtml(line)}</div>
+              </div>
+            `);
+          });
+        }
+      }
 
       return `${rows.join('')}|SPLIT|`;
     } catch (error) {
