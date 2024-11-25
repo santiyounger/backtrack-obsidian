@@ -21,41 +21,22 @@ export class GitDiffView {
                 const nextPart = i + 1 < diffs.length ? diffs[i + 1] : null;
 
                 if (part.removed && nextPart?.added) {
-                    // Find the common prefix and suffix
-                    const oldText = part.value;
-                    const newText = nextPart.value;
+                    // Use diffWords instead of character-by-character comparison
+                    const wordDiffs = diffWords(part.value, nextPart.value);
                     
-                    // Find common prefix length
-                    let prefixLength = 0;
-                    while (prefixLength < oldText.length && 
-                           prefixLength < newText.length && 
-                           oldText[prefixLength] === newText[prefixLength]) {
-                        prefixLength++;
-                    }
+                    let beforeLine = '';
+                    let afterLine = '';
                     
-                    // Find common suffix length
-                    let suffixLength = 0;
-                    while (suffixLength < oldText.length - prefixLength && 
-                           suffixLength < newText.length - prefixLength && 
-                           oldText[oldText.length - 1 - suffixLength] === newText[newText.length - 1 - suffixLength]) {
-                        suffixLength++;
-                    }
-                    
-                    // Extract the modified portions
-                    const removedPortion = oldText.slice(prefixLength, oldText.length - suffixLength);
-                    const addedPortion = newText.slice(prefixLength, newText.length - suffixLength);
-                    
-                    // Build the before line
-                    const beforeLine = 
-                        escapeHtml(oldText.slice(0, prefixLength)) +
-                        `<span class="diff-word-removed">${escapeHtml(removedPortion)}</span>` +
-                        escapeHtml(oldText.slice(oldText.length - suffixLength));
-                        
-                    // Build the after line
-                    const afterLine = 
-                        escapeHtml(newText.slice(0, prefixLength)) +
-                        `<span class="diff-word-added">${escapeHtml(addedPortion)}</span>` +
-                        escapeHtml(newText.slice(newText.length - suffixLength));
+                    wordDiffs.forEach(diff => {
+                        if (diff.removed) {
+                            beforeLine += `<span class="diff-word-removed">${escapeHtml(diff.value)}</span>`;
+                        } else if (diff.added) {
+                            afterLine += `<span class="diff-word-added">${escapeHtml(diff.value)}</span>`;
+                        } else {
+                            beforeLine += escapeHtml(diff.value);
+                            afterLine += escapeHtml(diff.value);
+                        }
+                    });
                     
                     rows.push(`
                         <div class="diff-row">

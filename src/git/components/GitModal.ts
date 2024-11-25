@@ -68,7 +68,13 @@ export class GitModal extends Modal {
             const contentArea = diffWrapper.createDiv({ cls: 'git-content-area' });
             this.gitDiffView = new GitDiffView(contentArea);
 
-            // The first commit will be automatically selected and its diff displayed by GitSidebar
+            // After rendering the commits, focus the latest one
+            const commitItems = this.contentEl.querySelectorAll('.commit-item');
+            if (commitItems.length > 0) {
+                const latestCommit = commitItems[0]; // First item is the latest commit
+                latestCommit.click(); // Simulate click on the latest commit
+                latestCommit.classList.add('is-active'); // Add active class
+            }
         } catch (error) {
             new Notice('Error displaying commits.');
             console.error(error);
