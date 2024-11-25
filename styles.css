@@ -79,7 +79,7 @@
   display: flex;
   width: 100%;
   line-height: var(--diff-line-height);
-  margin-bottom: -20px;
+  margin-bottom: -40px;
 }
 .diff-before,
 .diff-after {
@@ -91,16 +91,19 @@
   user-select: text;
   cursor: text;
   min-height: 1.5em;
+  line-height: 1.5;
 }
 .diff-before .diff-removed {
   color: var(--text-error);
   background-color: rgba(255, 0, 0, 0.1);
   display: block;
+  margin: 0;
 }
 .diff-after .diff-added {
   color: var(--text-success);
   background-color: rgba(0, 255, 0, 0.1);
   display: block;
+  margin: 0;
 }
 .diff-word-added {
   background-color: rgba(0, 255, 0, 0.2);
@@ -113,11 +116,14 @@
 .diff-word-moved {
   background-color: rgba(255, 255, 0, 0.2);
   color: var(--text-warning);
+  display: inline;
 }
 .diff-moved {
   background-color: rgba(255, 255, 0, 0.1);
   color: var(--text-warning);
   display: block;
+  margin: 0;
+  line-height: 1.5;
 }
 .commit-list {
   margin-top: 10px;
