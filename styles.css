@@ -98,7 +98,10 @@
   box-sizing: border-box;
   white-space: pre-wrap;
   word-break: break-word;
+  user-select: text; /* Allow text selection */
+  cursor: text;      /* Change cursor to text selection style */
 }
+
 
 /* Highlight removed lines */
 .diff-before .diff-removed {
