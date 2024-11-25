@@ -4,8 +4,8 @@
     --sidebar-width: 250px;
     --diff-line-height: 1.8;
     --commit-item-padding: 10px;
-    --removed-text: var(--text-error);
-    --removed-bg: rgba(255, 0, 0, 0.2);
+    --removed-text: rgba(255, 255, 255, 0.783);
+    --removed-bg: rgba(208, 123, 11, 0.581);
   }
 .git-diff-modal {
     min-width: 98vw; /* Enforce minimum width of 98vw */
