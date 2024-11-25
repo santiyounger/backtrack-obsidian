@@ -4,12 +4,12 @@
 	"main": "main.js",
 	"type": "module",
 	"scripts": {
-		"dev": "concurrently \"npm run dev:ts\" \"npm run watch-css\"",
-		"dev:ts": "node esbuild.config.mjs --watch",
-		"build": "npm run build-ts && npm run build-css",
-		"build-ts": "node esbuild.config.mjs",
-		"watch-css": "chokidar 'styles/**/*.css' -c \"npm run build-css\"",
-		"build-css": "npx postcss styles/main.css -o styles/styles.css"
+	  "dev": "concurrently \"npm run dev:ts\" \"npm run watch-css\"",
+	  "dev:ts": "node esbuild.config.mjs --watch",
+	  "build": "npm run build-ts && npm run build-css",
+	  "build-ts": "node esbuild.config.mjs",
+	  "watch-css": "chokidar 'styles/**/*.css' -c \"npm run build-css\"",
+	  "build-css": "npx postcss styles/main.css -o styles.css"
 	},
 	"devDependencies": {
 	  "@types/diff": "^6.0.0",

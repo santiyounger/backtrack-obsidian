@@ -1,0 +1,191 @@
+/* Import all component styles */
+:root {
+    /* Add your CSS variables here */
+    --sidebar-width: 250px;
+    --diff-line-height: 1.8;
+    --commit-item-padding: 10px;
+  }
+.git-diff-modal {
+    min-width: 98vw; /* Enforce minimum width of 98vw */
+    height: 100vh;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 0;
+  }
+.git-diff-modal .modal-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.git-modal-container {
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.git-diff-modal .modal-title {
+  padding: var(--commit-item-padding);
+}
+.git-sidebar {
+  width: 20%;
+  background-color: var(--background-secondary);
+  border-right: 1px solid var(--background-modifier-border);
+  padding: var(--commit-item-padding);
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+.git-sidebar.set-width {
+  width: var(--sidebar-width);
+}
+.git-diff-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  padding: 10px 40px;
+  font-family: var(--font-monospace);
+  white-space: pre-wrap;
+  background-color: var(--background-primary);
+  color: var(--text-normal);
+  box-sizing: border-box;
+}
+.git-diff-headings {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  margin-bottom: 10px;
+}
+.git-diff-heading {
+  width: 50%;
+  text-align: center;
+  background-color: var(--background-primary);
+  padding: var(--commit-item-padding);
+  border-bottom: 1px solid var(--background-modifier-border);
+  font-weight: bold;
+  box-sizing: border-box;
+}
+.git-content-area {
+  flex: 1;
+  overflow-y: auto;
+  font-family: 'Inter', sans-serif;
+  line-height: var(--diff-line-height);
+}
+.diff-row {
+  display: flex;
+  width: 100%;
+  line-height: var(--diff-line-height);
+  margin: 20px;
+}
+.diff-before,
+.diff-after {
+  width: 50%;
+  padding: 2px 8px;
+  box-sizing: border-box;
+  white-space: pre-wrap;
+  word-break: break-word;
+  user-select: text;
+  cursor: text;
+  min-height: 1.5em;
+  line-height: var(--diff-line-height);
+}
+.diff-before .diff-removed {
+  color: var(--text-error);
+  background-color: rgba(255, 0, 0, 0.1);
+  display: block;
+  margin: 0;
+}
+.diff-after .diff-added {
+  color: var(--text-success);
+  background-color: rgba(0, 255, 0, 0.1);
+  display: block;
+  margin: 0;
+}
+.diff-word-added {
+  background-color: rgba(0, 255, 0, 0.2);
+  color: var(--text-success);
+}
+.diff-word-removed {
+  background-color: rgba(255, 0, 0, 0.2);
+  color: var(--text-error);
+}
+.diff-word-moved {
+  background-color: rgba(255, 255, 0, 0.2);
+  color: var(--text-warning);
+  display: inline;
+}
+.diff-moved {
+  background-color: rgba(255, 255, 0, 0.1);
+  color: var(--text-warning);
+  display: block;
+  margin: 0;
+  line-height: var(--diff-line-height);
+}
+.git-modal-container {
+  display: flex;
+  height: 100%;
+}
+.git-diff-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+.git-diff-headings {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 1rem;
+}
+.git-diff-heading {
+  font-weight: bold;
+}
+.git-content-area {
+  flex: 1;
+  overflow: auto;
+}
+.git-diff-modal .diff-row {
+  line-height: 1.5;
+  padding: 2px 0;
+  display: flex;
+}
+.git-diff-modal .diff-word-removed,
+.git-diff-modal .diff-word-added {
+  display: inline;
+  padding: 0 2px;
+  margin: 0;
+}
+.commit-list {
+  margin-top: 10px;
+  overflow-y: auto;
+}
+.commit-item {
+  padding: var(--commit-item-padding);
+  margin-bottom: 5px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: var(--background-primary);
+  transition: background-color 0.2s, color 0.2s;
+}
+.commit-item:hover {
+  background-color: var(--background-hover);
+}
+.commit-item.selected {
+  background-color: var(--interactive-accent);
+  color: var(--text-on-accent);
+  font-weight: bold;
+}
+.commit-date {
+  color: var(--text-muted);
+  font-size: 0.9em;
+  margin-bottom: 5px;
+  display: block;
+}
+.commit-details {
+  color: var(--text-normal);
+  font-size: 1em;
+} 
