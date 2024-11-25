@@ -12,13 +12,6 @@
   box-sizing: border-box;
 }
 
-.git-diff-headings {
-  display: flex;
-  justify-content: space-between;
-  padding: 0 10px;
-  margin-bottom: -55px;
-}
-
 .git-diff-heading {
   width: 50%;
   text-align: center;
@@ -107,16 +100,6 @@
   display: flex;
   flex-direction: column;
   padding: 1rem;
-}
-
-.git-diff-headings {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 1rem;
-}
-
-.git-diff-heading {
-  font-weight: bold;
 }
 
 .git-content-area {
