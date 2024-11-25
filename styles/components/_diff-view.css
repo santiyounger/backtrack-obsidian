@@ -16,7 +16,7 @@
   display: flex;
   justify-content: space-between;
   padding: 0 10px;
-  margin-bottom: 5px; /* Reduced margin for closer spacing */
+  margin-bottom: -55px; /* Reduced margin for closer spacing */
 }
 
 .git-diff-heading {
@@ -33,13 +33,13 @@
   flex: 1;
   overflow-y: auto;
   font-family: 'Inter', sans-serif;
-  line-height: 1.4; /* Reduced line-height for better alignment */
+  line-height: 1.8; /* Reduced line-height for better alignment */
 }
 
 .diff-row {
   display: flex;
   width: 100%;
-  line-height: 1.4; /* Match the reduced line-height */
+  line-height: 1.8; /* Match the reduced line-height */
   margin: 10px 0; /* Reduced margin for tighter rows */
 }
 
@@ -53,7 +53,7 @@
   user-select: text;
   cursor: text;
   min-height: 1.2em; /* Adjusted min-height to match line-height */
-  line-height: 1.4; /* Consistent line-height */
+  line-height: 1.8; /* Consistent line-height */
 }
 
 .diff-before .diff-removed {
@@ -91,7 +91,7 @@
   color: var(--text-warning);
   display: block;
   margin: 0;
-  line-height: 1.4;
+  line-height: 1.8;
 }
 
 .git-modal-container {
@@ -122,9 +122,9 @@
 }
 
 .git-diff-modal .diff-row {
-  line-height: 1.4; /* Adjusted line-height */
-  padding: 2px 0;
+  line-height: 1.8; /* Adjusted line-height */
   display: flex;
+  margin-bottom: -50px;
 }
 
 .git-diff-modal .diff-word-removed,
