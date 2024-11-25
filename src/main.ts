@@ -1,6 +1,6 @@
 import { Plugin, addIcon } from 'obsidian';
 import { GitModal } from './git/components/GitModal';
-import './git/styles/git-diff-view.css';
+import '../styles/components/_diff-view.css';
 
 export default class GitDiffPlugin extends Plugin {
   async onload() {
