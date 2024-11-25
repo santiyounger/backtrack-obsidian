@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev": "node esbuild.config.mjs --watch",
 		"build": "node esbuild.config.mjs",
-		"postcss": "postcss styles/main.css -o main.css --watch"
+		"postcss": "npx postcss styles/main.css -o styles.css --watch"
 	},
 	"devDependencies": {
 		"@types/diff": "^6.0.0",

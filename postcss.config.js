@@ -1,6 +1,9 @@
-module.exports = {
+import postcssImport from 'postcss-import';
+import postcssNested from 'postcss-nested';
+
+export default {
   plugins: [
-    require('postcss-import'),
-    require('postcss-nested')
+    postcssImport,
+    postcssNested
   ]
-} 
+};
