@@ -1,4 +1,4 @@
-import { Plugin } from 'obsidian';
+import { Plugin, addIcon } from 'obsidian';
 import { GitModal } from './git-modal';
 
 export default class GitDiffPlugin extends Plugin {
