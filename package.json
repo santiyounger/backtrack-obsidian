@@ -4,7 +4,7 @@
 	"main": "main.js",
 	"type": "module",
 	"scripts": {
-	  "dev": "concurrently \"npm run dev:ts\" \"npm run watch-css\"",
+	  "dev": "npm run build-css && concurrently \"npm run dev:ts\" \"npm run watch-css\"",
 	  "dev:ts": "node esbuild.config.mjs --watch",
 	  "build": "npm run build-ts && npm run build-css",
 	  "build-ts": "node esbuild.config.mjs",
