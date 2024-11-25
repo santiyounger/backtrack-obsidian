@@ -1,6 +1,5 @@
 import { Plugin, addIcon } from 'obsidian';
-import { GitModal } from './git-modal';
-
+import { GitModal } from './git/components/GitModal';
 export default class GitDiffPlugin extends Plugin {
   async onload() {
     this.addCommand({
