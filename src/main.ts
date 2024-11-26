@@ -6,7 +6,8 @@ export default class GitDiffPlugin extends Plugin {
   private fileTracker: FileTracker;
 
   async onload() {
-    this.fileTracker = new FileTracker(this.app.vault.adapter.getBasePath());
+    const vaultPath = (this.app.vault.adapter as any).getBasePath();
+    this.fileTracker = new FileTracker(vaultPath);
 
     this.registerEvent(
       this.app.vault.on('rename', (file: TAbstractFile, oldPath: string) => {

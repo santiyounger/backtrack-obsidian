@@ -24,3 +24,14 @@ export async function getFileContent(dir: string, oid: string, filepath: string)
         return '';
     }
 }
+
+export type ReadCommitResult = {
+    oid: string;
+    commit: {
+        author: {
+            timestamp: number;
+            // ... other author properties ...
+        };
+        // ... other commit properties ...
+    };
+};
