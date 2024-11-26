@@ -3,18 +3,23 @@ import * as path from 'path';
 import { GitSidebar } from './GitSidebar';
 import { GitDiffView } from './GitDiffView';
 import { getCommitHistory } from '../utils/gitUtils';
+import { FileTracker } from '../utils/FileTracker';
 
 export class GitModal extends Modal {
     private filePath: string;
     private gitSidebar: GitSidebar;
     private gitDiffView: GitDiffView;
+    private fileTracker: FileTracker;
 
     constructor(app: App) {
         super(app);
+        const vaultPath = (this.app.vault.adapter as any).getBasePath();
+        this.fileTracker = new FileTracker(vaultPath);
 
         const activeFile = this.app.workspace.getActiveFile();
         if (activeFile) {
-            this.filePath = activeFile.path; // Get the relative path of the active file
+            this.filePath = activeFile.path;
+            this.fileTracker.trackFile(this.filePath);
         } else {
             new Notice('No active file selected for diff.');
             this.close();
@@ -37,10 +42,13 @@ export class GitModal extends Modal {
                 ? (this.app.vault.adapter as any).getBasePath()
                 : path.resolve('.'); // Fallback if `getBasePath` is not available
 
-            // Fetch commit history for the file
-            const commits = await getCommitHistory(dir, this.filePath);
+            const allPaths = this.fileTracker.getAllPathsForFile(this.filePath);
+            const commits = await Promise.all(allPaths.map(path => getCommitHistory(dir, path)));
+            const allCommits = commits.flat().sort((a, b) => 
+                b.commit.author.timestamp - a.commit.author.timestamp
+            );
 
-            if (commits.length === 0) {
+            if (allCommits.length === 0) {
                 contentEl.setText('No commit history found for this file.');
                 return;
             }
@@ -64,10 +72,10 @@ export class GitModal extends Modal {
             this.gitDiffView = new GitDiffView(contentArea);
 
             // Render the commit list
-            this.gitSidebar.renderCommitList(commits, async (commit, index) => {
-                const prevCommitOid = index + 1 < commits.length ? commits[index + 1].oid : null;
+            this.gitSidebar.renderCommitList(allCommits, async (commit, index) => {
+                const prevCommitOid = index + 1 < allCommits.length ? allCommits[index + 1].oid : null;
                 const currentCommitOid = commit.oid;
-                await this.gitDiffView.renderDiff(dir, prevCommitOid, currentCommitOid, this.filePath);
+                await this.gitDiffView.renderDiff(dir, prevCommitOid, currentCommitOid, this.filePath, allPaths);
             });
 
             // After rendering the commits, focus the latest one

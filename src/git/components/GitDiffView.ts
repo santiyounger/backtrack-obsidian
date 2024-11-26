@@ -6,10 +6,31 @@ import { detectMovedText, MovedTextInfo } from '../utils/movedTextDetector';
 export class GitDiffView {
     constructor(private contentArea: HTMLElement) {}
 
-    async renderDiff(dir: string, prevOid: string | null, currentOid: string, filepath: string): Promise<void> {
+    async renderDiff(dir: string, prevOid: string | null, currentOid: string, filepath: string, allPaths: string[]): Promise<void> {
         try {
-            const currentContent = await getFileContent(dir, currentOid, filepath);
-            const prevContent = prevOid ? await getFileContent(dir, prevOid, filepath) : '';
+            // Try to get content using each possible path until successful
+            let currentContent = '';
+            let prevContent = '';
+
+            for (const path of allPaths) {
+                try {
+                    currentContent = await getFileContent(dir, currentOid, path);
+                    if (currentContent) break;
+                } catch (e) {
+                    continue;
+                }
+            }
+
+            if (prevOid) {
+                for (const path of allPaths) {
+                    try {
+                        prevContent = await getFileContent(dir, prevOid, path);
+                        if (prevContent) break;
+                    } catch (e) {
+                        continue;
+                    }
+                }
+            }
 
             // Generate the diff for the split view
             const diffs = diffLines(prevContent, currentContent);
