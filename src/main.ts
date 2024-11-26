@@ -1,13 +1,16 @@
-import { Plugin, TAbstractFile } from 'obsidian';
+import { Plugin, TAbstractFile, MarkdownView } from 'obsidian';
 import { GitModal } from './git/components/GitModal';
 import { FileTracker } from './git/utils/FileTracker';
+import { DraftKeep } from './git/utils/DraftKeep';
 
 export default class GitDiffPlugin extends Plugin {
   private fileTracker: FileTracker;
+  private draftKeep: DraftKeep;
 
   async onload() {
     const vaultPath = (this.app.vault.adapter as any).getBasePath();
     this.fileTracker = new FileTracker(vaultPath);
+    this.draftKeep = new DraftKeep(this.app);
 
     this.registerEvent(
       this.app.vault.on('rename', (file: TAbstractFile, oldPath: string) => {
@@ -23,6 +26,21 @@ export default class GitDiffPlugin extends Plugin {
       callback: () => {
         new GitModal(this.app).open();
       },
+    });
+
+    this.addCommand({
+      id: 'take-snapshot',
+      name: 'Take Snapshot (Save, Commit, Push)',
+      checkCallback: (checking: boolean) => {
+        const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+        if (activeView) {
+          if (!checking) {
+            this.draftKeep.gitStageCommitPush(activeView);
+          }
+          return true;
+        }
+        return false;
+      }
     });
 
     this.addRibbonIcon('git-branch', 'Open Git Diff Viewer', () => {

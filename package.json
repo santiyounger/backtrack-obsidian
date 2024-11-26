@@ -28,7 +28,8 @@
 	  "diff": "^5.2.0",
 	  "glob": "^11.0.0",
 	  "isomorphic-git": "^1.15.0",
-	  "tslib": "^2.8.1"
+	  "tslib": "^2.8.1",
+	  "child_process": "^1.0.2"
 	}
   }
   
