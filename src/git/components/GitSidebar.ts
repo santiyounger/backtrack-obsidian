@@ -19,7 +19,7 @@ export class GitSidebar {
     renderCommitList(commits: any[], onCommitSelect: (commit: any, index: number) => void): void {
         this.commitItems = commits.map((commit, index) => {
             const message = commit.commit.message;
-            const isDefaultMessage = message.startsWith('snapshot by draft keep - obsidian plugin');
+            const isDefaultMessage = message.startsWith('snapshot by Backtrack - Version History - obsidian plugin');
 
             if (isDefaultMessage) {
                 // Render only the date and title, leaving the message area empty

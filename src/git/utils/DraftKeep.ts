@@ -63,7 +63,7 @@ export class DraftKeep {
                                 hour12: false
                             }).replace(/(\d+)\/(\d+)\/(\d+), (\d+):(\d+):(\d+)/, '$3_$1_$2 - $4:$5:$6');
 
-                            commitMessage = `snapshot by draft keep - obsidian plugin - captured file: ${filePath} at: ${timestamp}`;
+                            commitMessage = `snapshot by Backtrack - Version History - obsidian plugin - captured file: ${filePath} at: ${timestamp}`;
                         }
 
                         new Notice('Saving snapshot...', 2000);

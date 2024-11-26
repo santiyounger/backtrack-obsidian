@@ -29,7 +29,7 @@ export class GitModal extends Modal {
     async onOpen() {
         const { contentEl } = this;
         this.modalEl.addClass('git-diff-modal');
-        this.titleEl.setText('Draft Keep History');
+        this.titleEl.setText('Backtrack - Version History');
 
         if (!this.filePath) {
             new Notice('No file selected.');
