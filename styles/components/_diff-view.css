@@ -155,14 +155,30 @@
   margin: 0;
 }
 
+.modal-header-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-right: 10px;
+    min-height: 32px;
+}
+
+.modal-title-text {
+    flex-shrink: 0;
+    font-size: var(--header-height);
+}
+
 .commit-details {
-    padding: 10px;
-    margin-bottom: 10px;
+    font-size: 0.8em;
+    color: var(--text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+    padding: 2px 8px;
     background-color: var(--background-secondary);
     border-radius: 4px;
-    font-family: var(--font-interface);
-    font-size: 0.9em;
+    margin-top: 0;
+    margin-bottom: 0;
     line-height: 1.4;
-    white-space: pre-wrap;
-    word-break: break-word;
 }

@@ -186,6 +186,23 @@
   padding: 0 2px;
   margin: 0;
 }
+.modal-header-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-right: 10px;
+}
+.modal-title-text {
+    flex-shrink: 0;
+}
+.commit-details {
+    font-size: 0.85em;
+    color: var(--text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+}
 .commit-list {
   margin-top: 10px;
   overflow-y: auto;

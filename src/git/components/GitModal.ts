@@ -29,7 +29,16 @@ export class GitModal extends Modal {
     async onOpen() {
         const { contentEl } = this;
         this.modalEl.addClass('git-diff-modal');
-        this.titleEl.setText('Backtrack - Version History');
+        
+        // Create a header container for title and commit message
+        const headerEl = this.titleEl.createDiv({ cls: 'modal-header-container' });
+        
+        // Move the title text into the container
+        const titleTextEl = headerEl.createDiv({ cls: 'modal-title-text' });
+        titleTextEl.setText('Backtrack - Version History');
+        
+        // Create commit message element in the header
+        const commitMessageEl = headerEl.createDiv({ cls: 'commit-details' });
 
         if (!this.filePath) {
             new Notice('No file selected.');
@@ -53,13 +62,9 @@ export class GitModal extends Modal {
             }
 
             const container = contentEl.createDiv({ cls: 'git-modal-container' });
-
             this.gitSidebar = new GitSidebar(container);
-
             const diffWrapper = container.createDiv({ cls: 'git-diff-wrapper' });
 
-            const commitMessageEl = diffWrapper.createDiv({ cls: 'commit-details' });
-            
             const headings = diffWrapper.createDiv({ cls: 'git-diff-headings' });
             headings.createDiv({ cls: 'git-diff-heading', text: 'Before' });
             headings.createDiv({ cls: 'git-diff-heading', text: 'After' });
@@ -71,6 +76,7 @@ export class GitModal extends Modal {
                 const prevCommitOid = index + 1 < allCommits.length ? allCommits[index + 1].oid : null;
                 const currentCommitOid = commit.oid;
                 
+                // Update commit message in header
                 const isDefaultMessage = commit.commit.message.startsWith('snapshot by Backtrack - Version History - obsidian plugin');
                 if (!isDefaultMessage) {
                     commitMessageEl.setText(commit.commit.message);
