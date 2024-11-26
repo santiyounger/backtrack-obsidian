@@ -63,13 +63,21 @@
   cursor: text;
   min-height: 1.2em;
   line-height: 1.8;
+  text-indent: 0;
+  display: block;
+  vertical-align: top;
 }
 
 .diff-before .diff-removed {
-  color: var(--text-error);
-  background-color: rgba(255, 0, 0, 0.1);
-  display: block;
+  background-color: var(--removed-bg);
+  color: var(--removed-text);
+  display: inline-block;
+  padding: 0 2px;
   margin: 0;
+  text-indent: 0;
+  line-height: inherit;
+  width: 100%;
+  vertical-align: top;
 }
 
 .diff-after .diff-added {
@@ -87,6 +95,12 @@
 .diff-word-removed {
   background-color: var(--removed-bg);
   color: var(--removed-text);
+  display: inline-block;
+  padding: 0 2px;
+  margin: 0;
+  text-indent: 0;
+  line-height: inherit;
+  vertical-align: top;
 }
 
 .diff-word-moved {
