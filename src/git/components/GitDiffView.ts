@@ -48,26 +48,25 @@ export class GitDiffView {
                     const similarity = calculateSimilarity(part.value, nextPart.value);
 
                     if (similarity < 0.3) {
+                        // Get the lines from both parts
                         const beforeLines = part.value.trim().split('\n').filter(line => line !== '');
                         const afterLines = nextPart.value.trim().split('\n').filter(line => line !== '');
-
-                        beforeLines.forEach(line => {
+                        
+                        // Use the longer array's length to determine how many rows we need
+                        const maxLines = Math.max(beforeLines.length, afterLines.length);
+                        
+                        // Create rows with corresponding before/after lines aligned
+                        for (let lineIndex = 0; lineIndex < maxLines; lineIndex++) {
+                            const beforeLine = beforeLines[lineIndex] || '';
+                            const afterLine = afterLines[lineIndex] || '';
+                            
                             rows.push(`
                                 <div class="diff-row">
-                                    <div class="diff-before"><span class="diff-removed">${escapeHtml(line)}</span></div>
-                                    <div class="diff-after"></div>
+                                    <div class="diff-before">${beforeLine ? `<span class="diff-removed">${escapeHtml(beforeLine)}</span>` : ''}</div>
+                                    <div class="diff-after">${afterLine ? `<span class="diff-added">${escapeHtml(afterLine)}</span>` : ''}</div>
                                 </div>
                             `);
-                        });
-
-                        afterLines.forEach(line => {
-                            rows.push(`
-                                <div class="diff-row">
-                                    <div class="diff-before"></div>
-                                    <div class="diff-after"><span class="diff-added">${escapeHtml(line)}</span></div>
-                                </div>
-                            `);
-                        });
+                        }
                     } else {
                         const wordDiffs = diffWords(part.value, nextPart.value);
                         let beforeLine = '';

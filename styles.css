@@ -156,6 +156,8 @@
 .git-modal-container {
   display: flex;
   height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 .git-diff-wrapper {
   flex: 1;
@@ -170,7 +172,7 @@
 .git-diff-modal .diff-row {
   line-height: 1.8;
   display: flex;
-  margin-bottom: -50px;
+  margin-bottom: 0;
 }
 .git-diff-modal .diff-word-removed,
 .git-diff-modal .diff-word-added {
