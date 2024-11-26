@@ -48,7 +48,7 @@ export class GitModal extends Modal {
                 );
 
             if (allCommits.length === 0) {
-                contentEl.setText('No commit history found for this file.');
+                contentEl.setText('No history found for this file.');
                 return;
             }
 

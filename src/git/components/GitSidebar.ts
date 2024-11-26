@@ -12,7 +12,7 @@ export class GitSidebar {
 
     private initializeSidebar(): void {
         this.sidebarElement = this.container.createDiv({ cls: 'git-sidebar' });
-        this.sidebarElement.setText('Commit History');
+        this.sidebarElement.setText('Snapshots History');
         this.commitList = this.sidebarElement.createDiv({ cls: 'commit-list' });
     }
 
