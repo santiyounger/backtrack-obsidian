@@ -103,7 +103,6 @@
   line-height: 1.8;
   text-indent: 0;
   display: block;
-  vertical-align: top;
 }
 .diff-before .diff-removed {
   background-color: var(--removed-bg);
@@ -114,7 +113,6 @@
   text-indent: 0;
   line-height: inherit;
   width: 100%;
-  vertical-align: top;
 }
 .diff-after .diff-added {
   color: var(--text-success);
@@ -134,7 +132,6 @@
   margin: 0;
   text-indent: 0;
   line-height: inherit;
-  vertical-align: top;
 }
 .diff-word-moved {
   background-color: rgba(255, 255, 0, 0.2);
