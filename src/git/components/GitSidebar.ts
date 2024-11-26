@@ -18,11 +18,30 @@ export class GitSidebar {
 
     renderCommitList(commits: any[], onCommitSelect: (commit: any, index: number) => void): void {
         this.commitItems = commits.map((commit, index) => {
-            const commitItem = new GitCommitItem(commit, index, (commit, index) => {
-                this.handleCommitSelect(commitItem, commit, index, onCommitSelect);
-            });
-            this.commitList.appendChild(commitItem.getElement());
-            return commitItem;
+            const message = commit.commit.message;
+            const isDefaultMessage = message.startsWith('snapshot by draft keep - obsidian plugin');
+
+            if (isDefaultMessage) {
+                // Render only the date and title, leaving the message area empty
+                const commitItem = new GitCommitItem({
+                    ...commit,
+                    commit: {
+                        ...commit.commit,
+                        message: '' // Set message to empty
+                    }
+                }, index, (commit, index) => {
+                    this.handleCommitSelect(commitItem, commit, index, onCommitSelect);
+                });
+                this.commitList.appendChild(commitItem.getElement());
+                return commitItem;
+            } else {
+                // Render the full commit item
+                const commitItem = new GitCommitItem(commit, index, (commit, index) => {
+                    this.handleCommitSelect(commitItem, commit, index, onCommitSelect);
+                });
+                this.commitList.appendChild(commitItem.getElement());
+                return commitItem;
+            }
         });
 
         if (this.commitItems.length > 0) {
