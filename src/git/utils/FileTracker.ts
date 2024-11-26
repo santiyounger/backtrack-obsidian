@@ -111,7 +111,16 @@ export class FileTracker {
         );
 
         if (!file) return [currentPath];
-        return [file.currentPath, ...file.previousPaths];
+
+        const allPaths = [file.currentPath];
+        
+        file.previousPaths.reverse().forEach(path => {
+            if (!allPaths.includes(path)) {
+                allPaths.push(path);
+            }
+        });
+
+        return allPaths;
     }
 
     private generateUUID(): string {
