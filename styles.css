@@ -172,13 +172,13 @@
 .diff-row {
   line-height: 1.8;
   display: flex;
-  margin-bottom: -65px;
+  margin-bottom: -60px;
 }
 .diff-moved,
 .diff-added,
 .diff-removed {
-  margin-bottom: -30px;
-  margin-top: -30px;
+  margin-bottom: -60px;
+  margin-top: -60px;
 }
 .git-diff-modal .diff-word-removed,
 .git-diff-modal .diff-word-added {
