@@ -1,6 +1,6 @@
 export class GitCommitItem {
     private element: HTMLDivElement;
-    private static readonly TRUNCATION_LIMIT = 30;
+    private static readonly TRUNCATION_LIMIT = 25;
 
     constructor(
         private commit: any,
