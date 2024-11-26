@@ -53,11 +53,17 @@ export class DraftKeep {
                 if (err) {
                     new CommitMessageModal(this.app, async (commitMessage) => {
                         if (!commitMessage.trim()) {
-                            const timestamp = new Date()
-                                .toISOString()
-                                .replace(/[:.]/g, '-')
-                                .replace('T', '_');
-                            commitMessage = `updated-file_${filePath.replace(/\//g, '_')}_${timestamp}`;
+                            const timestamp = new Date().toLocaleString('en-US', {
+                                year: 'numeric',
+                                month: '2-digit',
+                                day: '2-digit',
+                                hour: '2-digit',
+                                minute: '2-digit',
+                                second: '2-digit',
+                                hour12: false
+                            }).replace(/(\d+)\/(\d+)\/(\d+), (\d+):(\d+):(\d+)/, '$3_$1_$2 - $4:$5:$6');
+
+                            commitMessage = `snapshot by draft keep - obsidian plugin - captured file: ${filePath} at: ${timestamp}`;
                         }
 
                         new Notice('Saving snapshot...', 2000);
@@ -127,7 +133,7 @@ export class CommitMessageModal extends Modal {
 
         const handleSubmit = (e: Event) => {
             e.preventDefault();
-            const commitMessage = inputEl.value.trim() || 'Default commit message';
+            const commitMessage = inputEl.value.trim();
             this.onSubmit(commitMessage);
             this.close();
         };
