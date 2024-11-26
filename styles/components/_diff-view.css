@@ -154,3 +154,15 @@
   padding: 0 2px;
   margin: 0;
 }
+
+.commit-details {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: var(--background-secondary);
+    border-radius: 4px;
+    font-family: var(--font-interface);
+    font-size: 0.9em;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    word-break: break-word;
+}

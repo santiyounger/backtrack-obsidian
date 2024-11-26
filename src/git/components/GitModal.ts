@@ -58,6 +58,8 @@ export class GitModal extends Modal {
 
             const diffWrapper = container.createDiv({ cls: 'git-diff-wrapper' });
 
+            const commitMessageEl = diffWrapper.createDiv({ cls: 'commit-details' });
+            
             const headings = diffWrapper.createDiv({ cls: 'git-diff-headings' });
             headings.createDiv({ cls: 'git-diff-heading', text: 'Before' });
             headings.createDiv({ cls: 'git-diff-heading', text: 'After' });
@@ -68,14 +70,23 @@ export class GitModal extends Modal {
             this.gitSidebar.renderCommitList(allCommits, async (commit, index) => {
                 const prevCommitOid = index + 1 < allCommits.length ? allCommits[index + 1].oid : null;
                 const currentCommitOid = commit.oid;
+                
+                const isDefaultMessage = commit.commit.message.startsWith('snapshot by Backtrack - Version History - obsidian plugin');
+                if (!isDefaultMessage) {
+                    commitMessageEl.setText(commit.commit.message);
+                    commitMessageEl.style.display = 'block';
+                } else {
+                    commitMessageEl.style.display = 'none';
+                }
+
                 await this.gitDiffView.renderDiff(dir, prevCommitOid, currentCommitOid, this.filePath, allPaths);
             });
 
             const commitItems = this.contentEl.querySelectorAll('.commit-item');
             if (commitItems.length > 0) {
-                const latestCommit = commitItems[0] as HTMLElement;
-                latestCommit.click();
-                latestCommit.classList.add('is-active');
+                const latestCommitItem = commitItems[0] as HTMLElement;
+                latestCommitItem.click();
+                latestCommitItem.classList.add('is-active');
             }
         } catch (error) {
             new Notice('Error displaying commits.');
