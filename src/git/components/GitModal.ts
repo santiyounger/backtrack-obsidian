@@ -3,18 +3,24 @@ import * as path from 'path';
 import { GitSidebar } from './GitSidebar';
 import { GitDiffView } from './GitDiffView';
 import { getCommitHistory } from '../utils/gitUtils';
+import { FileTracker } from '../utils/fileTracking';
+import { ReadCommitResult } from 'isomorphic-git';
 
 export class GitModal extends Modal {
     private filePath: string;
+    private fileId: string;
+    private fileTracker: FileTracker;
     private gitSidebar: GitSidebar;
     private gitDiffView: GitDiffView;
 
     constructor(app: App) {
         super(app);
+        this.fileTracker = new FileTracker(app);
 
         const activeFile = this.app.workspace.getActiveFile();
         if (activeFile) {
-            this.filePath = activeFile.path; // Get the relative path of the active file
+            this.filePath = activeFile.path;
+            this.fileId = this.fileTracker.getFileId(this.filePath) || '';
         } else {
             new Notice('No active file selected for diff.');
             this.close();
@@ -35,10 +41,25 @@ export class GitModal extends Modal {
         try {
             const dir = (this.app.vault.adapter as any).getBasePath
                 ? (this.app.vault.adapter as any).getBasePath()
-                : path.resolve('.'); // Fallback if `getBasePath` is not available
+                : path.resolve('.');
 
-            // Fetch commit history for the file
-            const commits = await getCommitHistory(dir, this.filePath);
+            // Get all historical paths for this file
+            const allPaths = this.fileTracker.getAllPaths(this.fileId);
+            
+            // Fetch commit history for all paths
+            const allCommits: ReadCommitResult[][] = await Promise.all(
+                allPaths.map(path => getCommitHistory(dir, path))
+            );
+
+            // Merge and sort commits by timestamp, removing duplicates
+            const commits = Array.from(new Set(
+                allCommits.reduce((acc, curr) => [...acc, ...curr], [])
+                    .map(commit => JSON.stringify(commit)) // Convert to string for deduplication
+            ))
+            .map(commitStr => JSON.parse(commitStr)) // Convert back to objects
+            .sort((a: ReadCommitResult, b: ReadCommitResult) => 
+                b.commit.author.timestamp - a.commit.author.timestamp
+            );
 
             if (commits.length === 0) {
                 contentEl.setText('No commit history found for this file.');
