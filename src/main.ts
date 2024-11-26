@@ -12,6 +12,7 @@ export default class GitDiffPlugin extends Plugin {
     this.fileTracker = new FileTracker(vaultPath);
     this.draftKeep = new DraftKeep(this.app);
 
+    // Handle file rename events
     this.registerEvent(
       this.app.vault.on('rename', (file: TAbstractFile, oldPath: string) => {
         if (file.path !== oldPath) {
@@ -20,6 +21,7 @@ export default class GitDiffPlugin extends Plugin {
       })
     );
 
+    // Register commands
     this.addCommand({
       id: 'open-git-diff-modal',
       name: 'Open Git Diff Viewer',
@@ -43,8 +45,36 @@ export default class GitDiffPlugin extends Plugin {
       }
     });
 
+    // Add ribbon icon
     this.addRibbonIcon('git-branch', 'Open Git Diff Viewer', () => {
       new GitModal(this.app).open();
     });
+
+    // Apply the correct theme class initially
+    this.updateThemeClass();
+
+    // Listen for theme changes and update the theme class
+    this.registerEvent(
+      this.app.workspace.on('css-change', () => {
+        this.updateThemeClass();
+      })
+    );
+  }
+
+  /**
+   * Updates the theme class on the <html> element based on the active Obsidian theme.
+   */
+  private updateThemeClass() {
+    const rootElement = document.documentElement;
+    const bodyClassList = document.body.classList;
+
+    // Check for Obsidian's theme classes and apply corresponding custom classes
+    if (bodyClassList.contains('mod-dark')) {
+      rootElement.classList.add('theme-dark');
+      rootElement.classList.remove('theme-light');
+    } else {
+      rootElement.classList.add('theme-light');
+      rootElement.classList.remove('theme-dark');
+    }
   }
 }

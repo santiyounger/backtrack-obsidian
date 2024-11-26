@@ -1,9 +1,18 @@
 :root {
-    /* Add your CSS variables here */
-    --sidebar-width: 250px;
-    --diff-line-height: 1.8;
-    --commit-item-padding: 10px;
-    --removed-text: rgb(255, 181, 142);
-    --removed-bg: rgba(226, 85, 9, 0.509);
-  }
-  
+  /* Shared variables */
+  --sidebar-width: 250px;
+  --diff-line-height: 1.8;
+  --commit-item-padding: 10px;
+}
+
+/* Dark mode variables */
+.theme-dark {
+  --removed-text: rgb(209, 71, 154);
+  --removed-bg: rgba(26, 225, 152, 0.509);
+}
+
+/* Light mode variables */
+.theme-light {
+  --removed-text: rgb(204, 68, 0); /* Darker orange for readability */
+  --removed-bg: rgba(255, 235, 204, 0.9); /* Softer orange background */
+}
