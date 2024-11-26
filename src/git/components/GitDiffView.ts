@@ -29,24 +29,20 @@ export class GitDiffView {
                     if (similarity < 0.3) {
                         const beforeLines = part.value.trim().split('\n').filter(line => line !== '');
                         const afterLines = nextPart.value.trim().split('\n').filter(line => line !== '');
-
-                        beforeLines.forEach(line => {
+                        
+                        // Match lines one-to-one when possible
+                        const maxLines = Math.max(beforeLines.length, afterLines.length);
+                        for (let lineIndex = 0; lineIndex < maxLines; lineIndex++) {
+                            const beforeLine = beforeLines[lineIndex] || '';
+                            const afterLine = afterLines[lineIndex] || '';
+                            
                             rows.push(`
                                 <div class="diff-row">
-                                    <div class="diff-before"><span class="diff-removed">${escapeHtml(line)}</span></div>
-                                    <div class="diff-after"></div>
+                                    <div class="diff-before">${beforeLine ? `<span class="diff-removed">${escapeHtml(beforeLine)}</span>` : ''}</div>
+                                    <div class="diff-after">${afterLine ? `<span class="diff-added">${escapeHtml(afterLine)}</span>` : ''}</div>
                                 </div>
                             `);
-                        });
-
-                        afterLines.forEach(line => {
-                            rows.push(`
-                                <div class="diff-row">
-                                    <div class="diff-before"></div>
-                                    <div class="diff-after"><span class="diff-added">${escapeHtml(line)}</span></div>
-                                </div>
-                            `);
-                        });
+                        }
                     } else {
                         const wordDiffs = diffWords(part.value, nextPart.value);
                         let beforeLine = '';
@@ -86,20 +82,23 @@ export class GitDiffView {
                             </div>
                         `);
                     });
-                } else if (part.removed) {
-                    const partLines = part.value.trim().split('\n').filter(line => line !== '');
+                } else if (part.removed && i < diffs.length - 1 && diffs[i + 1].added) {
+                    const nextPart = diffs[i + 1];
+                    const similarity = calculateSimilarity(part.value, nextPart.value);
                     const isMovedText = movedTexts.some(moved => moved.originalIndex === i);
 
-                    partLines.forEach(line => {
+                    if (similarity < 0.3 && !isMovedText) {
+                        const beforeLine = part.value.trim();
+                        const afterLine = nextPart.value.trim();
+                        
                         rows.push(`
                             <div class="diff-row">
-                                <div class="diff-before">
-                                    <span class="${isMovedText ? 'diff-moved' : 'diff-removed'}">${escapeHtml(line)}</span>
-                                </div>
-                                <div class="diff-after"></div>
+                                <div class="diff-before"><span class="diff-removed">${escapeHtml(beforeLine)}</span></div>
+                                <div class="diff-after"><span class="diff-added">${escapeHtml(afterLine)}</span></div>
                             </div>
                         `);
-                    });
+                        i++; // Skip the next part since we've handled it here
+                    }
                 } else {
                     const partLines = part.value.trim().split('\n').filter(line => line !== '');
 
