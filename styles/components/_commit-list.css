@@ -11,6 +11,17 @@
   cursor: pointer;
   background-color: var(--background-primary);
   transition: background-color 0.2s, color 0.2s;
+  min-height: 60px;
+}
+
+.commit-item.empty-commit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.commit-item.empty-commit .commit-date {
+  margin: 0;
 }
 
 .commit-item:hover {

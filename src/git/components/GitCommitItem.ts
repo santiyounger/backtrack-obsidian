@@ -28,11 +28,13 @@ export class GitCommitItem {
 
         const message = this.truncateMessage(this.commit.commit.message);
         
+        if (!message) {
+            commitItem.classList.add('empty-commit');
+        }
+
         commitItem.innerHTML = `
             <strong class="commit-date">${formattedDateTime}</strong>
-            <div class="commit-details">
-                ${message}<br>
-            </div>
+            ${message ? `<div class="commit-details">${message}</div>` : ''}
         `;
 
         commitItem.onclick = () => this.onSelect(this.commit, this.index);
@@ -41,6 +43,7 @@ export class GitCommitItem {
     }
 
     private truncateMessage(message: string): string {
+        if (!message) return '';
         return message.length > GitCommitItem.TRUNCATION_LIMIT 
             ? message.substring(0, GitCommitItem.TRUNCATION_LIMIT) + '...' 
             : message;
