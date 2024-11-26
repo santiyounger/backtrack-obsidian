@@ -1,6 +1,6 @@
 {
-	"id": "draft-keep",
-	"name": "Draft Keep",
+	"id": "backtrack",
+	"name": "Back Track - Version History",
 	"version": "1.0.0",
 	"description": "Track the history of your drafts in Obsidian.",
 	"author": "Santi Younger",
