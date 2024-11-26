@@ -45,26 +45,49 @@ export class FileTracker {
         }
     }
 
+    public handleFileRename(oldPath: string, newPath: string): void {
+        const fileByOldPath = this.data.files.find(file => 
+            file.currentPath === oldPath
+        );
+
+        if (fileByOldPath) {
+            fileByOldPath.previousPaths.push(fileByOldPath.currentPath);
+            fileByOldPath.currentPath = newPath;
+            this.saveTrackerFile();
+            return;
+        }
+
+        const fileByNewPath = this.data.files.find(file => 
+            file.currentPath === newPath
+        );
+
+        if (fileByNewPath) {
+            if (!fileByNewPath.previousPaths.includes(oldPath)) {
+                fileByNewPath.previousPaths.push(oldPath);
+                this.saveTrackerFile();
+            }
+            return;
+        }
+
+        const newFile: TrackedFile = {
+            id: this.generateUUID(),
+            currentPath: newPath,
+            previousPaths: [oldPath]
+        };
+        this.data.files.push(newFile);
+        this.saveTrackerFile();
+    }
+
     public trackFile(currentPath: string): string {
-        // First check if file was previously tracked under a different name
         const existingFile = this.data.files.find(file => 
             file.currentPath === currentPath || 
             file.previousPaths.includes(currentPath)
         );
 
         if (existingFile) {
-            // If current path is different from tracked path, update it
-            if (existingFile.currentPath !== currentPath) {
-                if (!existingFile.previousPaths.includes(existingFile.currentPath)) {
-                    existingFile.previousPaths.push(existingFile.currentPath);
-                }
-                existingFile.currentPath = currentPath;
-                this.saveTrackerFile();
-            }
             return existingFile.id;
         }
 
-        // If not previously tracked, create new entry
         const newFile: TrackedFile = {
             id: this.generateUUID(),
             currentPath: currentPath,

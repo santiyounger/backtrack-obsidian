@@ -1,8 +1,21 @@
-import { Plugin, addIcon } from 'obsidian';
+import { Plugin, TAbstractFile } from 'obsidian';
 import { GitModal } from './git/components/GitModal';
+import { FileTracker } from './git/utils/FileTracker';
 
 export default class GitDiffPlugin extends Plugin {
+  private fileTracker: FileTracker;
+
   async onload() {
+    this.fileTracker = new FileTracker(this.app.vault.adapter.getBasePath());
+
+    this.registerEvent(
+      this.app.vault.on('rename', (file: TAbstractFile, oldPath: string) => {
+        if (file.path !== oldPath) {
+          this.fileTracker.handleFileRename(oldPath, file.path);
+        }
+      })
+    );
+
     this.addCommand({
       id: 'open-git-diff-modal',
       name: 'Open Git Diff Viewer',
