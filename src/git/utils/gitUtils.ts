@@ -5,7 +5,7 @@ export async function getCommitHistory(dir: string, filepath: string) {
     try {
         return await git.log({ fs, dir, filepath });
     } catch (error) {
-        console.error('Error fetching commit history:', error);
+        console.debug(`Unable to fetch history for ${filepath}:`, error);
         return [];
     }
 }
@@ -20,7 +20,7 @@ export async function getFileContent(dir: string, oid: string, filepath: string)
         });
         return new TextDecoder('utf-8').decode(blob);
     } catch (error) {
-        console.error(`Error reading blob for oid ${oid} and file ${filepath}:`, error);
+        console.debug(`Unable to read content for ${filepath} at ${oid}:`, error);
         return '';
     }
 }
