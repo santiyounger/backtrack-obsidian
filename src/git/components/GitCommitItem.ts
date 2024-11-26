@@ -16,16 +16,20 @@ export class GitCommitItem {
         
         const date = new Date(this.commit.commit.author.timestamp * 1000);
         const formattedDate = date.toISOString().split('T')[0].replace(/-/g, '/');
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const formattedMonth = monthNames[date.getMonth()];
         const formattedTime = date.toLocaleTimeString([], { 
             hour: '2-digit', 
             minute: '2-digit', 
+            second: '2-digit',
             hour12: false 
         });
+        const formattedDateTime = `${formattedDate.split('/')[0]}/${formattedMonth}/${formattedDate.split('/')[2]} | ${formattedTime.split(':').slice(0, 2).join(':')} | ${formattedTime.split(':')[2]}s`;
 
         const message = this.truncateMessage(this.commit.commit.message);
         
         commitItem.innerHTML = `
-            <strong class="commit-date">${formattedDate} - ${formattedTime}</strong>
+            <strong class="commit-date">${formattedDateTime}</strong>
             <div class="commit-details">
                 ${message}<br>
             </div>
