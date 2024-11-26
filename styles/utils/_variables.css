@@ -7,8 +7,8 @@
 
 /* Dark mode variables */
 .theme-dark {
-  --removed-text: rgb(209, 71, 154);
-  --removed-bg: rgba(26, 225, 152, 0.509);
+  --removed-text: rgb(255, 181, 142);
+  --removed-bg: rgba(226, 85, 9, 0.509);
 }
 
 /* Light mode variables */
