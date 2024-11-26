@@ -133,11 +133,20 @@
   overflow: auto;
 }
 
-.git-diff-modal .diff-row {
+.diff-row {
   line-height: 1.8;
   display: flex;
-  margin-bottom: 0;
+  margin-bottom: -65px;
 }
+
+.diff-moved,
+.diff-added,
+.diff-removed {
+  margin-bottom: -30px;
+  margin-top: -30px;
+}
+
+
 
 .git-diff-modal .diff-word-removed,
 .git-diff-modal .diff-word-added {
