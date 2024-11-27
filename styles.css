@@ -197,7 +197,6 @@
   font-size: 0.8em;
   color: var(--text-muted);
   flex: 1;
-  padding: 2px 8px;
   background-color: var(--background-secondary);
   border-radius: 4px;
   margin: 0;
@@ -206,6 +205,9 @@
   overflow-y: hidden;
   white-space: nowrap;
   -ms-overflow-style: none;
+  width: 100%;
+  text-align: center;
+  padding: 2px 0;
 }
 .commit-details::-webkit-scrollbar {
   height: 6px;
