@@ -9,14 +9,18 @@
 .theme-dark {
   --removed-text: rgb(255, 181, 142);
   --removed-bg: rgba(226, 85, 9, 0.509);
-  --added-text: rgb(144, 238, 144); /* Light green for added text */
-  --added-bg: rgba(0, 128, 0, 0.3); /* Darker green background for added lines */
+  --added-text: rgb(144, 238, 144);
+  --added-bg: rgba(0, 128, 0, 0.3);
+  --moved-text: rgb(255, 255, 224);
+  --moved-bg: rgba(255, 255, 0, 0.2);
 }
 
 /* Light mode variables */
 .theme-light {
-  --removed-text: rgb(204, 68, 0); /* Darker orange for readability */
-  --removed-bg: rgba(255, 235, 204, 0.9); /* Softer orange background */
-  --added-text: rgb(0, 128, 0); /* Dark green for added text */
-  --added-bg: rgba(144, 238, 144, 0.3); /* Light green background for added lines */
+  --removed-text: rgb(204, 68, 0);
+  --removed-bg: rgba(255, 235, 204, 0.9);
+  --added-text: rgb(0, 128, 0);
+  --added-bg: rgba(144, 238, 144, 0.3);
+  --moved-text: rgb(128, 128, 0);
+  --moved-bg: rgba(255, 255, 224, 0.5);
 }

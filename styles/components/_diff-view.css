@@ -65,13 +65,13 @@
 }
 
 .diff-word-moved {
-  background-color: rgba(255, 255, 0, 0.2);
-  color: var(--text-warning);
+  background-color: var(--moved-bg);
+  color: var(--moved-text);
 }
 
 .diff-moved {
-  background-color:  rgba(255, 255, 0, 0.2);
-  color: var(--text-warning);
+  background-color: var(--moved-bg);
+  color: var(--moved-text);
 }
 
 .git-modal-container {
