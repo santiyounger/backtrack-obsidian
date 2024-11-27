@@ -238,7 +238,7 @@
 }
 .commit-item {
   padding: var(--commit-item-padding);
-  margin-bottom: 5px;
+  margin-bottom: 15px;
   border: 1px solid var(--background-modifier-border);
   border-radius: 5px;
   cursor: pointer;
