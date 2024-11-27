@@ -7,12 +7,10 @@ export class GitSidebar {
     private commitItems: GitCommitItem[] = [];
 
     constructor(private container: HTMLElement) {
-        this.initializeSidebar();
-    }
+        const titleElement = this.container.createDiv({ cls: 'sidebar-title' });
+        titleElement.setText('Snapshots History');
 
-    private initializeSidebar(): void {
         this.sidebarElement = this.container.createDiv({ cls: 'git-sidebar' });
-        this.sidebarElement.setText('Snapshots History');
         this.commitList = this.sidebarElement.createDiv({ cls: 'commit-list' });
     }
 
