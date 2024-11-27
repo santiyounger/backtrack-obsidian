@@ -89,12 +89,6 @@
   overflow-y: auto;
   font-family: 'Inter', sans-serif;
 }
-.diff-row {
-  display: flex;
-  width: 100%;
-  line-height: 1.8;
-  margin: 10px 0;
-}
 .diff-before,
 .diff-after {
   width: 50%;
@@ -115,8 +109,6 @@
 .diff-word-removed {
   background-color: var(--removed-bg);
   color: var(--removed-text);
-  display: inline-block;
-  text-indent: 0;
 }
 .diff-word-moved {
   background-color: rgba(255, 255, 0, 0.2);
@@ -131,11 +123,6 @@
   height: 100%;
   overflow: hidden;
   box-sizing: border-box;
-}
-.git-diff-wrapper {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
 }
 .git-content-area {
   flex: 1;
