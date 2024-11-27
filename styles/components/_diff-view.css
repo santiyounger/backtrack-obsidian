@@ -84,7 +84,6 @@
 }
 
 
-
 .git-content-area {
   flex: 1;
   overflow: auto;
@@ -100,14 +99,13 @@
   padding-right: 100px;
 }
 
-/*
+
 .diff-moved,
 .diff-added,
 .diff-removed {
-  margin-bottom: -60px;
-  margin-top: -60px;
+display: block;
 }
-*/
+
 
 
 

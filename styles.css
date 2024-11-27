@@ -134,14 +134,11 @@
   padding-left: 100px;
   padding-right: 100px;
 }
-/*
 .diff-moved,
 .diff-added,
 .diff-removed {
-  margin-bottom: -60px;
-  margin-top: -60px;
+display: block;
 }
-*/
 .git-diff-modal .diff-word-removed,
 .git-diff-modal .diff-word-added {
   display: inline;
