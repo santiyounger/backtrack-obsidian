@@ -4,7 +4,46 @@ import { getFileContent } from '../utils/gitUtils';
 import { detectMovedText, MovedTextInfo } from '../utils/movedTextDetector';
 
 export class GitDiffView {
-    constructor(private contentArea: HTMLElement) {}
+    constructor(private contentArea: HTMLElement) {
+        this.contentArea.addEventListener('click', this.handleClick.bind(this));
+    }
+
+    private handleClick(event: MouseEvent): void {
+        const target = event.target as HTMLElement;
+        const diffBefore = target.closest('.diff-before');
+        const diffAfter = target.closest('.diff-after');
+
+        if (diffBefore) {
+            this.setSelectionMode('before');
+        } else if (diffAfter) {
+            this.setSelectionMode('after');
+        }
+    }
+
+    private setSelectionMode(mode: 'before' | 'after'): void {
+        const diffBeforeElements = this.contentArea.querySelectorAll('.diff-before');
+        const diffAfterElements = this.contentArea.querySelectorAll('.diff-after');
+
+        if (mode === 'before') {
+            diffBeforeElements.forEach(el => {
+                el.classList.add('selectable');
+                el.classList.remove('non-selectable');
+            });
+            diffAfterElements.forEach(el => {
+                el.classList.remove('selectable');
+                el.classList.add('non-selectable');
+            });
+        } else if (mode === 'after') {
+            diffBeforeElements.forEach(el => {
+                el.classList.remove('selectable');
+                el.classList.add('non-selectable');
+            });
+            diffAfterElements.forEach(el => {
+                el.classList.add('selectable');
+                el.classList.remove('non-selectable');
+            });
+        }
+    }
 
     async renderDiff(dir: string, prevOid: string | null, currentOid: string, filepath: string, allPaths: string[]): Promise<void> {
         try {
