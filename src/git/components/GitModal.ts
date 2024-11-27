@@ -66,8 +66,8 @@ export class GitModal extends Modal {
             const diffWrapper = container.createDiv({ cls: 'git-diff-wrapper' });
 
             const headings = diffWrapper.createDiv({ cls: 'git-diff-headings' });
-            headings.createDiv({ cls: 'git-diff-heading', text: 'Before' });
-            headings.createDiv({ cls: 'git-diff-heading', text: 'After' });
+            headings.createEl('button', { cls: 'git-diff-heading before', text: 'Before' });
+            headings.createEl('button', { cls: 'git-diff-heading after', text: 'After' });
 
             const contentArea = diffWrapper.createDiv({ cls: 'git-content-area' });
             this.gitDiffView = new GitDiffView(contentArea);

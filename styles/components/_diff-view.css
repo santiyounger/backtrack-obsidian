@@ -29,6 +29,9 @@
   margin: 0;
   line-height: 1.3;
   font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  border: none;
+  background: none;
 }
 
 .git-diff-heading.before {
@@ -128,5 +131,9 @@
 
 .modal-header {
   margin-bottom: 0px;
+}
+
+.git-diff-heading:hover {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
