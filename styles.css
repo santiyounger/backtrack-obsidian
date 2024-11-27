@@ -50,19 +50,7 @@
     overflow: hidden;
     box-sizing: border-box;
 }
-.git-modal-container .sidebar-title {
-    position: absolute;
-    top: 40px;
-    left: var(--commit-item-padding);
-    z-index: 1;
-    background-color: var(--background-secondary);
-    padding: var(--commit-item-padding);
-    font-size: 1.2em;
-    font-weight: bold;
-    border-bottom: 1px solid var(--background-modifier-border);
-}
 .git-sidebar {
-    margin-top: 40px;
     width: 20%;
     background-color: var(--background-secondary);
     border-right: 1px solid var(--background-modifier-border);
@@ -71,6 +59,19 @@
     overflow-x: hidden;
     box-sizing: border-box;
     flex-shrink: 0;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+}
+.git-sidebar .sidebar-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+}
+.git-sidebar .commit-list {
+    flex-grow: 1;
+    overflow-y: auto;
 }
 .git-diff-modal .modal-title {
     padding: var(--commit-item-padding);

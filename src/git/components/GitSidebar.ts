@@ -7,11 +7,17 @@ export class GitSidebar {
     private commitItems: GitCommitItem[] = [];
 
     constructor(private container: HTMLElement) {
-        const titleElement = this.container.createDiv({ cls: 'sidebar-title' });
-        titleElement.setText('Snapshots History');
-
         this.sidebarElement = this.container.createDiv({ cls: 'git-sidebar' });
+        
+        // Create commit list first
         this.commitList = this.sidebarElement.createDiv({ cls: 'commit-list' });
+        
+        // Insert title before the commit list
+        const titleElement = this.sidebarElement.insertBefore(
+            createDiv({ cls: 'sidebar-title' }), 
+            this.commitList
+        );
+        titleElement.setText('Snapshots History');
     }
 
     renderCommitList(commits: any[], onCommitSelect: (commit: any, index: number) => void): void {
