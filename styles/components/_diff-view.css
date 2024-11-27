@@ -38,11 +38,6 @@
   border-left: 1px solid var(--background-modifier-border);
 }
 
-.git-content-area {
-  overflow-y: auto;
-  font-family: 'Inter', sans-serif;
-}
-
 
 .diff-before,
 .diff-after {
@@ -91,6 +86,7 @@
 .git-content-area {
   flex: 1;
   overflow: auto;
+  font-family: 'Inter', sans-serif;
 }
 
 .diff-row {

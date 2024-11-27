@@ -85,10 +85,6 @@
 .git-diff-heading.after {
   border-left: 1px solid var(--background-modifier-border);
 }
-.git-content-area {
-  overflow-y: auto;
-  font-family: 'Inter', sans-serif;
-}
 .diff-before,
 .diff-after {
   width: 50%;
@@ -114,7 +110,7 @@
   color: var(--text-warning);
 }
 .diff-moved {
-  background-color: rgba(255, 255, 0, 0.1);
+  background-color:  rgba(255, 255, 0, 0.2);
   color: var(--text-warning);
 }
 .git-modal-container {
@@ -126,6 +122,7 @@
 .git-content-area {
   flex: 1;
   overflow: auto;
+  font-family: 'Inter', sans-serif;
 }
 .diff-row {
   line-height: 1.8;
