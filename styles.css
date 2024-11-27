@@ -50,23 +50,9 @@
     overflow: hidden;
     box-sizing: border-box;
 }
-.git-sidebar {
-    width: 20%;
-    background-color: var(--background-secondary);
-    border-right: 1px solid var(--background-modifier-border);
-    padding: var(--commit-item-padding);
-    overflow-y: auto;
-    overflow-x: hidden;
-    box-sizing: border-box;
-    flex-shrink: 0;
-    margin-top: 40px;
-    display: flex;
-    flex-direction: column;
-}
 .git-sidebar .sidebar-title {
     font-size: 1.2em;
     font-weight: bold;
-    margin-bottom: 10px;
     flex-shrink: 0;
 }
 .git-sidebar .commit-list {
@@ -85,6 +71,9 @@
   overflow-x: hidden;
   box-sizing: border-box;
   flex-shrink: 0;
+  margin-top: 37px;
+  display: flex;
+  flex-direction: column;
 }
 .git-sidebar.set-width {
   width: var(--sidebar-width);

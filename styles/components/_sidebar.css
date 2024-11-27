@@ -7,6 +7,9 @@
   overflow-x: hidden;
   box-sizing: border-box;
   flex-shrink: 0;
+  margin-top: 37px;
+  display: flex;
+  flex-direction: column;
 }
 
 .git-sidebar.set-width {
