@@ -57,7 +57,6 @@
   flex-direction: column;
   gap: 5px;
   overflow-y: auto;
-  padding: 10px 20px;
   font-family: var(--font-monospace);
   white-space: pre-wrap;
   background-color: var(--background-primary);
@@ -87,10 +86,8 @@
   border-left: 1px solid var(--background-modifier-border);
 }
 .git-content-area {
-  flex: 1;
   overflow-y: auto;
   font-family: 'Inter', sans-serif;
-  line-height: 1.8;
 }
 .diff-row {
   display: flex;
@@ -101,30 +98,15 @@
 .diff-before,
 .diff-after {
   width: 50%;
-  box-sizing: border-box;
-  white-space: pre-wrap;
-  word-break: break-word;
-  user-select: text;
-  cursor: text;
-  min-height: 1.2em;
-  line-height: 1.8;
-  text-indent: 0;
-  display: block;
 }
 .diff-before .diff-removed {
   background-color: var(--removed-bg);
   color: var(--removed-text);
-  display: inline-block;
-  margin: 0;
   text-indent: 0;
-  line-height: inherit;
-  width: 100%;
 }
 .diff-after .diff-added {
   color: var(--text-success);
   background-color: rgba(0, 255, 0, 0.1);
-  display: block;
-  margin: 0;
 }
 .diff-word-added {
   background-color: rgba(0, 255, 0, 0.2);
@@ -135,18 +117,14 @@
   color: var(--removed-text);
   display: inline-block;
   text-indent: 0;
-  line-height: inherit;
 }
 .diff-word-moved {
   background-color: rgba(255, 255, 0, 0.2);
   color: var(--text-warning);
-  display: inline;
 }
 .diff-moved {
   background-color: rgba(255, 255, 0, 0.1);
   color: var(--text-warning);
-  display: block;
-  line-height: 1.8;
 }
 .git-modal-container {
   display: flex;
@@ -166,7 +144,7 @@
 .diff-row {
   line-height: 1.8;
   display: flex;
-  /* margin-bottom: -60px; */
+  margin-bottom: -50px;
 }
 /*
 .diff-moved,
