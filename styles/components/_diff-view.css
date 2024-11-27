@@ -11,7 +11,6 @@
   white-space: normal;
 }
 
-
 .git-diff-headings {
   display: flex;
   width: 100%;
@@ -37,7 +36,6 @@
 .git-diff-heading.after {
   border-left: 1px solid var(--background-modifier-border);
 }
-
 
 .diff-before,
 .diff-after {
@@ -83,7 +81,6 @@
   box-sizing: border-box;
 }
 
-
 .git-content-area {
   flex: 1;
   overflow: auto;
@@ -102,7 +99,7 @@
 .diff-moved,
 .diff-added,
 .diff-removed {
-display: block;
+  display: block;
 }
 
 .git-diff-modal .diff-word-removed,
@@ -122,61 +119,4 @@ display: block;
 .modal-title-text {
     flex-shrink: 0;
     font-size: 20px;
-}
-
-.commit-details {
-    font-size: 0.8em;
-    color: var(--text-muted);
-    flex: 1;
-    padding: 2px 8px;
-    background-color: var(--background-secondary);
-    border-radius: 4px;
-    margin: 0;
-    line-height: 1.4;
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-    -ms-overflow-style: none;
-}
-
-.commit-details::-webkit-scrollbar {
-    height: 6px;
-}
-
-.commit-details::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.commit-details::-webkit-scrollbar-thumb {
-    background-color: var(--scrollbar-thumb-bg);
-    border-radius: 3px;
-}
-
-.commit-details-top {
-    font-size: 0.8em;
-    color: var(--text-muted);
-    flex: 1;
-    padding: 2px 8px;
-    border-radius: 4px;
-    margin: 0 30px;
-    line-height: 1.4;
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-    -ms-overflow-style: none;
-    background-color: transparent;
-    text-align: center;
-}
-
-.commit-details-top::-webkit-scrollbar {
-    height: 6px;
-}
-
-.commit-details-top::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.commit-details-top::-webkit-scrollbar-thumb {
-    background-color: var(--scrollbar-thumb-bg);
-    border-radius: 3px;
 }

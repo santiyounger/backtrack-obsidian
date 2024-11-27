@@ -137,7 +137,7 @@
 .diff-moved,
 .diff-added,
 .diff-removed {
-display: block;
+  display: block;
 }
 .git-diff-modal .diff-word-removed,
 .git-diff-modal .diff-word-added {
@@ -154,6 +154,51 @@ display: block;
 .modal-title-text {
     flex-shrink: 0;
     font-size: 20px;
+}
+.commit-list {
+  margin-top: 10px;
+  overflow-y: auto;
+}
+.commit-item {
+  padding: var(--commit-item-padding);
+  margin-bottom: 5px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: var(--background-primary);
+  transition: background-color 0.2s, color 0.2s;
+  min-height: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.commit-item.empty-commit {
+  justify-content: center;
+}
+.commit-item.empty-commit .commit-date {
+  margin: 0;
+}
+.commit-item:hover {
+  background-color: var(--background-hover);
+}
+.commit-item.selected {
+  background-color: var(--interactive-accent);
+  color: var(--text-on-accent);
+  font-weight: bold;
+}
+.commit-date {
+  color: var(--text-muted);
+  font-size: 0.9em;
+  margin-bottom: 5px;
+  display: block;
+  text-align: center;
+}
+.commit-details {
+  color: var(--text-normal);
+  font-size: 1em;
+  width: 100%;
+  text-align: left;
+  padding-left: 10px;
 }
 .commit-details {
     font-size: 0.8em;
@@ -203,49 +248,4 @@ display: block;
 .commit-details-top::-webkit-scrollbar-thumb {
     background-color: var(--scrollbar-thumb-bg);
     border-radius: 3px;
-}
-.commit-list {
-  margin-top: 10px;
-  overflow-y: auto;
-}
-.commit-item {
-  padding: var(--commit-item-padding);
-  margin-bottom: 5px;
-  border: 1px solid var(--background-modifier-border);
-  border-radius: 5px;
-  cursor: pointer;
-  background-color: var(--background-primary);
-  transition: background-color 0.2s, color 0.2s;
-  min-height: 60px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.commit-item.empty-commit {
-  justify-content: center;
-}
-.commit-item.empty-commit .commit-date {
-  margin: 0;
-}
-.commit-item:hover {
-  background-color: var(--background-hover);
-}
-.commit-item.selected {
-  background-color: var(--interactive-accent);
-  color: var(--text-on-accent);
-  font-weight: bold;
-}
-.commit-date {
-  color: var(--text-muted);
-  font-size: 0.9em;
-  margin-bottom: 5px;
-  display: block;
-  text-align: center;
-}
-.commit-details {
-  color: var(--text-normal);
-  font-size: 1em;
-  width: 100%;
-  text-align: left;
-  padding-left: 10px;
 } 

@@ -3,4 +3,5 @@
 @import 'components/_modal.css';
 @import 'components/_sidebar.css';
 @import 'components/_diff-view.css';
-@import 'components/_commit-list.css'; 
+@import 'components/_commit-list.css';
+@import 'components/_commit-view.css'; 
