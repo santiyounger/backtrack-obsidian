@@ -72,10 +72,21 @@ export class GitModal extends Modal {
             const contentArea = diffWrapper.createDiv({ cls: 'git-content-area' });
             this.gitDiffView = new GitDiffView(contentArea);
 
+            // Function to clear text selection
+            const clearSelection = () => {
+                if (window.getSelection) {
+                    const selection = window.getSelection();
+                    if (selection) {
+                        selection.removeAllRanges();
+                    }
+                }
+            };
+
             // Initialize selection mode
             let currentMode: 'before' | 'after' | null = null;
 
             const setMode = (mode: 'before' | 'after' | null) => {
+                clearSelection(); // Clear selection when changing modes
                 currentMode = mode;
                 if (mode === 'before') {
                     diffWrapper.classList.add('select-before');
