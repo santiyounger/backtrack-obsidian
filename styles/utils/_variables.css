@@ -3,6 +3,9 @@
   --sidebar-width: 250px;
   --diff-line-height: 1.8;
   --commit-item-padding: 10px;
+  
+  /* Interactive accent color */
+  --interactive-accent: #007acc; /* You can change this to match your theme */
 }
 
 /* Dark mode variables */
@@ -14,6 +17,7 @@
   --moved-text: rgb(255, 255, 224);
   --moved-bg: rgba(255, 255, 0, 0.2);
   --active-commit: rgba(65, 105, 225, 0.6);
+  --interactive-accent: #3399ff; /* Accent color for dark mode */
 }
 
 /* Light mode variables */
@@ -25,4 +29,5 @@
   --moved-text: rgb(128, 128, 0);
   --moved-bg: rgba(255, 255, 224, 0.5);
   --active-commit: rgba(135, 206, 250, 0.5);
+  --interactive-accent: #005f9e; /* Accent color for light mode */
 }

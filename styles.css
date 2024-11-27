@@ -4,6 +4,9 @@
   --sidebar-width: 250px;
   --diff-line-height: 1.8;
   --commit-item-padding: 10px;
+  
+  /* Interactive accent color */
+  --interactive-accent: #007acc; /* You can change this to match your theme */
 }
 /* Dark mode variables */
 .theme-dark {
@@ -14,6 +17,7 @@
   --moved-text: rgb(255, 255, 224);
   --moved-bg: rgba(255, 255, 0, 0.2);
   --active-commit: rgba(65, 105, 225, 0.6);
+  --interactive-accent: #3399ff; /* Accent color for dark mode */
 }
 /* Light mode variables */
 .theme-light {
@@ -24,6 +28,7 @@
   --moved-text: rgb(128, 128, 0);
   --moved-bg: rgba(255, 255, 224, 0.5);
   --active-commit: rgba(135, 206, 250, 0.5);
+  --interactive-accent: #005f9e; /* Accent color for light mode */
 }
 .modal-container .git-diff-modal {
     min-width: 94vw;
@@ -150,15 +155,22 @@
   padding-left: 20px;
   padding-right: 20px;
   user-select: none;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
 }
 .diff-before.selectable,
 .diff-after.selectable {
   user-select: text;
+  opacity: 1;
 }
 .diff-before.non-selectable,
 .diff-after.non-selectable {
   opacity: 0.7;
   pointer-events: none;
+}
+.diff-before.selectable-focused,
+.diff-after.selectable-focused {
+  /* Removed border styling */
 }
 .diff-before .diff-removed {
   background-color: var(--removed-bg);
@@ -187,14 +199,20 @@
 .git-modal-container {
   display: flex;
   height: 100%;
-  overflow: hidden;
   box-sizing: border-box;
 }
 .git-content-area {
   flex: 1;
   overflow: auto;
   font-family: 'Inter', sans-serif;
-  user-select: text;
+  height: 100%;
+}
+.git-sidebar-content {
+  padding: 0 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+  box-sizing: border-box;
 }
 .diff-row {
   line-height: 1.8;
@@ -214,18 +232,18 @@
   display: inline;
 }
 .modal-header-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding-right: 10px;
-    height: 32px;
-    overflow: visible;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-right: 10px;
+  height: 32px;
+  overflow: visible;
 }
 .modal-title-text {
-    flex-shrink: 0;
-    font-size: 20px;
-      padding-left: 10px;
-      padding-right: 10px;
+  flex-shrink: 0;
+  font-size: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 .modal-header {
   margin-bottom: 0px;

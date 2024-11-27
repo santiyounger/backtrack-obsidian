@@ -6,6 +6,7 @@ import { detectMovedText, MovedTextInfo } from '../utils/movedTextDetector';
 export class GitDiffView {
     constructor(private contentArea: HTMLElement) {
         this.contentArea.addEventListener('click', this.handleClick.bind(this));
+        this.contentArea.addEventListener('mouseleave', this.resetSelectionMode.bind(this));
     }
 
     private handleClick(event: MouseEvent): void {
@@ -20,27 +21,45 @@ export class GitDiffView {
         }
     }
 
+    private resetSelectionMode(): void {
+        const diffBeforeElements = this.contentArea.querySelectorAll('.diff-before');
+        const diffAfterElements = this.contentArea.querySelectorAll('.diff-after');
+
+        diffBeforeElements.forEach(el => {
+            el.classList.remove('selectable-focused', 'non-selectable');
+            el.classList.add('selectable');
+        });
+        diffAfterElements.forEach(el => {
+            el.classList.remove('selectable-focused', 'non-selectable');
+            el.classList.add('selectable');
+        });
+    }
+
     private setSelectionMode(mode: 'before' | 'after'): void {
         const diffBeforeElements = this.contentArea.querySelectorAll('.diff-before');
         const diffAfterElements = this.contentArea.querySelectorAll('.diff-after');
 
         if (mode === 'before') {
             diffBeforeElements.forEach(el => {
-                el.classList.add('selectable');
+                el.classList.add('selectable-focused');
                 el.classList.remove('non-selectable');
+                el.classList.add('selectable');
             });
             diffAfterElements.forEach(el => {
-                el.classList.remove('selectable');
+                el.classList.remove('selectable-focused');
                 el.classList.add('non-selectable');
+                el.classList.remove('selectable');
             });
         } else if (mode === 'after') {
             diffBeforeElements.forEach(el => {
-                el.classList.remove('selectable');
+                el.classList.remove('selectable-focused');
                 el.classList.add('non-selectable');
+                el.classList.remove('selectable');
             });
             diffAfterElements.forEach(el => {
-                el.classList.add('selectable');
+                el.classList.add('selectable-focused');
                 el.classList.remove('non-selectable');
+                el.classList.add('selectable');
             });
         }
     }
