@@ -44,11 +44,29 @@
     flex-direction: column;
     overflow: hidden;
 }
+.git-modal {
+  display: flex;
+  flex-direction: column;
+}
+.git-modal-header {
+  /* Header styling */
+}
 .git-modal-container {
-    display: flex;
-    height: 100%;
-    overflow: hidden;
-    box-sizing: border-box;
+  display: flex;
+  flex: 1;
+}
+.git-sidebar {
+  width: 20%;
+  background-color: var(--background-secondary);
+  border-right: 1px solid var(--background-modifier-border);
+  padding: var(--commit-item-padding);
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  /* Remove margin-top workaround */
 }
 .git-sidebar .sidebar-title {
     font-size: 1.2em;
@@ -62,6 +80,11 @@
 .git-diff-modal .modal-title {
     padding: var(--commit-item-padding);
 }
+.git-modal-container {
+  display: flex;
+  height: 100%;
+  box-sizing: border-box;
+}
 .git-sidebar {
   width: 20%;
   background-color: var(--background-secondary);
@@ -71,9 +94,9 @@
   overflow-x: hidden;
   box-sizing: border-box;
   flex-shrink: 0;
-  margin-top: 37px;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 .git-sidebar.set-width {
   width: var(--sidebar-width);
@@ -83,6 +106,12 @@
   font-weight: bold;
   margin-bottom: 0;
   text-align: center;
+}
+.git-content-area {
+  flex: 1;
+  overflow: auto;
+  font-family: 'Inter', sans-serif;
+  height: 100%;
 }
 .git-diff-wrapper {
   flex: 1;

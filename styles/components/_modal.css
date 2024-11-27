@@ -20,13 +20,33 @@
     overflow: hidden;
 }
 
-.git-modal-container {
-    display: flex;
-    height: 100%;
-    overflow: hidden;
-    box-sizing: border-box;
+.git-modal {
+  display: flex;
+  flex-direction: column;
 }
 
+.git-modal-header {
+  /* Header styling */
+}
+
+.git-modal-container {
+  display: flex;
+  flex: 1;
+}
+
+.git-sidebar {
+  width: 20%;
+  background-color: var(--background-secondary);
+  border-right: 1px solid var(--background-modifier-border);
+  padding: var(--commit-item-padding);
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  /* Remove margin-top workaround */
+}
 
 .git-sidebar .sidebar-title {
     font-size: 1.2em;

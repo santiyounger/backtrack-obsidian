@@ -1,3 +1,9 @@
+.git-modal-container {
+  display: flex;
+  height: 100%;
+  box-sizing: border-box;
+}
+
 .git-sidebar {
   width: 20%;
   background-color: var(--background-secondary);
@@ -7,9 +13,9 @@
   overflow-x: hidden;
   box-sizing: border-box;
   flex-shrink: 0;
-  margin-top: 37px;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .git-sidebar.set-width {
@@ -21,4 +27,11 @@
   font-weight: bold;
   margin-bottom: 0;
   text-align: center;
+}
+
+.git-content-area {
+  flex: 1;
+  overflow: auto;
+  font-family: 'Inter', sans-serif;
+  height: 100%;
 } 
