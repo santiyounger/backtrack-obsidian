@@ -71,7 +71,6 @@
   background-color: var(--removed-bg);
   color: var(--removed-text);
   display: inline-block;
-  padding: 0 2px;
   margin: 0;
   text-indent: 0;
   line-height: inherit;
@@ -94,8 +93,6 @@
   background-color: var(--removed-bg);
   color: var(--removed-text);
   display: inline-block;
-  padding: 0 2px;
-  margin: 0;
   text-indent: 0;
   line-height: inherit;
 }
@@ -110,7 +107,6 @@
   background-color: rgba(255, 255, 0, 0.1);
   color: var(--text-warning);
   display: block;
-  margin: 0;
   line-height: 1.8;
 }
 
@@ -125,7 +121,6 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 1rem;
 }
 
 .git-content-area {
@@ -136,23 +131,23 @@
 .diff-row {
   line-height: 1.8;
   display: flex;
-  margin-bottom: -60px;
+  /* margin-bottom: -60px; */
 }
 
+/*
 .diff-moved,
 .diff-added,
 .diff-removed {
   margin-bottom: -60px;
   margin-top: -60px;
 }
+*/
 
 
 
 .git-diff-modal .diff-word-removed,
 .git-diff-modal .diff-word-added {
   display: inline;
-  padding: 0 2px;
-  margin: 0;
 }
 
 .modal-header-container {
