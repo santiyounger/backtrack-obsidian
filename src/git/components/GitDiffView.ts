@@ -138,24 +138,26 @@ export class GitDiffView {
                 }
             }
 
-            // Wrap the content in columns
+            // Wrap the content in columns while preserving the original diff structure
             this.contentArea.innerHTML = `
                 <div class="git-diff-content">
                     <div class="git-diff-column before" id="beforeColumn">
-                        ${rows.map(row => {
-                            const parser = new DOMParser();
-                            const doc = parser.parseFromString(row, 'text/html');
-                            const beforeContent = doc.querySelector('.diff-before')?.innerHTML || '';
-                            return `<div class="diff-row">${beforeContent}</div>`;
-                        }).join('')}
+                        <div class="diff-before">
+                            ${rows.map(row => {
+                                const parser = new DOMParser();
+                                const doc = parser.parseFromString(row, 'text/html');
+                                return doc.querySelector('.diff-before')?.innerHTML || '';
+                            }).join('')}
+                        </div>
                     </div>
                     <div class="git-diff-column after" id="afterColumn">
-                        ${rows.map(row => {
-                            const parser = new DOMParser();
-                            const doc = parser.parseFromString(row, 'text/html');
-                            const afterContent = doc.querySelector('.diff-after')?.innerHTML || '';
-                            return `<div class="diff-row">${afterContent}</div>`;
-                        }).join('')}
+                        <div class="diff-after">
+                            ${rows.map(row => {
+                                const parser = new DOMParser();
+                                const doc = parser.parseFromString(row, 'text/html');
+                                return doc.querySelector('.diff-after')?.innerHTML || '';
+                            }).join('')}
+                        </div>
                     </div>
                 </div>
             `;
