@@ -58,10 +58,10 @@
   gap: 5px;
   overflow-y: auto;
   font-family: var(--font-monospace);
-  white-space: pre-wrap;
   background-color: var(--background-primary);
   color: var(--text-normal);
   box-sizing: border-box;
+  white-space: normal;
 }
 .git-diff-headings {
   display: flex;
@@ -144,7 +144,6 @@
 .diff-row {
   line-height: 1.8;
   display: flex;
-  margin-bottom: -50px;
 }
 /*
 .diff-moved,
