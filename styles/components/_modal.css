@@ -26,6 +26,7 @@
 }
 
 .modal-bg {
-    backdrop-filter: blur(10px); /* Adjust the blur value as needed */
-    -webkit-backdrop-filter: blur(10px); /* For Safari support */
+    backdrop-filter: blur(12px) brightness(10%);
+    -webkit-backdrop-filter: blur(12px) brightness(90%);
+    background-color: rgba(0, 43, 197, 0.2);
 } 
