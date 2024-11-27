@@ -66,11 +66,41 @@ export class GitModal extends Modal {
             const diffWrapper = container.createDiv({ cls: 'git-diff-wrapper' });
 
             const headings = diffWrapper.createDiv({ cls: 'git-diff-headings' });
-            headings.createEl('button', { cls: 'git-diff-heading before', text: 'Before' });
-            headings.createEl('button', { cls: 'git-diff-heading after', text: 'After' });
+            const beforeButton = headings.createEl('button', { cls: 'git-diff-heading before', text: 'Before' });
+            const afterButton = headings.createEl('button', { cls: 'git-diff-heading after', text: 'After' });
 
             const contentArea = diffWrapper.createDiv({ cls: 'git-content-area' });
             this.gitDiffView = new GitDiffView(contentArea);
+
+            // Initialize selection mode
+            let currentMode: 'before' | 'after' | null = null;
+
+            const setMode = (mode: 'before' | 'after' | null) => {
+                currentMode = mode;
+                if (mode === 'before') {
+                    diffWrapper.classList.add('select-before');
+                    diffWrapper.classList.remove('select-after');
+                    beforeButton.classList.add('active');
+                    afterButton.classList.remove('active');
+                } else if (mode === 'after') {
+                    diffWrapper.classList.add('select-after');
+                    diffWrapper.classList.remove('select-before');
+                    afterButton.classList.add('active');
+                    beforeButton.classList.remove('active');
+                } else {
+                    diffWrapper.classList.remove('select-before', 'select-after');
+                    beforeButton.classList.remove('active');
+                    afterButton.classList.remove('active');
+                }
+            };
+
+            beforeButton.addEventListener('click', () => {
+                setMode(currentMode === 'before' ? null : 'before');
+            });
+
+            afterButton.addEventListener('click', () => {
+                setMode(currentMode === 'after' ? null : 'after');
+            });
 
             this.gitSidebar.renderCommitList(allCommits, async (commit, index) => {
                 const prevCommitOid = index + 1 < allCommits.length ? allCommits[index + 1].oid : null;
@@ -86,6 +116,9 @@ export class GitModal extends Modal {
                 }
 
                 await this.gitDiffView.renderDiff(dir, prevCommitOid, currentCommitOid, this.filePath, allPaths);
+
+                // Reset selection mode when a new commit is selected
+                setMode(null);
             });
 
             const commitItems = this.contentEl.querySelectorAll('.commit-item');

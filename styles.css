@@ -140,6 +140,8 @@
   cursor: pointer;
   border: none;
   background: none;
+  padding: 10px 20px;
+  transition: background-color 0.3s, color 0.3s;
 }
 .git-diff-heading.before {
   border-right: 1px solid var(--background-modifier-border);
@@ -225,6 +227,39 @@
 }
 .git-diff-heading:hover {
   background-color: rgba(0, 0, 0, 0.1);
+}
+/* Selection Isolation Modes */
+.select-before .diff-after {
+    opacity: 0.7;
+    user-select: none;
+}
+.select-before .diff-before {
+    opacity: 1;
+    user-select: text;
+}
+.select-after .diff-before {
+    opacity: 0.7;
+    user-select: none;
+}
+.select-after .diff-after {
+    opacity: 1;
+    user-select: text;
+}
+/* Active Button Styles */
+.git-diff-heading.active {
+    background-color: var(--interactive-accent);
+    color: white;
+}
+.git-diff-heading {
+    cursor: pointer;
+    padding: 10px 20px;
+    border: none;
+    background: none;
+    font-size: 1em;
+    transition: background-color 0.3s, color 0.3s;
+}
+.git-diff-heading:hover {
+    background-color: rgba(0, 0, 0, 0.1);
 }
 .commit-list {
   margin-top: 10px;
