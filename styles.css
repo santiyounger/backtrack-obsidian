@@ -89,19 +89,13 @@
   width: 20%;
   background-color: var(--background-secondary);
   border-right: 1px solid var(--background-modifier-border);
-  padding: var(--commit-item-padding);
-  overflow-y: auto;
-  overflow-x: hidden;
   box-sizing: border-box;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
   height: 100%;
   margin: 0px;
-  padding-top: 5px;
-  padding-right: 10px;
-  padding-bottom: 0px;
-  padding-left: 10px;
+  padding: 5px 0 0 0;
 }
 .git-sidebar.set-width {
   width: var(--sidebar-width);
@@ -119,6 +113,13 @@
   overflow: auto;
   font-family: 'Inter', sans-serif;
   height: 100%;
+}
+.git-sidebar-content {
+  padding: 0 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+  box-sizing: border-box;
 }
 .git-diff-wrapper {
   flex: 1;
@@ -237,8 +238,14 @@
   overflow-y: auto;
 }
 .commit-item {
-  padding: var(--commit-item-padding);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: 0;
+  margin-right: 10px;
   margin-bottom: 15px;
+  margin-left: 10px;
   border: 1px solid var(--background-modifier-border);
   border-radius: 5px;
   cursor: pointer;
