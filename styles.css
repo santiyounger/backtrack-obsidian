@@ -194,58 +194,51 @@
   text-align: center;
 }
 .commit-details {
-  color: var(--text-normal);
-  font-size: 1em;
-  width: 100%;
-  text-align: left;
-  padding-left: 10px;
-}
-.commit-details {
-    font-size: 0.8em;
-    color: var(--text-muted);
-    flex: 1;
-    padding: 2px 8px;
-    background-color: var(--background-secondary);
-    border-radius: 4px;
-    margin: 0;
-    line-height: 1.4;
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-    -ms-overflow-style: none;
+  font-size: 0.8em;
+  color: var(--text-muted);
+  flex: 1;
+  padding: 2px 8px;
+  background-color: var(--background-secondary);
+  border-radius: 4px;
+  margin: 0;
+  line-height: 1.4;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  -ms-overflow-style: none;
 }
 .commit-details::-webkit-scrollbar {
-    height: 6px;
+  height: 6px;
 }
 .commit-details::-webkit-scrollbar-track {
-    background: transparent;
+  background: transparent;
 }
 .commit-details::-webkit-scrollbar-thumb {
-    background-color: var(--scrollbar-thumb-bg);
-    border-radius: 3px;
+  background-color: var(--scrollbar-thumb-bg);
+  border-radius: 3px;
 }
 .commit-details-top {
-    font-size: 0.8em;
-    color: var(--text-muted);
-    flex: 1;
-    padding: 2px 8px;
-    border-radius: 4px;
-    margin: 0 30px;
-    line-height: 1.4;
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-    -ms-overflow-style: none;
-    background-color: transparent;
-    text-align: center;
+  font-size: 0.8em;
+  color: var(--text-muted);
+  flex: 1;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin: 0 30px;
+  line-height: 1.4;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  -ms-overflow-style: none;
+  background-color: transparent;
+  text-align: center;
 }
 .commit-details-top::-webkit-scrollbar {
-    height: 6px;
+  height: 6px;
 }
 .commit-details-top::-webkit-scrollbar-track {
-    background: transparent;
+  background: transparent;
 }
 .commit-details-top::-webkit-scrollbar-thumb {
-    background-color: var(--scrollbar-thumb-bg);
-    border-radius: 3px;
+  background-color: var(--scrollbar-thumb-bg);
+  border-radius: 3px;
 } 
