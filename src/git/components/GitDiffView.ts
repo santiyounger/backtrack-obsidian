@@ -138,7 +138,6 @@ export class GitDiffView {
                 }
             }
 
-            // Wrap the content in selection containers while maintaining the original structure
             this.contentArea.innerHTML = `
                 <div class="git-diff-content">
                     <div class="selection-container before">
