@@ -99,15 +99,11 @@
   padding-right: 100px;
 }
 
-
 .diff-moved,
 .diff-added,
 .diff-removed {
 display: block;
 }
-
-
-
 
 .git-diff-modal .diff-word-removed,
 .git-diff-modal .diff-word-added {
