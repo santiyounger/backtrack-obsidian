@@ -160,7 +160,8 @@
     align-items: center;
     gap: 10px;
     padding-right: 10px;
-    min-height: 32px;
+    height: 32px;
+    overflow: visible;
 }
 
 .modal-title-text {
@@ -171,14 +172,32 @@
 .commit-details {
     font-size: 0.8em;
     color: var(--text-muted);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     flex: 1;
     padding: 2px 8px;
     background-color: var(--background-secondary);
     border-radius: 4px;
-    margin-top: 0;
-    margin-bottom: 0;
+    margin: 0;
     line-height: 1.4;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    scrollbar-height: none;
+    -ms-overflow-style: none;
+}
+
+.commit-details:hover {
+    scrollbar-height: auto;
+}
+
+.commit-details::-webkit-scrollbar {
+    height: 6px;
+}
+
+.commit-details::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.commit-details::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb-bg);
+    border-radius: 3px;
 }

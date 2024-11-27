@@ -189,19 +189,42 @@
 .modal-header-container {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
     padding-right: 10px;
+    height: 32px;
+    overflow: visible;
 }
 .modal-title-text {
     flex-shrink: 0;
+    font-size: var(--header-height);
 }
 .commit-details {
-    font-size: 0.85em;
+    font-size: 0.8em;
     color: var(--text-muted);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     flex: 1;
+    padding: 2px 8px;
+    background-color: var(--background-secondary);
+    border-radius: 4px;
+    margin: 0;
+    line-height: 1.4;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    scrollbar-height: none;
+    -ms-overflow-style: none;
+}
+.commit-details:hover {
+    scrollbar-height: auto;
+}
+.commit-details::-webkit-scrollbar {
+    height: 6px;
+}
+.commit-details::-webkit-scrollbar-track {
+    background: transparent;
+}
+.commit-details::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb-bg);
+    border-radius: 3px;
 }
 .commit-list {
   margin-top: 10px;
