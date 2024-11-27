@@ -138,33 +138,43 @@ export class GitDiffView {
                 }
             }
 
-            // Wrap the content in columns while preserving the original diff structure
+            // Split the content into before and after columns
+            const beforeContent = [];
+            const afterContent = [];
+
+            rows.forEach(row => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(row, 'text/html');
+                const beforeDiv = doc.querySelector('.diff-before')?.innerHTML || '';
+                const afterDiv = doc.querySelector('.diff-after')?.innerHTML || '';
+                
+                beforeContent.push(`
+                    <div class="diff-row-content">
+                        ${beforeDiv}
+                    </div>
+                `);
+                
+                afterContent.push(`
+                    <div class="diff-row-content">
+                        ${afterDiv}
+                    </div>
+                `);
+            });
+
             this.contentArea.innerHTML = `
                 <div class="git-diff-content">
-                    <div class="git-diff-column before" id="beforeColumn">
-                        <div class="diff-before">
-                            ${rows.map(row => {
-                                const parser = new DOMParser();
-                                const doc = parser.parseFromString(row, 'text/html');
-                                return doc.querySelector('.diff-before')?.innerHTML || '';
-                            }).join('')}
-                        </div>
+                    <div class="diff-column diff-before-column">
+                        ${beforeContent.join('')}
                     </div>
-                    <div class="git-diff-column after" id="afterColumn">
-                        <div class="diff-after">
-                            ${rows.map(row => {
-                                const parser = new DOMParser();
-                                const doc = parser.parseFromString(row, 'text/html');
-                                return doc.querySelector('.diff-after')?.innerHTML || '';
-                            }).join('')}
-                        </div>
+                    <div class="diff-column diff-after-column">
+                        ${afterContent.join('')}
                     </div>
                 </div>
             `;
 
             // Synchronize scrolling
-            const beforeColumn = document.getElementById('beforeColumn');
-            const afterColumn = document.getElementById('afterColumn');
+            const beforeColumn = this.contentArea.querySelector('.diff-before-column');
+            const afterColumn = this.contentArea.querySelector('.diff-after-column');
 
             if (beforeColumn && afterColumn) {
                 beforeColumn.addEventListener('scroll', () => {
