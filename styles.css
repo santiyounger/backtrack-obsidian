@@ -92,8 +92,8 @@
 .sidebar-title {
   font-size: 1.2em;
   font-weight: bold;
-  padding: var(--commit-item-padding);
   margin-bottom: 0;
+  text-align: center;
 }
 .git-diff-wrapper {
   flex: 1;
