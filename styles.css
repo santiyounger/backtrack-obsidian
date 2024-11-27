@@ -9,11 +9,15 @@
 .theme-dark {
   --removed-text: rgb(255, 181, 142);
   --removed-bg: rgba(226, 85, 9, 0.509);
+  --added-text: rgb(144, 238, 144); /* Light green for added text */
+  --added-bg: rgba(0, 128, 0, 0.3); /* Darker green background for added lines */
 }
 /* Light mode variables */
 .theme-light {
   --removed-text: rgb(204, 68, 0); /* Darker orange for readability */
   --removed-bg: rgba(255, 235, 204, 0.9); /* Softer orange background */
+  --added-text: rgb(0, 128, 0); /* Dark green for added text */
+  --added-bg: rgba(144, 238, 144, 0.3); /* Light green background for added lines */
 }
 .git-diff-modal {
     min-width: 98vw; /* Enforce minimum width of 98vw */
@@ -96,12 +100,12 @@
   color: var(--removed-text);
 }
 .diff-after .diff-added {
-  color: var(--text-success);
-  background-color: rgba(0, 255, 0, 0.1);
+  color: var(--added-text);
+  background-color: var(--added-bg);
 }
 .diff-word-added {
-  background-color: rgba(0, 255, 0, 0.2);
-  color: var(--text-success);
+  background-color: var(--added-bg);
+  color: var(--added-text);
 }
 .diff-word-removed {
   background-color: var(--removed-bg);

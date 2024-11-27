@@ -9,10 +9,14 @@
 .theme-dark {
   --removed-text: rgb(255, 181, 142);
   --removed-bg: rgba(226, 85, 9, 0.509);
+  --added-text: rgb(144, 238, 144); /* Light green for added text */
+  --added-bg: rgba(0, 128, 0, 0.3); /* Darker green background for added lines */
 }
 
 /* Light mode variables */
 .theme-light {
   --removed-text: rgb(204, 68, 0); /* Darker orange for readability */
   --removed-bg: rgba(255, 235, 204, 0.9); /* Softer orange background */
+  --added-text: rgb(0, 128, 0); /* Dark green for added text */
+  --added-bg: rgba(144, 238, 144, 0.3); /* Light green background for added lines */
 }

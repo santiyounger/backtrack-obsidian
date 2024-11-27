@@ -1,0 +1,11 @@
+.theme-dark {
+    --removed-text: rgb(255, 181, 142);
+    --removed-bg: rgba(226, 85, 9, 0.509);
+  }
+  
+  /* Light mode variables */
+  .theme-light {
+    --removed-text: rgb(204, 68, 0); /* Darker orange for readability */
+    --removed-bg: rgba(255, 235, 204, 0.9); /* Softer orange background */
+  }
+  
