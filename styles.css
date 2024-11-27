@@ -13,7 +13,7 @@
   --added-bg: rgba(0, 128, 0, 0.3);
   --moved-text: rgb(255, 255, 224);
   --moved-bg: rgba(255, 255, 0, 0.2);
-  --active-commit: darkblue;
+  --active-commit: rgba(65, 105, 225, 0.6);
 }
 /* Light mode variables */
 .theme-light {
@@ -23,7 +23,7 @@
   --added-bg: rgba(144, 238, 144, 0.3);
   --moved-text: rgb(128, 128, 0);
   --moved-bg: rgba(255, 255, 224, 0.5);
-  --active-commit: lightblue;
+  --active-commit: rgba(135, 206, 250, 0.5);
 }
 .git-diff-modal {
     min-width: 98vw; /* Enforce minimum width of 98vw */
