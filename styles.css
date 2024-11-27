@@ -96,7 +96,6 @@
 .diff-before .diff-removed {
   background-color: var(--removed-bg);
   color: var(--removed-text);
-  text-indent: 0;
 }
 .diff-after .diff-added {
   color: var(--text-success);

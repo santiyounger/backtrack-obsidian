@@ -52,7 +52,6 @@
 .diff-before .diff-removed {
   background-color: var(--removed-bg);
   color: var(--removed-text);
-  text-indent: 0;
 }
 
 .diff-after .diff-added {
@@ -76,7 +75,7 @@
 }
 
 .diff-moved {
-  background-color: rgba(255, 255, 0, 0.1);
+  background-color:  rgba(255, 255, 0, 0.2);
   color: var(--text-warning);
 }
 
