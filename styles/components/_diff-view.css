@@ -60,12 +60,6 @@
   opacity: 0.7;
   pointer-events: none;
 }
-
-.diff-before.selectable-focused,
-.diff-after.selectable-focused {
-  /* Removed border styling */
-}
-
 .diff-before .diff-removed {
   background-color: var(--removed-bg);
   color: var(--removed-text);
