@@ -62,8 +62,12 @@ export class GitDiffView {
                             
                             rows.push(`
                                 <div class="diff-row">
-                                    <div class="diff-before">${beforeLine ? `<span class="diff-removed">${escapeHtml(beforeLine)}</span>` : ''}</div>
-                                    <div class="diff-after">${afterLine ? `<span class="diff-added">${escapeHtml(afterLine)}</span>` : ''}</div>
+                                    <div class="diff-before">
+                                        <div class="diff-before-content">${beforeLine ? `<span class="diff-removed">${escapeHtml(beforeLine)}</span>` : ''}</div>
+                                    </div>
+                                    <div class="diff-after">
+                                        <div class="diff-after-content">${afterLine ? `<span class="diff-added">${escapeHtml(afterLine)}</span>` : ''}</div>
+                                    </div>
                                 </div>
                             `);
                         }
@@ -134,7 +138,42 @@ export class GitDiffView {
                 }
             }
 
-            this.contentArea.innerHTML = rows.join('');
+            // Wrap the content in columns
+            this.contentArea.innerHTML = `
+                <div class="git-diff-content">
+                    <div class="git-diff-column before" id="beforeColumn">
+                        ${rows.map(row => {
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(row, 'text/html');
+                            const beforeContent = doc.querySelector('.diff-before')?.innerHTML || '';
+                            return `<div class="diff-row">${beforeContent}</div>`;
+                        }).join('')}
+                    </div>
+                    <div class="git-diff-column after" id="afterColumn">
+                        ${rows.map(row => {
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(row, 'text/html');
+                            const afterContent = doc.querySelector('.diff-after')?.innerHTML || '';
+                            return `<div class="diff-row">${afterContent}</div>`;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+
+            // Synchronize scrolling
+            const beforeColumn = document.getElementById('beforeColumn');
+            const afterColumn = document.getElementById('afterColumn');
+
+            if (beforeColumn && afterColumn) {
+                beforeColumn.addEventListener('scroll', () => {
+                    afterColumn.scrollTop = beforeColumn.scrollTop;
+                });
+
+                afterColumn.addEventListener('scroll', () => {
+                    beforeColumn.scrollTop = afterColumn.scrollTop;
+                });
+            }
+
         } catch (error) {
             console.error('Error generating file diff:', error);
             this.contentArea.setText('Failed to generate file diff.');

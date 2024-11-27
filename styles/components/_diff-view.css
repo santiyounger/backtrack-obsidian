@@ -2,12 +2,42 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
   font-family: var(--font-monospace);
   background-color: var(--background-primary);
   color: var(--text-normal);
   box-sizing: border-box;
   white-space: normal;
+  overflow: hidden;
+}
+
+.git-diff-content {
+  display: flex;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.git-diff-column {
+  width: 50%;
+  overflow-y: auto;
+  position: relative;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.git-diff-column::-webkit-scrollbar {
+  display: none;
+}
+
+.git-diff-column.after::-webkit-scrollbar {
+  display: block;
+  width: 8px;
+}
+
+.diff-row {
+  line-height: 1.8;
+  padding: 30px 20px;
+  box-sizing: border-box;
 }
 
 .git-diff-headings {
@@ -44,6 +74,26 @@
   width: 50%;
   padding-left: 20px;
   padding-right: 20px;
+  position: relative;
+}
+
+.diff-before::after,
+.diff-after::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 20px;
+  height: 100%;
+  user-select: none;
+  pointer-events: none;
+}
+
+.diff-before::after {
+  right: 0;
+}
+
+.diff-after::before {
+  left: 0;
 }
 
 .diff-before .diff-removed {
@@ -97,6 +147,7 @@
   margin-bottom: 30px;
   padding-left: 70px;
   padding-right: 70px;
+  position: relative;
 }
 
 .diff-moved,
@@ -128,5 +179,10 @@
 
 .modal-header {
   margin-bottom: 0px;
+}
+
+.diff-before-content,
+.diff-after-content {
+  user-select: text;
 }
 
