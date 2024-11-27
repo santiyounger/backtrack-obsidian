@@ -138,52 +138,31 @@ export class GitDiffView {
                 }
             }
 
-            // Split the content into before and after columns
-            const beforeContent = [];
-            const afterContent = [];
-
-            rows.forEach(row => {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(row, 'text/html');
-                const beforeDiv = doc.querySelector('.diff-before')?.innerHTML || '';
-                const afterDiv = doc.querySelector('.diff-after')?.innerHTML || '';
-                
-                beforeContent.push(`
-                    <div class="diff-row-content">
-                        ${beforeDiv}
-                    </div>
-                `);
-                
-                afterContent.push(`
-                    <div class="diff-row-content">
-                        ${afterDiv}
-                    </div>
-                `);
-            });
-
+            // Wrap each column's content in a selection container
             this.contentArea.innerHTML = `
                 <div class="git-diff-content">
-                    <div class="diff-column diff-before-column">
-                        ${beforeContent.join('')}
+                    <div class="selection-container before">
+                        <div class="diff-column">
+                            ${rows.join('')}
+                        </div>
                     </div>
-                    <div class="diff-column diff-after-column">
-                        ${afterContent.join('')}
+                    <div class="selection-container after">
+                        <div class="diff-column">
+                            ${rows.join('')}
+                        </div>
                     </div>
                 </div>
             `;
 
-            // Synchronize scrolling
-            const beforeColumn = this.contentArea.querySelector('.diff-before-column');
-            const afterColumn = this.contentArea.querySelector('.diff-after-column');
+            // Hide duplicate content
+            const beforeContainer = this.contentArea.querySelector('.selection-container.before');
+            const afterContainer = this.contentArea.querySelector('.selection-container.after');
 
-            if (beforeColumn && afterColumn) {
-                beforeColumn.addEventListener('scroll', () => {
-                    afterColumn.scrollTop = beforeColumn.scrollTop;
-                });
-
-                afterColumn.addEventListener('scroll', () => {
-                    beforeColumn.scrollTop = afterColumn.scrollTop;
-                });
+            if (beforeContainer) {
+                beforeContainer.querySelectorAll('.diff-after').forEach(el => (el as HTMLElement).style.display = 'none');
+            }
+            if (afterContainer) {
+                afterContainer.querySelectorAll('.diff-before').forEach(el => (el as HTMLElement).style.display = 'none');
             }
 
         } catch (error) {
