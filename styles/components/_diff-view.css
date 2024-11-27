@@ -181,12 +181,7 @@
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
-    scrollbar-height: none;
     -ms-overflow-style: none;
-}
-
-.commit-details:hover {
-    scrollbar-height: auto;
 }
 
 .commit-details::-webkit-scrollbar {
