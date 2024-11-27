@@ -101,7 +101,6 @@
 .diff-before,
 .diff-after {
   width: 50%;
-  padding: 2px 8px;
   box-sizing: border-box;
   white-space: pre-wrap;
   word-break: break-word;
