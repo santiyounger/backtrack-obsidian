@@ -35,8 +35,9 @@ export class GitDiffView {
             // Generate the diff for the split view
             const diffs = diffLines(prevContent, currentContent);
 
-            // Initialize an array to hold the HTML for each row
-            const rows: string[] = [];
+            // Initialize arrays to hold the HTML for each row
+            const beforeRows: string[] = [];
+            const afterRows: string[] = [];
 
             const movedTexts = detectMovedText(diffs);
 
@@ -60,13 +61,11 @@ export class GitDiffView {
                             const beforeLine = beforeLines[lineIndex] || '';
                             const afterLine = afterLines[lineIndex] || '';
                             
-                            rows.push(`
+                            beforeRows.push(`<div class="diff-row"><div class="diff-before"><span class="empty-line"> </span></div></div>`);
+                            afterRows.push(`
                                 <div class="diff-row">
-                                    <div class="diff-before">
-                                        <div class="diff-before-content">${beforeLine ? `<span class="diff-removed">${escapeHtml(beforeLine)}</span>` : ''}</div>
-                                    </div>
                                     <div class="diff-after">
-                                        <div class="diff-after-content">${afterLine ? `<span class="diff-added">${escapeHtml(afterLine)}</span>` : ''}</div>
+                                        <span class="${movedTexts.some(moved => moved.newIndex === i) ? 'diff-moved' : 'diff-added'}">${escapeHtml(afterLine)}</span>
                                     </div>
                                 </div>
                             `);
@@ -87,12 +86,8 @@ export class GitDiffView {
                             }
                         });
 
-                        rows.push(`
-                            <div class="diff-row">
-                                <div class="diff-before">${beforeLine}</div>
-                                <div class="diff-after">${afterLine}</div>
-                            </div>
-                        `);
+                        beforeRows.push(`<div class="diff-row"><div class="diff-before">${beforeLine}</div></div>`);
+                        afterRows.push(`<div class="diff-row"><div class="diff-after">${afterLine}</div></div>`);
                     }
 
                     i++;
@@ -101,9 +96,9 @@ export class GitDiffView {
                     const isMovedText = movedTexts.some(moved => moved.newIndex === i);
 
                     partLines.forEach(line => {
-                        rows.push(`
+                        beforeRows.push(`<div class="diff-row"><div class="diff-before"><span class="empty-line"> </span></div></div>`);
+                        afterRows.push(`
                             <div class="diff-row">
-                                <div class="diff-before"></div>
                                 <div class="diff-after">
                                     <span class="${isMovedText ? 'diff-moved' : 'diff-added'}">${escapeHtml(line)}</span>
                                 </div>
@@ -115,51 +110,26 @@ export class GitDiffView {
                     const isMovedText = movedTexts.some(moved => moved.originalIndex === i);
 
                     partLines.forEach(line => {
-                        rows.push(`
+                        beforeRows.push(`
                             <div class="diff-row">
                                 <div class="diff-before">
                                     <span class="${isMovedText ? 'diff-moved' : 'diff-removed'}">${escapeHtml(line)}</span>
                                 </div>
-                                <div class="diff-after"></div>
                             </div>
                         `);
+                        afterRows.push(`<div class="diff-row"><div class="diff-after"><span class="empty-line"> </span></div></div>`);
                     });
                 } else {
                     const partLines = part.value.trim().split('\n').filter(line => line !== '');
 
                     partLines.forEach(line => {
-                        rows.push(`
-                            <div class="diff-row">
-                                <div class="diff-before">${escapeHtml(line)}</div>
-                                <div class="diff-after">${escapeHtml(line)}</div>
-                            </div>
-                        `);
+                        beforeRows.push(`<div class="diff-row"><div class="diff-before">${escapeHtml(line)}</div></div>`);
+                        afterRows.push(`<div class="diff-row"><div class="diff-after">${escapeHtml(line)}</div></div>`);
                     });
                 }
             }
 
-            const beforeRows: string[] = [];
-            const afterRows: string[] = [];
-
-            for (let i = 0; i < rows.length; i++) {
-                const row = rows[i];
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(row, 'text/html');
-                const beforeContent = doc.querySelector('.diff-before')?.innerHTML.trim() || '';
-                const afterContent = doc.querySelector('.diff-after')?.innerHTML.trim() || '';
-
-                if (beforeContent && !afterContent) {
-                    beforeRows.push(`<div class="diff-row"><div class="diff-before">${beforeContent}</div></div>`);
-                    afterRows.push(`<div class="diff-row"><div class="diff-after"><span class="empty-line"> </span></div></div>`);
-                } else if (!beforeContent && afterContent) {
-                    beforeRows.push(`<div class="diff-row"><div class="diff-before"><span class="empty-line"> </span></div></div>`);
-                    afterRows.push(`<div class="diff-row"><div class="diff-after">${afterContent}</div></div>`);
-                } else {
-                    beforeRows.push(`<div class="diff-row"><div class="diff-before">${beforeContent}</div></div>`);
-                    afterRows.push(`<div class="diff-row"><div class="diff-after">${afterContent}</div></div>`);
-                }
-            }
-
+            // Wrap the content in selection containers
             this.contentArea.innerHTML = `
                 <div class="git-diff-content">
                     <div class="selection-container before">
