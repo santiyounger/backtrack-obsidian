@@ -49,9 +49,9 @@
   padding: var(--commit-item-padding);
 }
 .modal-bg {
-    backdrop-filter: blur(12px) brightness(10%);
+    backdrop-filter: blur(22px) brightness(50%);
     -webkit-backdrop-filter: blur(12px) brightness(90%);
-    background-color: rgba(0, 43, 197, 0.2);
+    background-color: rgba(1, 18, 82, 0.2);
 }
 .git-sidebar {
   width: 20%;
