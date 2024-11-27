@@ -45,8 +45,12 @@
   padding-left: 20px;
   padding-right: 20px;
   position: relative;
-  isolation: isolate;
-  user-select: contain;
+}
+
+.diff-before > *,
+.diff-after > * {
+  user-select: auto;
+  -webkit-user-select: auto;
 }
 
 .diff-before .diff-removed {
@@ -100,13 +104,6 @@
   margin-bottom: 30px;
   padding-left: 70px;
   padding-right: 70px;
-  width: 100%;
-}
-
-.diff-row::after,
-.diff-before::after,
-.diff-after::before {
-  display: none;
 }
 
 .diff-moved,
@@ -148,20 +145,28 @@
 
 .selection-container {
     width: 50%;
-    position: relative;
-    overflow: hidden;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
-.selection-container.before .diff-column {
-    margin-right: -50%;
+.selection-container::-webkit-scrollbar {
+    display: none;
 }
 
-.selection-container.after .diff-column {
-    margin-left: -50%;
+.selection-container.after::-webkit-scrollbar {
+    display: block;
+    width: 8px;
 }
 
-.diff-column {
-    width: 200%;
-    position: relative;
+.selection-container .diff-row {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.selection-container .diff-before,
+.selection-container .diff-after {
+    width: 100%;
+    padding: 0;
 }
 

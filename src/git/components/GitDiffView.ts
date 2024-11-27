@@ -138,31 +138,40 @@ export class GitDiffView {
                 }
             }
 
-            // Wrap each column's content in a selection container
+            // Wrap the content in selection containers while maintaining the original structure
             this.contentArea.innerHTML = `
                 <div class="git-diff-content">
                     <div class="selection-container before">
-                        <div class="diff-column">
-                            ${rows.join('')}
-                        </div>
+                        ${rows.map(row => {
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(row, 'text/html');
+                            const beforeContent = doc.querySelector('.diff-before')?.outerHTML || '';
+                            return `<div class="diff-row">${beforeContent}</div>`;
+                        }).join('')}
                     </div>
                     <div class="selection-container after">
-                        <div class="diff-column">
-                            ${rows.join('')}
-                        </div>
+                        ${rows.map(row => {
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(row, 'text/html');
+                            const afterContent = doc.querySelector('.diff-after')?.outerHTML || '';
+                            return `<div class="diff-row">${afterContent}</div>`;
+                        }).join('')}
                     </div>
                 </div>
             `;
 
-            // Hide duplicate content
+            // Synchronize scrolling
             const beforeContainer = this.contentArea.querySelector('.selection-container.before');
             const afterContainer = this.contentArea.querySelector('.selection-container.after');
 
-            if (beforeContainer) {
-                beforeContainer.querySelectorAll('.diff-after').forEach(el => (el as HTMLElement).style.display = 'none');
-            }
-            if (afterContainer) {
-                afterContainer.querySelectorAll('.diff-before').forEach(el => (el as HTMLElement).style.display = 'none');
+            if (beforeContainer && afterContainer) {
+                beforeContainer.addEventListener('scroll', () => {
+                    afterContainer.scrollTop = beforeContainer.scrollTop;
+                });
+
+                afterContainer.addEventListener('scroll', () => {
+                    beforeContainer.scrollTop = afterContainer.scrollTop;
+                });
             }
 
         } catch (error) {
