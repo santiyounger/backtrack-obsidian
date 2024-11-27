@@ -196,7 +196,7 @@
 }
 .modal-title-text {
     flex-shrink: 0;
-    font-size: var(--header-height);
+    font-size: 20px;
 }
 .commit-details {
     font-size: 0.8em;
