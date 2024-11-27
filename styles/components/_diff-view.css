@@ -121,3 +121,12 @@
     flex-shrink: 0;
     font-size: 20px;
 }
+
+.modal-header {
+  margin-bottom: 0px;
+}
+
+.modal-title-text {
+    padding-left: 10px;
+    padding-right: 10px;
+}
