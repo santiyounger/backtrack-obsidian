@@ -38,7 +38,7 @@ export class GitModal extends Modal {
         titleTextEl.setText('Backtrack - Version History');
         
         // Create commit message element in the header
-        const commitMessageEl = headerEl.createDiv({ cls: 'commit-details' });
+        const commitMessageEl = headerEl.createDiv({ cls: 'commit-details-top' });
 
         if (!this.filePath) {
             new Notice('No file selected.');
