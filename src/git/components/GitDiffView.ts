@@ -138,23 +138,35 @@ export class GitDiffView {
                 }
             }
 
+            const beforeRows: string[] = [];
+            const afterRows: string[] = [];
+
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i];
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(row, 'text/html');
+                const beforeContent = doc.querySelector('.diff-before')?.innerHTML.trim() || '';
+                const afterContent = doc.querySelector('.diff-after')?.innerHTML.trim() || '';
+
+                if (beforeContent && !afterContent) {
+                    beforeRows.push(`<div class="diff-row"><div class="diff-before">${beforeContent}</div></div>`);
+                    afterRows.push(`<div class="diff-row"><div class="diff-after"><span class="empty-line"> </span></div></div>`);
+                } else if (!beforeContent && afterContent) {
+                    beforeRows.push(`<div class="diff-row"><div class="diff-before"><span class="empty-line"> </span></div></div>`);
+                    afterRows.push(`<div class="diff-row"><div class="diff-after">${afterContent}</div></div>`);
+                } else {
+                    beforeRows.push(`<div class="diff-row"><div class="diff-before">${beforeContent}</div></div>`);
+                    afterRows.push(`<div class="diff-row"><div class="diff-after">${afterContent}</div></div>`);
+                }
+            }
+
             this.contentArea.innerHTML = `
                 <div class="git-diff-content">
                     <div class="selection-container before">
-                        ${rows.map(row => {
-                            const parser = new DOMParser();
-                            const doc = parser.parseFromString(row, 'text/html');
-                            const beforeContent = doc.querySelector('.diff-before')?.outerHTML || '';
-                            return `<div class="diff-row">${beforeContent}</div>`;
-                        }).join('')}
+                        ${beforeRows.join('')}
                     </div>
                     <div class="selection-container after">
-                        ${rows.map(row => {
-                            const parser = new DOMParser();
-                            const doc = parser.parseFromString(row, 'text/html');
-                            const afterContent = doc.querySelector('.diff-after')?.outerHTML || '';
-                            return `<div class="diff-row">${afterContent}</div>`;
-                        }).join('')}
+                        ${afterRows.join('')}
                     </div>
                 </div>
             `;

@@ -258,6 +258,10 @@
     padding-left: 20px;
     padding-right: 20px;
 }
+.empty-line {
+    display: block;
+    min-height: 1.8em;
+}
 .commit-list {
   margin-top: 10px;
   overflow-y: auto;

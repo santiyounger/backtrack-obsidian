@@ -175,3 +175,8 @@
     padding-right: 20px;
 }
 
+.empty-line {
+    display: block;
+    min-height: 1.8em;
+}
+
