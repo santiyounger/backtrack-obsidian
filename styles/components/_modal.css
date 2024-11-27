@@ -23,4 +23,9 @@
 
 .git-diff-modal .modal-title {
   padding: var(--commit-item-padding);
+}
+
+.modal-bg {
+    backdrop-filter: blur(10px); /* Adjust the blur value as needed */
+    -webkit-backdrop-filter: blur(10px); /* For Safari support */
 } 
