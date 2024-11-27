@@ -184,7 +184,6 @@
 .commit-item.selected {
   background-color: var(--interactive-accent);
   color: var(--text-on-accent);
-  font-weight: bold;
 }
 .commit-date {
   color: var(--text-muted);
@@ -194,7 +193,7 @@
   text-align: center;
 }
 .commit-details {
-  font-size: 0.8em;
+  font-size: 1em;
   color: var(--text-muted);
   flex: 1;
   background-color: var(--background-secondary);
