@@ -28,6 +28,7 @@
   font-size: 1.4em;
   margin: 0;
   line-height: 1.3;
+  font-family: 'Inter', sans-serif;
 }
 
 .git-diff-heading.before {
