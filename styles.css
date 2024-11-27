@@ -13,6 +13,7 @@
   --added-bg: rgba(0, 128, 0, 0.3);
   --moved-text: rgb(255, 255, 224);
   --moved-bg: rgba(255, 255, 0, 0.2);
+  --active-commit: darkblue;
 }
 /* Light mode variables */
 .theme-light {
@@ -22,6 +23,7 @@
   --added-bg: rgba(144, 238, 144, 0.3);
   --moved-text: rgb(128, 128, 0);
   --moved-bg: rgba(255, 255, 224, 0.5);
+  --active-commit: lightblue;
 }
 .git-diff-modal {
     min-width: 98vw; /* Enforce minimum width of 98vw */
@@ -190,7 +192,7 @@
   background-color: var(--background-hover);
 }
 .commit-item.selected {
-  background-color: var(--interactive-accent);
+  background-color: var(--active-commit);
   color: var(--text-on-accent);
 }
 .commit-date {

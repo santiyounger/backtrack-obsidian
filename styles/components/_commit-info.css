@@ -30,7 +30,7 @@
 }
 
 .commit-item.selected {
-  background-color: var(--interactive-accent);
+  background-color: var(--active-commit);
   color: var(--text-on-accent);
 }
 
