@@ -75,7 +75,10 @@
     overflow-y: auto;
 }
 .git-diff-modal .modal-title {
-    padding: var(--commit-item-padding);
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 14px;
+  padding-right: 10px;
 }
 .git-modal-container {
   display: flex;
@@ -221,13 +224,11 @@
 .modal-title-text {
     flex-shrink: 0;
     font-size: 20px;
+      padding-left: 10px;
+      padding-right: 10px;
 }
 .modal-header {
   margin-bottom: 0px;
-}
-.modal-title-text {
-    padding-left: 10px;
-    padding-right: 10px;
 }
 .commit-list {
   margin-top: 10px;
