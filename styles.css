@@ -87,7 +87,7 @@
 }
 .git-sidebar {
   width: 20%;
-  background-color: var(--background-secondary);
+  background-color: transparent;
   border-right: 1px solid var(--background-modifier-border);
   box-sizing: border-box;
   flex-shrink: 0;
