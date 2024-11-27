@@ -206,7 +206,7 @@
   font-size: 1em;
   color: var(--text-muted);
   flex: 1;
-  background-color: var(--background-secondary);
+  background-color: var(--background-primary);
   border-radius: 4px;
   margin: 0;
   line-height: 1.4;
