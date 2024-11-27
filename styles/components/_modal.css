@@ -7,9 +7,9 @@
 }
 
 .modal-container:has(.git-diff-modal) {
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    background-color: rgba(1, 18, 82, 0.3);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 .git-diff-modal .modal-content {
