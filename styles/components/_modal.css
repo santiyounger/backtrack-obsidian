@@ -1,5 +1,6 @@
 .modal-container .git-diff-modal {
-    min-width: 98vw;
+    min-width: 94vw;
+    min-height: 94vh;
     height: 100vh;
     margin: 0 auto;
     overflow: hidden;
