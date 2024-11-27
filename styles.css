@@ -129,13 +129,15 @@
 }
 .git-diff-headings {
   display: flex;
+  padding-left: 70px;
+  padding-right: 70px;
   width: 100%;
 }
 .git-diff-heading {
   width: 50%;
   text-align: center;
   background-color: var(--background-primary);
-  padding: 5px;
+  padding: 20px 0px;
   border-bottom: 1px solid var(--background-modifier-border);
   font-weight: bold;
   box-sizing: border-box;
