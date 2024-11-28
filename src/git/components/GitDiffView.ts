@@ -16,7 +16,7 @@ export class GitDiffView {
     private setupClickHandler() {
         this.contentArea.addEventListener('click', () => {
             if (!this.isSelectionModeActive) {
-                new Notice('Please click on "before" or "after" top buttons to select text.', 3000);
+                new Notice('Please click on the `before` or `after` buttons to select text', 3000);
             }
         });
     }
