@@ -2,9 +2,24 @@ import { diffLines, diffWords } from 'diff';
 import { escapeHtml, calculateSimilarity } from '../utils/diffUtils';
 import { getFileContent } from '../utils/gitUtils';
 import { detectMovedText, MovedTextInfo } from '../utils/movedTextDetector';
+import { Notice } from 'obsidian';
 
 export class GitDiffView {
-    constructor(private contentArea: HTMLElement) {}
+    private isSelectionModeActive: boolean = false;
+    private contentArea: HTMLElement;
+
+    constructor(private contentAreaElement: HTMLElement) {
+        this.contentArea = contentAreaElement;
+        this.setupClickHandler();
+    }
+
+    private setupClickHandler() {
+        this.contentArea.addEventListener('click', () => {
+            if (!this.isSelectionModeActive) {
+                new Notice('Please click on "before" or "after" top buttons to select text.', 3000);
+            }
+        });
+    }
 
     async renderDiff(dir: string, prevOid: string | null, currentOid: string, filepath: string, allPaths: string[]): Promise<void> {
         try {
@@ -135,6 +150,41 @@ export class GitDiffView {
             }
 
             this.contentArea.innerHTML = rows.join('');
+
+            // After setting up the mode buttons (before and after), update the state
+            // Assume you have a method or part of your existing code where mode changes occur
+            // For demonstration, here's how you might handle mode changes
+
+            const beforeButton = document.getElementById('before-button');
+            const afterButton = document.getElementById('after-button');
+
+            if (beforeButton && afterButton) {
+                beforeButton.addEventListener('click', () => {
+                    this.isSelectionModeActive = true;
+                    this.contentArea.classList.remove('selection-inactive');
+                    // Existing logic for 'before' button
+                });
+
+                afterButton.addEventListener('click', () => {
+                    this.isSelectionModeActive = true;
+                    this.contentArea.classList.remove('selection-inactive');
+                    // Existing logic for 'after' button
+                });
+
+                // Example: Resetting the selection mode (if applicable)
+                const resetButton = document.getElementById('reset-button');
+                if (resetButton) {
+                    resetButton.addEventListener('click', () => {
+                        this.isSelectionModeActive = false;
+                        this.contentArea.classList.add('selection-inactive');
+                    });
+                }
+            }
+
+            // Initialize cursor style
+            if (!this.isSelectionModeActive) {
+                this.contentArea.classList.add('selection-inactive');
+            }
         } catch (error) {
             console.error('Error generating file diff:', error);
             this.contentArea.setText('Failed to generate file diff.');

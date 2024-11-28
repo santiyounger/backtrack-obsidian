@@ -198,6 +198,10 @@
   overflow: auto;
   font-family: 'Inter', sans-serif;
   user-select: text;
+  cursor: pointer;
+}
+.git-content-area.selection-inactive {
+  cursor: default;
 }
 .diff-row {
   line-height: 1.8;
