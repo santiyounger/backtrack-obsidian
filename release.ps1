@@ -27,8 +27,8 @@ $latestTag = git describe --tags $(git rev-list --tags --max-count=1)
 Write-Host "Latest Git tag: $latestTag"
 
 # Step 5: Get the latest GitHub release
-$latestRelease = gh release list --limit 1 | Select-String -Pattern '^[^\s]+' | ForEach-Object { $_.Matches[0].Value }
-Write-Host "Latest GitHub release: $latestRelease"
+# $latestRelease = gh release list --limit 1 | Select-String -Pattern '^[^\s]+' | ForEach-Object { $_.Matches[0].Value }
+# Write-Host "Latest GitHub release: $latestRelease"
 
 # Step 6: Decide whether to bump the version
 Write-Host "Do you want to bump the version? (Press Enter to bump, or type 'n' to keep the current version)"
