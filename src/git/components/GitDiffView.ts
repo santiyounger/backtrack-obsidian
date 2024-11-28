@@ -17,7 +17,13 @@ export class GitDiffView {
         let isNoticeVisible = false;
 
         this.contentArea.addEventListener('click', () => {
-            if (!this.isSelectionModeActive && !isNoticeVisible) {
+            const beforeButton = document.querySelector('.git-diff-heading.before');
+            const afterButton = document.querySelector('.git-diff-heading.after');
+
+            const isBeforeActive = beforeButton?.classList.contains('active');
+            const isAfterActive = afterButton?.classList.contains('active');
+
+            if (!this.isSelectionModeActive && !isNoticeVisible && !isBeforeActive && !isAfterActive) {
                 isNoticeVisible = true;
                 new Notice('Please click on the buttons: "before" or "after" to select text', 2500);
                 setTimeout(() => {
