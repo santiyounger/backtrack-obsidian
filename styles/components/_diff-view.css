@@ -38,10 +38,18 @@
 
 .git-diff-heading.before {
   border-right: 1px solid var(--background-modifier-border);
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .git-diff-heading.after {
   border-left: 1px solid var(--background-modifier-border);
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
 .diff-before,
