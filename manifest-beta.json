@@ -1,8 +1,8 @@
 {
     "id":  "backtrack",
     "name":  "Backtrack - Version History",
-    "version":  "0.0.6",
-    "description":  "Track the history of your drafts in Obsidian.",
+    "version":  "0.0.7",
+    "description":  "Track the history of your drafts in Obsidian. this is version 0.0.5",
     "author":  "Santi Younger",
     "authorUrl":  "https://www.santiyounger.com/",
     "isDesktopOnly":  true
