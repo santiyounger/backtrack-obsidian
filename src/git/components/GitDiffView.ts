@@ -19,7 +19,7 @@ export class GitDiffView {
         this.contentArea.addEventListener('click', () => {
             if (!this.isSelectionModeActive && !isNoticeVisible) {
                 isNoticeVisible = true;
-                new Notice('Please click on the `before` or `after` buttons to select text', 2500);
+                new Notice('Please click on the buttons: "before" or "after" to select text', 2500);
                 setTimeout(() => {
                     isNoticeVisible = false;
                 }, 2500);
