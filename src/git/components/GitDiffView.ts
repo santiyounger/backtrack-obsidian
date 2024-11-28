@@ -14,9 +14,15 @@ export class GitDiffView {
     }
 
     private setupClickHandler() {
+        let isNoticeVisible = false;
+
         this.contentArea.addEventListener('click', () => {
-            if (!this.isSelectionModeActive) {
-                new Notice('Please click on the `before` or `after` buttons to select text', 3000);
+            if (!this.isSelectionModeActive && !isNoticeVisible) {
+                isNoticeVisible = true;
+                new Notice('Please click on the `before` or `after` buttons to select text', 500);
+                setTimeout(() => {
+                    isNoticeVisible = false;
+                }, 500);
             }
         });
     }
