@@ -21,8 +21,7 @@
   width: 50%;
   text-align: center;
   background-color: var(--background-primary);
-  padding: 20px 0px;
-  border-bottom: 1px solid var(--background-modifier-border);
+  padding: 10px 20px;
   font-weight: bold;
   box-sizing: border-box;
   font-size: 1.4em;
@@ -32,7 +31,6 @@
   cursor: pointer;
   border: none;
   background: none;
-  padding: 10px 20px;
   transition: background-color 0.3s, color 0.3s;
 }
 
