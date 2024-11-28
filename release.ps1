@@ -52,13 +52,17 @@ if ($input -ne 'n') {
     Write-Host "Keeping current version: $newVersion"
 }
 
-# Step 7: Update versions.json with the new version
+# Step 7: Duplicate changes to manifest-beta.json
+Write-Host "Duplicating changes to manifest-beta.json..."
+Copy-Item -Path 'manifest.json' -Destination 'manifest-beta.json' -Force
+
+# Step 8: Update versions.json with the new version
 $versions = Get-Content -Raw -Path 'versions.json' | ConvertFrom-Json
 $versions.PSObject.Properties.Add((New-Object System.Management.Automation.PSNoteProperty("$newVersion", "0.15.0")))  # Set the appropriate minimum Obsidian version
 $versions | ConvertTo-Json -Depth 3 | Set-Content -Path 'versions.json'
 
-# Step 8: Commit the changes
-git add manifest.json versions.json main.js  # Ensure main.js is included if it's generated
+# Step 9: Commit the changes
+git add manifest.json manifest-beta.json versions.json main.js  # Ensure main.js is included if it's generated
 try {
     git commit -m "Bump version to $newVersion"
 } catch {
@@ -66,7 +70,7 @@ try {
     exit 1
 }
 
-# Step 9: Tag the new release without the 'v' prefix
+# Step 10: Tag the new release without the 'v' prefix
 Write-Host "Tagging version $newVersion..."
 try {
     git tag -a $newVersion -m "Release $newVersion"
@@ -75,7 +79,7 @@ try {
     exit 1
 }
 
-# Step 10: Push changes and the new tag to GitHub
+# Step 11: Push changes and the new tag to GitHub
 git push origin main
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Error pushing changes to GitHub. Please check your network connection or credentials."
