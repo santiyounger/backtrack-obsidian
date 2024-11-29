@@ -151,15 +151,17 @@ export class GitModal extends Modal {
                 tempContainer.appendChild(range.cloneContents());
             
                 const filteredContent = Array.from(tempContainer.querySelectorAll(`.${activeColumnClass}`))
-                    .map(node => node.textContent?.trim()) // Trim leading/trailing whitespace
-                    .filter(text => text && text.length > 0) // Remove empty lines or null values
-                    .join('\n'); // Use single line break to prevent extra spaces
+                    .map(node => node.textContent)
+                    .filter(text => text && text.length > 0)
+                    .map(text => text.trim()) // Trim leading/trailing spaces on each block
+                    .join('\n\n'); // Use double line breaks between blocks
             
                 if (filteredContent) {
                     event.clipboardData?.setData('text/plain', filteredContent);
                     event.preventDefault();
                 }
             });
+            
             
         } catch (error) {
             new Notice('Error displaying commits.');
