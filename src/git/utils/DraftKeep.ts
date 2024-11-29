@@ -107,7 +107,7 @@ export class CommitMessageModal extends Modal {
     onOpen() {
         const { contentEl } = this;
 
-        contentEl.createEl('h2', { text: 'Name this snapshot (optional)' });
+        contentEl.createEl('h2', { text: 'Name This Snapshot (Optional)', cls: 'snapshot-title' });
 
         const form = contentEl.createEl('form');
         form.style.display = 'flex';

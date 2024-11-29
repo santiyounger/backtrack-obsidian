@@ -68,6 +68,10 @@
   padding-left: 14px;
   padding-right: 10px;
 }
+.snapshot-title {
+    text-align: center;
+    margin: 20px;
+}
 .git-modal-container {
   display: flex;
   height: 100%;
