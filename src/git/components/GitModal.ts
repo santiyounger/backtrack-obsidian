@@ -153,7 +153,7 @@ export class GitModal extends Modal {
                 const filteredContent = Array.from(tempContainer.querySelectorAll(`.${activeColumnClass}`))
                     .map(node => node.textContent)
                     .filter(text => text && text.length > 0)
-                    .map(text => text.trim()) // Trim leading/trailing spaces on each block
+                    .map(text => text ? text.trim() : '') // Trim leading/trailing spaces on each block
                     .join('\n\n'); // Use double line breaks between blocks
             
                 if (filteredContent) {
