@@ -123,7 +123,7 @@ export class CommitMessageModal extends Modal {
         inputEl.style.border = '1px solid var(--background-modifier-border)';
         inputEl.style.borderRadius = '4px';
 
-        const submitButton = form.createEl('button', { text: 'Submit' });
+        const submitButton = form.createEl('button', { text: 'Save' });
         submitButton.style.padding = '0.5em 1em';
         submitButton.style.border = 'none';
         submitButton.style.borderRadius = '4px';
