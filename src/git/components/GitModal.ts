@@ -151,10 +151,11 @@ export class GitModal extends Modal {
                 const tempContainer = document.createElement('div');
                 tempContainer.appendChild(range.cloneContents());
 
-                // Filter out nodes not in the active column
+                // Filter out nodes not in the active column and preserve line breaks
                 const filteredContent = Array.from(tempContainer.querySelectorAll(`.${activeColumnClass}`))
                     .map(node => node.textContent)
-                    .join('');
+                    .filter(text => text !== null)
+                    .join('\n\n'); // Use double line breaks to separate paragraphs
 
                 if (filteredContent) {
                     event.clipboardData?.setData('text/plain', filteredContent);
