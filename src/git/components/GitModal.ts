@@ -66,9 +66,33 @@ export class GitModal extends Modal {
             const diffWrapper = container.createDiv({ cls: 'git-diff-wrapper' });
 
             const headings = diffWrapper.createDiv({ cls: 'git-diff-headings' });
-            const beforeButton = headings.createEl('button', { cls: 'git-diff-heading before', text: 'Before' });
-            const afterButton = headings.createEl('button', { cls: 'git-diff-heading after', text: 'After' });
 
+            // Before section with "Copy All Before" button
+            const beforeSection = headings.createDiv({ cls: 'button-section before-section' });
+            const beforeButton = beforeSection.createEl('button', { cls: 'git-diff-heading before', text: 'Before' });
+            const copyBeforeButton = beforeSection.createEl('button', { cls: 'copy-button', text: 'Copy All Before' });
+            copyBeforeButton.addEventListener('click', () => {
+              const beforeText = Array.from(contentArea.querySelectorAll('.diff-before'))
+                .map(el => el.textContent?.trim() || '')
+                .join('\n');
+              navigator.clipboard.writeText(beforeText).then(() => {
+                new Notice('Copied all "Before" text to clipboard!');
+              });
+            });
+            
+            // After section with "Copy All After" button
+            const afterSection = headings.createDiv({ cls: 'button-section after-section' });
+            const afterButton = afterSection.createEl('button', { cls: 'git-diff-heading after', text: 'After' });
+            const copyAfterButton = afterSection.createEl('button', { cls: 'copy-button', text: 'Copy All After' });
+            copyAfterButton.addEventListener('click', () => {
+              const afterText = Array.from(contentArea.querySelectorAll('.diff-after'))
+                .map(el => el.textContent?.trim() || '')
+                .join('\n');
+              navigator.clipboard.writeText(afterText).then(() => {
+                new Notice('Copied all "After" text to clipboard!');
+              });
+            });
+            
             const contentArea = diffWrapper.createDiv({ cls: 'git-content-area' });
             this.gitDiffView = new GitDiffView(contentArea);
 
