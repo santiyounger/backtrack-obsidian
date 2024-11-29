@@ -56,14 +56,16 @@ $minor = [int]$versionParts[1]
 $patch = [int]$versionParts[2] + 1  # Increment the patch version
 $newVersion = "$major.$minor.$patch"
 
-Write-Host "Current version: $currentVersion"
+Write-Host "manifest.json: $currentVersion"
+Write-Host "Latest Git tag: $latestTag"
+Write-Host ""
 Write-Host "Proposed new version: $newVersion"
+Write-Host ""
 Write-Host "Choose an option:"
 Write-Host "1. Bump up to $newVersion"
 Write-Host "2. Rename manually"
-Write-Host "3. Keep the current version"
 
-$choice = Read-Host "Enter your choice (1/2/3)"
+$choice = Read-Host "Enter your choice (1/2)"
 
 switch ($choice) {
     '1' {
@@ -75,10 +77,6 @@ switch ($choice) {
         Write-Host "Renaming version to: $manualVersion"
         $manifest.version = $manualVersion
         $newVersion = $manualVersion
-    }
-    '3' {
-        Write-Host "Keeping current version: $currentVersion"
-        $newVersion = $currentVersion
     }
     default {
         Write-Host "Invalid choice. Exiting."
