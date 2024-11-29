@@ -127,7 +127,7 @@ export class CommitMessageModal extends Modal {
         submitButton.style.padding = '0.5em 1em';
         submitButton.style.border = 'none';
         submitButton.style.borderRadius = '4px';
-        submitButton.style.backgroundColor = 'var(--interactive-accent)';
+        submitButton.style.backgroundColor = 'rgba(65, 105, 225, 0.6)';
         submitButton.style.color = 'white';
         submitButton.style.cursor = 'pointer';
 
