@@ -30,27 +30,45 @@ Write-Host "Latest Git tag: $latestTag"
 # $latestRelease = gh release list --limit 1 | Select-String -Pattern '^[^\s]+' | ForEach-Object { $_.Matches[0].Value }
 # Write-Host "Latest GitHub release: $latestRelease"
 
-# Step 6: Decide whether to bump the version
-Write-Host "Do you want to bump the version? (Press Enter to bump, or type 'n' to keep the current version)"
-$input = Read-Host
-if ($input -ne 'n') {
-    # Increment the version number (patch version)
-    $versionParts = $currentVersion.Split('.')
-    $major = [int]$versionParts[0]
-    $minor = [int]$versionParts[1]
-    $patch = [int]$versionParts[2] + 1  # Increment the patch version
+# Step 6: Decide on the new version
+$versionParts = $currentVersion.Split('.')
+$major = [int]$versionParts[0]
+$minor = [int]$versionParts[1]
+$patch = [int]$versionParts[2] + 1  # Increment the patch version
+$newVersion = "$major.$minor.$patch"
 
-    # New version
-    $newVersion = "$major.$minor.$patch"
-    Write-Host "Bumping version to: $newVersion"
+Write-Host "Current version: $currentVersion"
+Write-Host "Proposed new version: $newVersion"
+Write-Host "Choose an option:"
+Write-Host "1. Bump up to $newVersion"
+Write-Host "2. Rename manually"
+Write-Host "3. Keep the current version"
 
-    # Update the version in manifest.json
-    $manifest.version = $newVersion
-    $manifest | ConvertTo-Json -Depth 3 | Set-Content -Path 'manifest.json'
-} else {
-    $newVersion = $currentVersion
-    Write-Host "Keeping current version: $newVersion"
+$choice = Read-Host "Enter your choice (1/2/3)"
+
+switch ($choice) {
+    '1' {
+        Write-Host "Bumping version to: $newVersion"
+        $manifest.version = $newVersion
+    }
+    '2' {
+        $manualVersion = Read-Host "Enter the new version manually"
+        Write-Host "Renaming version to: $manualVersion"
+        $manifest.version = $manualVersion
+        $newVersion = $manualVersion
+    }
+    '3' {
+        Write-Host "Keeping current version: $currentVersion"
+        $newVersion = $currentVersion
+    }
+    default {
+        Write-Host "Invalid choice. Exiting."
+        exit 1
+    }
 }
+
+# Update the version in manifest.json
+$manifest | ConvertTo-Json -Depth 3 | Set-Content -Path 'manifest.json'
 
 # Step 7: Duplicate changes to manifest-beta.json
 Write-Host "Duplicating changes to manifest-beta.json..."
