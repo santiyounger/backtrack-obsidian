@@ -2,8 +2,27 @@
 Write-Host "Checking if working directory is clean..."
 $gitStatus = git status --porcelain
 if ($gitStatus) {
-    Write-Host "Git working directory is not clean. Please commit your changes first."
-    exit 1
+    Write-Host "There are some uncommitted changes. Please write your commit message here:"
+    $commitMessage = Read-Host
+
+    # Stage all changes
+    git add .
+
+    # Commit with the provided message
+    try {
+        git commit -m $commitMessage
+    } catch {
+        Write-Host "Error committing changes. Please check your Git configuration."
+        exit 1
+    }
+
+    # Push to the current branch
+    $currentBranch = git rev-parse --abbrev-ref HEAD
+    git push origin $currentBranch
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "Error pushing changes to GitHub. Please check your network connection or credentials."
+        exit 1
+    }
 } else {
     Write-Host "Git working directory is clean."
 }
