@@ -244,6 +244,7 @@
 .select-before .diff-after {
     opacity: 0.7;
     user-select: none;
+    pointer-events: none;
 }
 .select-before .diff-before {
     user-select: text;
@@ -251,6 +252,7 @@
 .select-after .diff-before {
     opacity: 0.7;
     user-select: none;
+    pointer-events: none;
 }
 .select-after .diff-after {
     user-select: text;

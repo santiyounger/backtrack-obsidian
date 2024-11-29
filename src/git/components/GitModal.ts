@@ -138,6 +138,29 @@ export class GitModal extends Modal {
                 latestCommitItem.click();
                 latestCommitItem.classList.add('is-active');
             }
+
+            // Add event listener for copy event
+            document.addEventListener('copy', (event) => {
+                const selection = window.getSelection();
+                if (!selection || selection.rangeCount === 0) return;
+
+                const range = selection.getRangeAt(0);
+                const activeColumnClass = currentMode === 'before' ? 'diff-before' : 'diff-after';
+
+                // Create a temporary container to hold the selected content
+                const tempContainer = document.createElement('div');
+                tempContainer.appendChild(range.cloneContents());
+
+                // Filter out nodes not in the active column
+                const filteredContent = Array.from(tempContainer.querySelectorAll(`.${activeColumnClass}`))
+                    .map(node => node.textContent)
+                    .join('');
+
+                if (filteredContent) {
+                    event.clipboardData?.setData('text/plain', filteredContent);
+                    event.preventDefault();
+                }
+            });
         } catch (error) {
             new Notice('Error displaying commits.');
             console.error(error);
