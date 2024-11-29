@@ -143,25 +143,24 @@ export class GitModal extends Modal {
             document.addEventListener('copy', (event) => {
                 const selection = window.getSelection();
                 if (!selection || selection.rangeCount === 0) return;
-
+            
                 const range = selection.getRangeAt(0);
                 const activeColumnClass = currentMode === 'before' ? 'diff-before' : 'diff-after';
-
-                // Create a temporary container to hold the selected content
+            
                 const tempContainer = document.createElement('div');
                 tempContainer.appendChild(range.cloneContents());
-
-                // Filter out nodes not in the active column and preserve line breaks
+            
                 const filteredContent = Array.from(tempContainer.querySelectorAll(`.${activeColumnClass}`))
-                    .map(node => node.textContent)
-                    .filter(text => text !== null)
-                    .join('\n\n'); // Use double line breaks to separate paragraphs
-
+                    .map(node => node.textContent?.trim()) // Trim leading/trailing whitespace
+                    .filter(text => text && text.length > 0) // Remove empty lines or null values
+                    .join('\n'); // Use single line break to prevent extra spaces
+            
                 if (filteredContent) {
                     event.clipboardData?.setData('text/plain', filteredContent);
                     event.preventDefault();
                 }
             });
+            
         } catch (error) {
             new Notice('Error displaying commits.');
             console.error(error);
