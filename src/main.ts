@@ -24,7 +24,7 @@ export default class GitDiffPlugin extends Plugin {
     // Register commands
     this.addCommand({
       id: 'open-git-diff-modal',
-      name: 'Open Git Diff Viewer',
+      name: 'Open Snapshot History',
       callback: () => {
         new GitModal(this.app).open();
       },
@@ -32,7 +32,7 @@ export default class GitDiffPlugin extends Plugin {
 
     this.addCommand({
       id: 'take-snapshot',
-      name: 'Take Snapshot (Save, Commit, Push)',
+      name: 'Take Snapshot',
       checkCallback: (checking: boolean) => {
         const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
         if (activeView) {
@@ -46,7 +46,7 @@ export default class GitDiffPlugin extends Plugin {
     });
 
     // Add ribbon icon
-    this.addRibbonIcon('git-branch', 'Open Git Diff Viewer', () => {
+    this.addRibbonIcon('git-branch', 'Open Snapshot History', () => {
       new GitModal(this.app).open();
     });
 
