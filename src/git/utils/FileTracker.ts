@@ -9,7 +9,7 @@ interface FileTrackerData {
 }
 
 export class FileTracker {
-    private static TRACKER_FILE = '.draft-keep.json';
+    private static TRACKER_FILE = '.backtrack.json';
     private data: FileTrackerData;
 
     constructor(private vaultPath: string) {

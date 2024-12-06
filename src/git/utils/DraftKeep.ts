@@ -2,8 +2,6 @@ import { App, MarkdownView, Notice, Modal } from 'obsidian';
 import { exec } from 'child_process';
 import * as path from 'path';
 
-const DRAFT_KEEP_FILENAME = '.backtrack.json';
-
 export class DraftKeep {
     private app: App;
 
