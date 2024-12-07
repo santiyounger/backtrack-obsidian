@@ -16,7 +16,7 @@ I break this down in detail for beginners in my course:
 This plugin was designed for my course students, so it's not currently available in community plugins, more info on how to set it up in my course 👆
 
 # License
-**License**: All rights reserved. For licensing inquiries, please contact me at [santiyounger.com/contact](https://santiyounger.com/contact).
+**License**: All rights reserved. For licensing inquiries, please contact me at [santiyounger.com/contact](https://santiyounger.com/contact)
 
 
 
